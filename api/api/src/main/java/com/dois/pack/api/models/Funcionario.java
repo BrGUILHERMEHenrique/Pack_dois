@@ -35,7 +35,7 @@ public class Funcionario implements Serializable {
 	@NotNull
 	private LocalDate dataNascimento;
 
-	@Column(name = "cpf", unique = true)
+	@Column(name = "cpf")
 	@Size(min = 11, max = 11)
 	private String cpf;
 

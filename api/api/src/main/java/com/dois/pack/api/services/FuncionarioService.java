@@ -28,8 +28,19 @@ public class FuncionarioService {
 	}
 	
 	@Transactional
-	public void delete(Funcionario funcionario) {
-		funcionarioRepository.delete(funcionario);
+	public Optional<Funcionario> getbyId(Integer id) {
+		return funcionarioRepository.findById(id);
+	}
+	
+	@Transactional
+	public boolean delete(Integer id) {
+		Optional<Funcionario> funcionario = funcionarioRepository.findById(id);
+		if(funcionario.isPresent()) {
+			funcionarioRepository.delete(funcionario.get());
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	@Transactional
@@ -37,13 +48,13 @@ public class FuncionarioService {
 		Optional<Funcionario> funcionarioAntigo = funcionarioRepository.findById(id);
 		Funcionario funcionarioAtualizado = funcionarioAntigo.get();
 		
-		if(!funcionario.getNome().equals("") && funcionario.getNome() == null) {
+		if(!funcionario.getNome().equals("") && funcionario.getNome() != null) {
 			funcionarioAtualizado.setNome(funcionario.getNome());
 		}
 		if(funcionario.getDataNascimento() != null) {
 			funcionarioAtualizado.setDataNascimento(funcionario.getDataNascimento());
 		}
-		if(!funcionario.getTelefone().equals("") && funcionario.getTelefone() == null) {
+		if(!funcionario.getTelefone().equals("") && funcionario.getTelefone() != null) {
 			funcionarioAtualizado.setTelefone(funcionario.getTelefone());
 		}
 		

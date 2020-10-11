@@ -28,31 +28,29 @@ public class FuncionarioController {
 		return ResponseEntity.ok(funcionarioService.getAll());
 	}
 
-//	@GetMapping("/{numero}")
-//	public ResponseEntity<?> pegaPorNumero(@PathVariable Integer numero) {
-//		return ResponseEntity.ok(funcionarioService.recuperarPorNumero(numero));
-//	}
+	@GetMapping("/{id}")
+	public ResponseEntity<?> pegaPorNumero(@PathVariable Integer id) {
+		return ResponseEntity.ok(funcionarioService.getbyId(id));
+	}
 
 	@PostMapping
 	public ResponseEntity<?> createFuncionario(@RequestBody Funcionario funcionario) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioService.create(funcionario));
 	}
 
-	@PutMapping("/{numero}")
+	@PutMapping("/{id}")
 	public ResponseEntity<?> updateFuncionario(@PathVariable Integer id, @RequestBody Funcionario funcionario) {
 		Funcionario funcionarioAtualizado = funcionarioService.update(id, funcionario);
 		return ResponseEntity.ok(funcionarioAtualizado);
 	}
 
-//	@DeleteMapping("/{numero}")
-//	public ResponseEntity<?> apagarConta(@PathVariable Integer numero) {
-//		funcionarioService.apagarConta(numero);
-//		return ResponseEntity.ok("Conta apagada com sucesso!!");
-//	}
-//
-//	@PostMapping("/{numero}/{operacao}/{valor}")
-//	public ResponseEntity<?> operacao(@PathVariable("numero") Integer numero, @PathVariable("operacao") String operacao,
-//			@PathVariable("valor") Double valor) {
-//		return ResponseEntity.status(HttpStatus.ACCEPTED).body(funcionarioService.operacao(operacao, valor, numero));
-//	}
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> apagarConta(@PathVariable Integer id) {
+		boolean response = funcionarioService.delete(id);
+		if(response) {		
+			return ResponseEntity.ok("Funcionario apagada com sucesso!!");
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 }
