@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "axios": "^0.20.0",
+    "react-input-mask": "^2.0.4",
+    "styled-components": "^5.2.0"
+  }
+}
