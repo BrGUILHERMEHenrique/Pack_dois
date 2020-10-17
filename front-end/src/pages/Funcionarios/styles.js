@@ -36,31 +36,47 @@ export const FormModal = styled.form`
     input{
         width: 90%;
         height: 40%;
+        padding: 6px;
 
         border: 0;
         outline: none;
 
+        border-radius: 5px;
         border-bottom: 1px solid black;
 
-        color: #3a3a3a
+        color: #3a3a3a;
 
-        &+input{
-            margin-top: 20%;
-        }
+        margin-top: 10px;
+
 
         &#date{
             border: 0;
-            
         }
         &#tel{
-            border: 0;
-            
+            border: 0;  
         }
 
         &#cpf{
-            border: 0;
-         
+            border: 0; 
         }
     }
 
+`;
+
+export const ContainerInputs = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
+export const HeaderModal = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`;
+
+export const FooterModal = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: 30%;
 `;
