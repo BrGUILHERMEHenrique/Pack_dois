@@ -37,12 +37,10 @@ export const FormModal = styled.form`
         width: 90%;
         height: 40%;
         padding: 6px;
+        flex: 1;
 
         border: 0;
         outline: none;
-
-        border-radius: 5px;
-        border-bottom: 1px solid black;
 
         color: #3a3a3a;
 
@@ -72,11 +70,22 @@ export const HeaderModal = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    h2{
+        margin-left: 42%;
+        font-size: 30px;
+        font-weight: bold;
+    }
 `;
 
 export const FooterModal = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    margin-top: 30%;
+    margin-top: 20%;
+
+    Button+Button{
+        margin-left: 10px;
+
+    }
 `;

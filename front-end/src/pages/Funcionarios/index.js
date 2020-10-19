@@ -1,10 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Modal from 'react-modal';
+import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import InputMask from 'react-input-mask';
 import MaterialInput from '@material-ui/core/Input';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
 
 import { AiOutlineClose } from 'react-icons/ai'
 
@@ -97,6 +99,11 @@ const Funcionarios = () => {
                 alert("pro favor preencha todos os campos");
                 return;
             }
+
+            if(!cpfValidator.isValid(cpf)){ 
+                alert('o cpf informado é inválido');
+                return;
+            }
             const params = {
                 nome: nome,
                 codMatricula: codMatricula,
@@ -110,7 +117,7 @@ const Funcionarios = () => {
                 const response = await api.post('funcionario', params);
                 console.log(response.data);
             } catch (error) {
-                console.log(error);
+                alert(error.response.data);
             } finally {
                 setNome('');
                 setCodMatricula('');
@@ -214,13 +221,15 @@ const Funcionarios = () => {
                 </HeaderModal>
                 <hr />
             <FormModal>
-                <input 
+                <Input 
                     placeholder="Nome"
+                    fullWidth={true}
                     value={nome}
                     onChange={e => setNome(e.target.value)}
                 />
-                <input 
+                <Input 
                     placeholder="Matricula"
+                    fullWidth={true}
                     value={codMatricula}
                     onChange={e => setCodMatricula(e.target.value)}
                 />
@@ -267,13 +276,17 @@ const Funcionarios = () => {
                     </InputMask>
                 </ContainerInputs>
                 <FooterModal>
-                    <button
+                    <Button
+                        color="secundary"
+                        variant="outlined"
                         onClick={closeModal}
-                    >Cancelar</button>
+                    >Cancelar</Button>
 
-                    <button
+                    <Button
+                        color="primary"
+                        variant="contained"
                         onClick={e => handleAddFuncionario(e)}
-                    >Adicionar</button>
+                    >Adicionar</Button>
                     </FooterModal>
             </FormModal>
             </Modal>
@@ -290,7 +303,7 @@ const Funcionarios = () => {
             <h2>Atualizar</h2>
             <button onClick={closeModalUpdate}>Fechar</button>
             <FormModal>
-                <input 
+                <Input 
                     placeholder="Nome"
                     value={nomeAtualizado}
                     onChange={e => setNomeAtualizado(e.target.value)}
@@ -331,7 +344,7 @@ const Funcionarios = () => {
             </Modal>
 
             <TableF funcionarios = {funcionarios} handleFuncionario = {openModalWithData} removeFuncionario = {removeFuncionario}/> 
-            
+   
         </Container>
         
     );

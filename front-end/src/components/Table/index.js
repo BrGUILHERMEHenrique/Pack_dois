@@ -1,5 +1,7 @@
 //importação padrão do react 
-import React from 'react';
+import React, { useState } from 'react';
+import Modal from 'react-modal';
+import { format } from 'date-fns'
 //imortação para construir a tabela com material ui
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -10,6 +12,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+
+import { HeaderModal, FooterModal, ModalBody, ModalText } from './styles'
 
 //styles criado através do material para a tabela
 const useStyles = makeStyles({
@@ -22,6 +26,20 @@ const useStyles = makeStyles({
       marginTop: "10%"
     },
   });
+
+  //Styles do modal
+  const customStyles = {
+    content : {
+        width               : '50%',
+        height              : '50%',
+        top                 : '50%',
+        left                : '50%',
+        right               : 'auto',
+        bottom              : 'auto',
+        marginRight         : '-50%',
+        transform           : 'translate(-50%, -50%)'
+    }
+  };
   
 
   //protoypes que formataram os dados em tela  
@@ -39,11 +57,26 @@ const useStyles = makeStyles({
   
   const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     const classes = useStyles();
-    
+
+    const [modalDeleteIsOpen, setModalDeleteisOpen] = useState(false);
+    const [funcionario, setFuncionario] = useState({});
+
     function createData(Nome, Matricula, CPF, Data_de_nascimento, Telefone) {
       return { Nome, Matricula, CPF, Data_de_nascimento, Telefone };
     }
+
+    const openModalDelete = (funcionario) => {
+      setFuncionario(funcionario);
+      setModalDeleteisOpen(true);
+    }
+
+    const closeModalDelete = () => {
+      setFuncionario({});
+      setModalDeleteisOpen(false);
+    }
+
       return(
+        <>
         <TableContainer component={Paper} className={classes.table}>
         <Table  aria-label="Tabela Funcionários">
           <TableHead>
@@ -65,19 +98,44 @@ const useStyles = makeStyles({
 
                 <TableCell align="right">{funcionario.codMatricula}</TableCell>
                 <TableCell align="right">{funcionario.cpf.cpf()}</TableCell>
-                <TableCell align="right">{funcionario.dataNascimento.join('/')}</TableCell>
+                <TableCell align="right">{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</TableCell>
                 <TableCell align="right">{funcionario.telefone.numero()}</TableCell>
                 <TableCell align="right"><Button variant="contained" color="primary"
                   onClick={() => {
                     handleFuncionario(funcionario.id);
                   }}
                 >Atualizar</Button></TableCell>
-                <TableCell align="right"><Button variant="outlined" color="primary" onClick={() => removeFuncionario(funcionario.id)}>Excluir</Button></TableCell>
+                <TableCell align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(funcionario)}>Excluir</Button></TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <Modal
+                isOpen={modalDeleteIsOpen}
+                onRequestClose={closeModalDelete}
+                style={customStyles}
+                contentLabel="Excluir"
+            >
+                <HeaderModal>
+                    <h2>Confirmar exclusão</h2>
+                </HeaderModal>
+                <hr />
+
+                <ModalBody>
+
+                    <ModalText>Deseja realmente EXCLUIR o funcionário {funcionario.nome}? </ModalText>
+
+                </ModalBody>
+
+                <FooterModal>
+                        <Button color="secundary" variant="contained" onClick={() => closeModalDelete()}>Cancelar</Button>
+                        <Button color="primary" variant="contained" onClick={() => {
+                            removeFuncionario(funcionario.id)
+                            closeModalDelete()}}>Excluir</Button>
+                </FooterModal>
+            </Modal>            
+      </>
       )
   }
 
