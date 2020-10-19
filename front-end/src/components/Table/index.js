@@ -15,8 +15,11 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles({
     table: {
       minWidth: "480px",
-      width: "70vw",
-      height: "auto"
+      width: "80vw",
+      height: "auto",
+      margin: "auto",
+      padding: "auto",
+      marginTop: "10%"
     },
   });
   
@@ -34,7 +37,7 @@ const useStyles = makeStyles({
       return numero.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
 }
   
-  const TableF = ({ funcionarios }) =>{
+  const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     const classes = useStyles();
     
     function createData(Nome, Matricula, CPF, Data_de_nascimento, Telefone) {
@@ -64,8 +67,12 @@ const useStyles = makeStyles({
                 <TableCell align="right">{funcionario.cpf.cpf()}</TableCell>
                 <TableCell align="right">{funcionario.dataNascimento.join('/')}</TableCell>
                 <TableCell align="right">{funcionario.telefone.numero()}</TableCell>
-                <TableCell align="right"><Button variant="contained" color="primary">Atualizar</Button></TableCell>
-                <TableCell align="right"><Button variant="outlined" color="primary">Apagar</Button></TableCell>
+                <TableCell align="right"><Button variant="contained" color="primary"
+                  onClick={() => {
+                    handleFuncionario(funcionario.id);
+                  }}
+                >Atualizar</Button></TableCell>
+                <TableCell align="right"><Button variant="outlined" color="primary" onClick={() => removeFuncionario(funcionario.id)}>Excluir</Button></TableCell>
               </TableRow>
             ))}
           </TableBody>

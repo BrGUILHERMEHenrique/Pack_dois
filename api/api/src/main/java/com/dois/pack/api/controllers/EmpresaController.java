@@ -1,6 +1,5 @@
 package com.dois.pack.api.controllers;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,42 +11,42 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.dois.pack.api.models.Funcionario;
-import com.dois.pack.api.services.FuncionarioService;
+import com.dois.pack.api.models.Empresa;
+import com.dois.pack.api.services.EmpresaService;
 
 @RestController
-@RequestMapping({ "/funcionario" })
-public class FuncionarioController {
+@RequestMapping({ "/empresa" })
+public class EmpresaController {
 
 	@Autowired
-	FuncionarioService funcionarioService;
+	EmpresaService empresaService;
 
 	@GetMapping
 	public ResponseEntity<?> getAll() {
-		return ResponseEntity.ok(funcionarioService.getAll());
+		return ResponseEntity.ok(empresaService.getAll());
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> get(@PathVariable Integer id) {
-		return ResponseEntity.ok(funcionarioService.getbyId(id));
+		return ResponseEntity.ok(empresaService.getbyId(id));
 	}
 
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody Funcionario funcionario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioService.create(funcionario));
+	public ResponseEntity<?> create(@RequestBody Empresa empresa) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(empresaService.create(empresa));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> put(@PathVariable Integer id, @RequestBody Funcionario funcionario) {
-		Funcionario funcionarioAtualizado = funcionarioService.update(id, funcionario);
-		return ResponseEntity.ok(funcionarioAtualizado);
+	public ResponseEntity<?> put(@PathVariable Integer id, @RequestBody Empresa empresa) {
+		Empresa empresaAtualizada = empresaService.update(id, empresa);
+		return ResponseEntity.ok(empresaAtualizada);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Integer id) {
-		boolean response = funcionarioService.delete(id);
+		boolean response = empresaService.delete(id);
 		if(response) {		
-			return ResponseEntity.ok("Funcionario apagado com sucesso!");
+			return ResponseEntity.ok("Empresa apagada com sucesso.");
 		} else {
 			return ResponseEntity.notFound().build();
 		}

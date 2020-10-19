@@ -4,6 +4,9 @@ import InputMask from 'react-input-mask';
 import MaterialInput from '@material-ui/core/Input';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+import { AiOutlineClose } from 'react-icons/ai'
 
 
 
@@ -12,12 +15,12 @@ import TableF from '../../components/Table';
 
 import api from '../../services/api';
 
-import { Container, FormModal } from './styles';
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal } from './styles';
 
 const customStyles = {
     content : {
         width               : '50%',
-        height               : '50%',
+        height              : '50%',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -43,12 +46,17 @@ const Funcionarios = () => {
     const classes = useStyles();
 
     const [funcionarios, setFuncionarios] = useState([]);
+    const [funcionario, setFuncionario] = useState({});
     const [modalIsOpen,setIsOpen] = useState(false);
+    const [modalPutIsOpen, setModalPutIsOpen] = useState(false);
     const [nome, setNome] = useState('');
     const [codMatricula, setCodMatricula] = useState('');
     const [cpf, setCpf] = useState('');
     const [dataNascimento, setDataNascimento] = useState('');
     const [telefone, setTelefone] = useState('');
+    const [nomeAtualizado, setNomeAtualizado] = useState('');
+    const [dataNascimentoAtulizado, setDataNascimentoAtualizado] = useState('');
+    const [telefoneAtualizado, setTelefoneAtualizado] = useState('');
 
 
 
@@ -58,6 +66,14 @@ const Funcionarios = () => {
       
       function closeModal(){
         setIsOpen(false);
+      }
+
+      function openModalUpdate() {
+        setModalPutIsOpen(true);
+      }
+      
+      function closeModalUpdate(){
+        setModalPutIsOpen(false);
       }
 
 
@@ -76,23 +92,105 @@ const Funcionarios = () => {
     const handleAddFuncionario = useCallback(
         async (e) => {
             e.preventDefault();
+
+            if(!nome || !codMatricula || !cpf.replace(/\D/g, '') || !dataNascimento.replace(/\D/g, '') || !telefone.replace(/\D/g, '')){
+                alert("pro favor preencha todos os campos");
+                return;
+            }
             const params = {
-                nome,
-                codMatricula,
-                cpf,
-                dataNascimento,
-                telefone
+                nome: nome,
+                codMatricula: codMatricula,
+                cpf: cpf.replace(/\D/g, ''),
+                dataNascimento: dataNascimento,
+                telefone: telefone.replace(/\D/g, '')
             }
 
             try {
                 console.log(params);
-                const response = await api.post('funcionario');
+                const response = await api.post('funcionario', params);
                 console.log(response.data);
             } catch (error) {
                 console.log(error);
+            } finally {
+                setNome('');
+                setCodMatricula('');
+                setCpf('');
+                setDataNascimento('');
+                setTelefone('');
+                closeModal();
+                loadFuncionarios();
             }
-        }, [],
+        }, [nome, codMatricula, cpf, dataNascimento, telefone],
     )
+
+        const getFuncionarioById = useCallback(
+            async (id) => {
+                
+                try{
+                    const response = await api.get(`funcionario/${id}`);
+                    setFuncionario(response.data);
+                } catch(error){
+                    console.log(error);
+                } 
+            }, [nome, cpf, dataNascimento, codMatricula, telefone, funcionario]
+        )
+
+        const openModalWithData = useCallback(
+            async (id) => {
+                try {
+                    const response = await api.get(`funcionario/${id}`);
+                    await getFuncionarioById(id);
+                    setNomeAtualizado(response.data.nome);
+                    setDataNascimentoAtualizado(response.data.dataNascimento.join('-'));
+                    setTelefoneAtualizado(response.data.telefone);
+                } catch(error) {
+                    console.log(error);
+                } finally {
+                    openModalUpdate();
+                }
+            }, [funcionario, nomeAtualizado, dataNascimentoAtulizado, telefoneAtualizado],
+        )
+
+        const handleUpdateFuncionario = useCallback(
+        async (e) => {
+            e.preventDefault();
+
+            if(!nomeAtualizado || !dataNascimentoAtulizado.replace(/\D/g, '') || !telefoneAtualizado.replace(/\D/g, '')){
+                alert("por favor preencha todos os campos");
+                return;
+            }
+
+            const paramsUpdated = {
+                nome: nomeAtualizado,
+                dataNascimento: dataNascimentoAtulizado,
+                telefone: telefoneAtualizado.replace(/\D/g, '')
+            }
+
+            try{
+                await api.put(`funcionario/${funcionario.id}`, paramsUpdated);
+                console.log(paramsUpdated);
+            } catch(error){
+                console.log(error);
+
+            } finally {
+                closeModalUpdate();
+                loadFuncionarios();
+            }
+            
+        }, [nomeAtualizado, dataNascimentoAtulizado, telefoneAtualizado],
+        )
+
+        const removeFuncionario = async (id) => {
+            try {
+                const response = await api.delete(`funcionario/${id}`);
+                console.log(response.data);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                loadFuncionarios();
+            }
+        }
+
 
     useEffect(
         () => {
@@ -103,74 +201,136 @@ const Funcionarios = () => {
     return(
 
         <Container>
-            <button onClick={openModal}>Open Modal</button>
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
- 
-          <h2>Cadastro</h2>
-          <button onClick={closeModal}>Fechar</button>
-          <div>I am a modal</div>
-          <FormModal>
-            <input 
-                placeholder="Nome"
-                value={nome}
-                onChange={e => setNome(e.target.value)}
-            />
-            <input 
-                placeholder="Matricula"
-                value={codMatricula}
-                onChange={e => setCodMatricula(e.target.value)}
-            />
-
-            <InputMask mask="999.999.999-99" 
-                id="cpf"
-                value={cpf} 
-                onChange={e => {
-                setCpf(e.target.value);
-                console.log(e.target.value);
-                }}>
-                {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
-            </InputMask>
-
-            <form className={classes.container} >
-                <TextField
-                    id="date"
-                    label="Data de nascimento"
-                    type="date"
-                    defaultValue={dataNascimento}
-                    onChange={e => {
-                        setDataNascimento(e.target.value)
-                        console.log(e.target.value)
-                    }}
-                    className={classes.textField}
-                    InputLabelProps={{
-                    shrink: true,
-                    }}
+            <Button variant="contained" color="primary" onClick={openModal}>Adicionar</Button>
+            <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Modal"
+            >
+                <HeaderModal>
+                    <h2>Cadastro</h2>
+                    <AiOutlineClose onClick={closeModal} />
+                </HeaderModal>
+                <hr />
+            <FormModal>
+                <input 
+                    placeholder="Nome"
+                    value={nome}
+                    onChange={e => setNome(e.target.value)}
                 />
-            </form>
+                <input 
+                    placeholder="Matricula"
+                    value={codMatricula}
+                    onChange={e => setCodMatricula(e.target.value)}
+                />
+                <ContainerInputs>
 
-            
-            <InputMask mask="+55 (99) 99999-9999"
-                id="tel" 
-                value={telefone} 
-                onChange={e => {
-                setTelefone(e.target.value);
-                console.log(e.target.value);
-                }}>
-                {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
-            </InputMask>
-            
-            <button
-                onClick={e => handleAddFuncionario(e)}
-            >Adicionar</button>
-          </FormModal>
-        </Modal>
+                    <InputMask mask="999.999.999-99" 
+                        id="cpf"
+                        placeholder="CPF"
+                        value={cpf} 
+                        onChange={e => {
+                        setCpf(e.target.value);
+                        console.log(e.target.value);
+                        }}>
+                        {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
+                    </InputMask>
 
-            <TableF funcionarios = {funcionarios} />
+                    <form className={classes.container} >
+                        <TextField
+                            id="date"
+                            label="Data de nascimento"
+                            type="date"
+                            defaultValue={dataNascimento}
+                            onChange={e => {
+                                setDataNascimento(e.target.value)
+                                console.log(e.target.value)
+                            }}
+                            className={classes.textField}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                        />
+                    </form>
+
+                    
+                    <InputMask mask="(99) 99999-9999"
+                        id="tel" 
+                        placeholder="Numero"
+                        value={telefone} 
+                        onChange={e => {
+                        setTelefone(e.target.value);
+                        console.log(e.target.value);
+                        }}>
+                        {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
+                    </InputMask>
+                </ContainerInputs>
+                <FooterModal>
+                    <button
+                        onClick={closeModal}
+                    >Cancelar</button>
+
+                    <button
+                        onClick={e => handleAddFuncionario(e)}
+                    >Adicionar</button>
+                    </FooterModal>
+            </FormModal>
+            </Modal>
+
+
+                    {/* segundo modal para atualização ! */}
+            <Modal
+            isOpen={modalPutIsOpen}
+            onRequestClose={closeModalUpdate}
+            style={customStyles}
+            contentLabel="Modal"
+            >
+    
+            <h2>Atualizar</h2>
+            <button onClick={closeModalUpdate}>Fechar</button>
+            <FormModal>
+                <input 
+                    placeholder="Nome"
+                    value={nomeAtualizado}
+                    onChange={e => setNomeAtualizado(e.target.value)}
+                />
+
+                
+                <form className={classes.container} >
+                    <TextField
+                        id="date"
+                        label="Data de nascimento"
+                        type="date"
+                        defaultValue={dataNascimentoAtulizado}
+                        onChange={e => {
+                            setDataNascimentoAtualizado(e.target.value)
+                            console.log(e.target.value)
+                        }}
+                        className={classes.textField}
+                        InputLabelProps={{
+                        shrink: true,
+                        }}
+                    />
+                </form>
+                
+                <InputMask mask="(99) 99999-9999"
+                    id="tel" 
+                    value={telefoneAtualizado} 
+                    onChange={e => {
+                    setTelefoneAtualizado(e.target.value);
+                    console.log(e.target.value);
+                    }}>
+                    {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
+                </InputMask>
+                
+                <button
+                    onClick={e => handleUpdateFuncionario(e)}
+                >Atualizar</button>
+            </FormModal>
+            </Modal>
+
+            <TableF funcionarios = {funcionarios} handleFuncionario = {openModalWithData} removeFuncionario = {removeFuncionario}/> 
             
         </Container>
         

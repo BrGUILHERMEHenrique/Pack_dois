@@ -2,12 +2,9 @@ package com.dois.pack.api.services;
 
 import java.util.List;
 import java.util.Optional;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.dois.pack.api.models.Funcionario;
 import com.dois.pack.api.repositorys.FuncionarioRepository;
 
@@ -56,6 +53,14 @@ public class FuncionarioService {
 		}
 		if(!funcionario.getTelefone().equals("") && funcionario.getTelefone() != null) {
 			funcionarioAtualizado.setTelefone(funcionario.getTelefone());
+		}
+		
+		if(!funcionario.getTelefone().equals("") && funcionario.getCodMatricula() != null) {
+			funcionarioAtualizado.setCodMatricula(funcionario.getCodMatricula());
+		}
+		
+		if(!funcionario.getCpf().equals("") && funcionario.getCpf() != null) {
+			funcionarioAtualizado.setCpf(funcionario.getCpf());
 		}
 		
 		return funcionarioRepository.save(funcionarioAtualizado);
