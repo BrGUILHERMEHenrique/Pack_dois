@@ -8,7 +8,7 @@ import Empresas from '../pages/Empresas';
 const Routes = () => (
     <Switch>
 
-        <Route exact path="/" component={Funcionarios} />
+        <Route exact path="/funcionarios" component={Funcionarios} />
         <Route exact path="/empresas" component={Empresas} />
 
     </Switch>

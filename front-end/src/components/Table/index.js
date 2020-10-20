@@ -35,9 +35,9 @@ const useStyles = makeStyles({
         height              : '50%',
         top                 : '50%',
         left                : '50%',
-        right               : 'auto',
+        center               : 'auto',
         bottom              : 'auto',
-        marginRight         : '-50%',
+        margincenter         : '-50%',
         transform           : 'translate(-50%, -50%)'
     }
   };
@@ -94,30 +94,30 @@ const useStyles = makeStyles({
           <TableHead>
             <TabelaRow>
 
-              <Tabela align="right">Nome</Tabela>
-              <Tabela align="right">Matricula</Tabela>
-              <Tabela align="right">CPF</Tabela>
-              <Tabela align="right">Data de nascimento</Tabela>
-              <Tabela align="right">Telefone</Tabela>
+              <Tabela align="center">Nome</Tabela>
+              <Tabela align="center">Matricula</Tabela>
+              <Tabela align="center">CPF</Tabela>
+              <Tabela align="center">Data de nascimento</Tabela>
+              <Tabela align="center">Telefone</Tabela>
             </TabelaRow>
           </TableHead>
           <TableBody>
             {funcionarios.map((funcionario) => (
               <TabelaRow key={funcionario.id}>
-                <Tabela component="th" scope="funcionario" align="right">
+                <Tabela component="th" scope="funcionario" align="center">
                   {funcionario.nome}
                 </Tabela>
 
-                <Tabela align="right">{funcionario.codMatricula}</Tabela>
-                <Tabela align="right">{funcionario.cpf.cpf()}</Tabela>
-                <Tabela align="right">{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</Tabela>
-                <Tabela align="right">{funcionario.telefone.numero()}</Tabela>
-                <Tabela align="right"><Button variant="contained" color="primary"
+                <Tabela align="center">{funcionario.codMatricula}</Tabela>
+                <Tabela align="center">{funcionario.cpf.cpf()}</Tabela>
+                <Tabela align="center">{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</Tabela>
+                <Tabela align="center">{funcionario.telefone.numero()}</Tabela>
+                <Tabela align="center"><Button variant="contained" color="primary"
                   onClick={() => {
                     handleFuncionario(funcionario.id);
                   }}
                 >Atualizar</Button></Tabela>
-                <Tabela align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(funcionario)}>Excluir</Button></Tabela>
+                <Tabela align="center"><Button variant="outlined" color="primary" onClick={() => openModalDelete(funcionario)}>Excluir</Button></Tabela>
               </TabelaRow>
             ))}
           </TableBody>
@@ -160,25 +160,25 @@ const useStyles = makeStyles({
           <TableHead>
             <TabelaRow>
 
-              <Tabela align="right">Razão Social</Tabela>
-              <Tabela align="right">Código da Empresa</Tabela>
-              <Tabela align="right">Cnpj</Tabela>
+              <Tabela align="center">Razão Social</Tabela>
+              <Tabela align="center">Código da Empresa</Tabela>
+              <Tabela align="center">Cnpj</Tabela>
             </TabelaRow>
           </TableHead>
           <TableBody>
             {empresas.map((empresa) => (
               <TabelaRow key={empresa.id}>
-                <Tabela component="th" scope="empresa" align="right">
+                <Tabela component="th" scope="empresa" align="center">
                   {empresa.razaoSocial}
                 </Tabela>
-                <Tabela align="right">{empresa.codEmpresa}</Tabela>
-                <Tabela align="right">{empresa.cnpj.cnpj()}</Tabela>
-                <Tabela align="right"><Button variant="contained" color="primary"
+                <Tabela align="center">{empresa.codEmpresa}</Tabela>
+                <Tabela align="center">{empresa.cnpj.cnpj()}</Tabela>
+                <Tabela align="center"><Button variant="contained" color="primary"
                   onClick={() => {
                     handleEmpresa(empresa.id);
                   }}
                 >Atualizar</Button></Tabela>
-                <Tabela align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(empresa)}>Excluir</Button></Tabela>
+                <Tabela align="center"><Button variant="outlined" color="primary" onClick={() => openModalDelete(empresa)}>Excluir</Button></Tabela>
               </TabelaRow>
             ))}
           </TableBody>
