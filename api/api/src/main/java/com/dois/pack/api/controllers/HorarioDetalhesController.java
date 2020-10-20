@@ -12,42 +12,42 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.dois.pack.api.models.Funcionario;
-import com.dois.pack.api.services.FuncionarioService;
+import com.dois.pack.api.models.HorarioDetalhes;
+import com.dois.pack.api.services.HorarioDetalhesService;
 
 @RestController
-@RequestMapping({ "/funcionario" })
-public class FuncionarioController {
+@RequestMapping({ "/horario_detalhes" })
+public class HorarioDetalhesController {
 
 	@Autowired
-	FuncionarioService funcionarioService;
+	HorarioDetalhesService horarioDetalhesService;
 
 	@GetMapping
 	public ResponseEntity<?> getAll() {
-		return ResponseEntity.ok(funcionarioService.getAll());
+		return ResponseEntity.ok(horarioDetalhesService.getAll());
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> get(@PathVariable Integer id) {
-		return ResponseEntity.ok(funcionarioService.getbyId(id));
+		return ResponseEntity.ok(horarioDetalhesService.getbyId(id));
 	}
 
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody Funcionario funcionario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioService.create(funcionario));
+	public ResponseEntity<?> create(@RequestBody HorarioDetalhes horarioDetalhes) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(horarioDetalhesService.create(horarioDetalhes));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> put(@PathVariable Integer id, @RequestBody Funcionario funcionario) {
-		Funcionario funcionarioAtualizado = funcionarioService.update(id, funcionario);
-		return ResponseEntity.ok(funcionarioAtualizado);
+	public ResponseEntity<?> put(@PathVariable Integer id, @RequestBody HorarioDetalhes horarioDetalhes) {
+		HorarioDetalhes horarioAtualizado = horarioDetalhesService.update(id, horarioDetalhes);
+		return ResponseEntity.ok(horarioAtualizado);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Integer id) {
-		boolean response = funcionarioService.delete(id);
+		boolean response = horarioDetalhesService.delete(id);
 		if(response) {		
-			return ResponseEntity.ok("Funcionario apagado com sucesso!");
+			return ResponseEntity.ok("Horario apagado com sucesso!");
 		} else {
 			return ResponseEntity.notFound().build();
 		}

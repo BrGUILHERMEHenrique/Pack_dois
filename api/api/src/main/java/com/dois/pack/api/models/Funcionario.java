@@ -2,7 +2,6 @@ package com.dois.pack.api.models;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,32 +22,35 @@ public class Funcionario implements Serializable {
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "codMatricula", unique = true)
-	@Size(min = 10, max = 20)
+	@NotNull
+	@Column(name = "cod_matricula", unique = true)
 	private String codMatricula;
-
-	@Column(name = "nome")
+	
+	@NotNull
+	@Column(name = "nome", length = 100)
 	@Size(min = 1, max = 100)
 	private String nome;
-
-	@Column(name = "dataNascimento")
+	
 	@NotNull
+	@Column(name = "data_nascimento")
 	private LocalDate dataNascimento;
-
-	@Column(name = "cpf")
+	
+	@NotNull
+	@Column(name = "cpf", length = 11)
 	@Size(min = 11, max = 11)
 	private String cpf;
 
-	@Column(name = "telefone")
-	@Size(min = 8, max = 15)
+	@NotNull
+	@Column(name = "telefone", length = 20)
+	@Size(min = 8, max = 20)
 	private String telefone;
-
-	public Integer getId() {
-		return id;
-	}
 
 	public String getCodMatricula() {
 		return codMatricula;
+	}
+
+	public void setCodMatricula(String codMatricula) {
+		this.codMatricula = codMatricula;
 	}
 
 	public String getNome() {
@@ -71,10 +73,6 @@ public class Funcionario implements Serializable {
 		return cpf;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
@@ -87,20 +85,8 @@ public class Funcionario implements Serializable {
 		this.telefone = telefone;
 	}
 
-	public Funcionario() {
-		super();
-
-	}
-
-	public Funcionario(Integer id, String codMatricula, String nome, LocalDate dataNascimento, String cpf,
-			String telefone) {
-		super();
-		this.id = id;
-		this.codMatricula = codMatricula;
-		this.nome = nome;
-		this.dataNascimento = dataNascimento;
-		this.cpf = cpf;
-		this.telefone = telefone;
+	public Integer getId() {
+		return id;
 	}
 
 }
