@@ -6,10 +6,10 @@ import { format } from 'date-fns'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import { TableCell } from './styles';
+import { Tabela, TabelaRow } from './styles';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+// import TabelaRow from '@material-ui/core/TabelaRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
@@ -92,33 +92,33 @@ const useStyles = makeStyles({
         <TableContainer component={Paper} className={classes.table}>
         <Table  aria-label="Tabela Funcionários">
           <TableHead>
-            <TableRow>
+            <TabelaRow>
 
-              <TableCell align="right">Nome</TableCell>
-              <TableCell align="right">Matricula</TableCell>
-              <TableCell align="right">CPF</TableCell>
-              <TableCell align="right">Data de nascimento</TableCell>
-              <TableCell align="right">Telefone</TableCell>
-            </TableRow>
+              <Tabela align="right">Nome</Tabela>
+              <Tabela align="right">Matricula</Tabela>
+              <Tabela align="right">CPF</Tabela>
+              <Tabela align="right">Data de nascimento</Tabela>
+              <Tabela align="right">Telefone</Tabela>
+            </TabelaRow>
           </TableHead>
           <TableBody>
             {funcionarios.map((funcionario) => (
-              <TableRow key={funcionario.id}>
-                <TableCell component="th" scope="funcionario" align="right">
+              <TabelaRow key={funcionario.id}>
+                <Tabela component="th" scope="funcionario" align="right">
                   {funcionario.nome}
-                </TableCell>
+                </Tabela>
 
-                <TableCell align="right">{funcionario.codMatricula}</TableCell>
-                <TableCell align="right">{funcionario.cpf.cpf()}</TableCell>
-                <TableCell align="right">{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</TableCell>
-                <TableCell align="right">{funcionario.telefone.numero()}</TableCell>
-                <TableCell align="right"><Button variant="contained" color="primary"
+                <Tabela align="right">{funcionario.codMatricula}</Tabela>
+                <Tabela align="right">{funcionario.cpf.cpf()}</Tabela>
+                <Tabela align="right">{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</Tabela>
+                <Tabela align="right">{funcionario.telefone.numero()}</Tabela>
+                <Tabela align="right"><Button variant="contained" color="primary"
                   onClick={() => {
                     handleFuncionario(funcionario.id);
                   }}
-                >Atualizar</Button></TableCell>
-                <TableCell align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(funcionario)}>Excluir</Button></TableCell>
-              </TableRow>
+                >Atualizar</Button></Tabela>
+                <Tabela align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(funcionario)}>Excluir</Button></Tabela>
+              </TabelaRow>
             ))}
           </TableBody>
         </Table>
@@ -158,28 +158,28 @@ const useStyles = makeStyles({
         <TableContainer component={Paper} className={classes.table}>
         <Table  aria-label="Tabela Empresas">
           <TableHead>
-            <TableRow>
+            <TabelaRow>
 
-              <TableCell align="right">Razão Social</TableCell>
-              <TableCell align="right">Código da Empresa</TableCell>
-              <TableCell align="right">Cnpj</TableCell>
-            </TableRow>
+              <Tabela align="right">Razão Social</Tabela>
+              <Tabela align="right">Código da Empresa</Tabela>
+              <Tabela align="right">Cnpj</Tabela>
+            </TabelaRow>
           </TableHead>
           <TableBody>
             {empresas.map((empresa) => (
-              <TableRow key={empresa.id}>
-                <TableCell component="th" scope="empresa" align="right">
+              <TabelaRow key={empresa.id}>
+                <Tabela component="th" scope="empresa" align="right">
                   {empresa.razaoSocial}
-                </TableCell>
-                <TableCell align="right">{empresa.codEmpresa}</TableCell>
-                <TableCell align="right">{empresa.cnpj.cnpj()}</TableCell>
-                <TableCell align="right"><Button variant="contained" color="primary"
+                </Tabela>
+                <Tabela align="right">{empresa.codEmpresa}</Tabela>
+                <Tabela align="right">{empresa.cnpj.cnpj()}</Tabela>
+                <Tabela align="right"><Button variant="contained" color="primary"
                   onClick={() => {
                     handleEmpresa(empresa.id);
                   }}
-                >Atualizar</Button></TableCell>
-                <TableCell align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(empresa)}>Excluir</Button></TableCell>
-              </TableRow>
+                >Atualizar</Button></Tabela>
+                <Tabela align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(empresa)}>Excluir</Button></Tabela>
+              </TabelaRow>
             ))}
           </TableBody>
         </Table>
