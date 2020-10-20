@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.dois.pack.api.models.Funcionario;
 import com.dois.pack.api.services.FuncionarioService;
 
@@ -26,6 +28,11 @@ public class FuncionarioController {
 	public ResponseEntity<?> getAll() {
 		return ResponseEntity.ok(funcionarioService.getAll());
 	}
+	
+	@GetMapping("/cod/{codMatricula}")
+	public Funcionario getMatricula(@PathVariable String codMatricula){
+		return funcionarioService.getByMatricula(codMatricula);
+	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> get(@PathVariable Integer id) {
@@ -33,7 +40,7 @@ public class FuncionarioController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody Funcionario funcionario) {
+	public ResponseEntity<?> create(@RequestBody Funcionario funcionario) throws SameCpfException {
 		return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioService.create(funcionario));
 	}
 

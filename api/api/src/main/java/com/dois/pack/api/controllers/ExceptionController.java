@@ -19,20 +19,21 @@ public class ExceptionController {
 		return ResponseEntity.badRequest().headers(headers).body(msg);
 	}
 	
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<String> tratarGenericException(Exception exception) {
-		String msg = String.format("Erro inesperado no servidor, se possível verifique as informações passadas.");
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-				.header("message", msg)
-				.body(msg);
-	}
+
 	
 	@ExceptionHandler(NullPointerException.class)
-	public ResponseEntity<String> tratarNullPointerException(NullPointerException exception){
+	public ResponseEntity<String> NullPointer(NullPointerException exception){
 		String msg = "Algum parâmetro foi passado de forma errada, por favor verifique os dados passados";
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.header("message", msg)
 				.body(msg);
+	}
+
+	@ExceptionHandler(SameCpfException.class)
+	public ResponseEntity<?> sameCpf(SameCpfException exception){
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", exception.getMsg());
+		return ResponseEntity.badRequest().headers(headers).body(exception.getMsg());
 	}
 
 }
