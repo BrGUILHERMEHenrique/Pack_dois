@@ -96,7 +96,7 @@ const Funcionarios = () => {
             e.preventDefault();
 
             if(!nome || !codMatricula || !cpf.replace(/\D/g, '') || !dataNascimento.replace(/\D/g, '') || !telefone.replace(/\D/g, '')){
-                alert("pro favor preencha todos os campos");
+                alert("por favor preencha todos os campos");
                 return;
             }
 
