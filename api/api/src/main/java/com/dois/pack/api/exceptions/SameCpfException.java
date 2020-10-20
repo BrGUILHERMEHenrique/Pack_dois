@@ -1,4 +1,4 @@
-package com.dois.pack.api.controllers;
+package com.dois.pack.api.exceptions;
 
 public class SameCpfException extends Exception {
 

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.dois.pack.api.exceptions.SameCnpjException;
 import com.dois.pack.api.models.Empresa;
 import com.dois.pack.api.services.EmpresaService;
 
@@ -30,9 +32,14 @@ public class EmpresaController {
 	public ResponseEntity<?> get(@PathVariable Integer id) {
 		return ResponseEntity.ok(empresaService.getbyId(id));
 	}
+	
+	@GetMapping("cnpj/{cnpj}")
+	public ResponseEntity<?> getByCnpj(@PathVariable String cnpj){
+		return ResponseEntity.ok(empresaService.getByCnpj(cnpj));
+	}
 
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody Empresa empresa) {
+	public ResponseEntity<?> create(@RequestBody Empresa empresa) throws SameCnpjException {
 		return ResponseEntity.status(HttpStatus.CREATED).body(empresaService.create(empresa));
 	}
 

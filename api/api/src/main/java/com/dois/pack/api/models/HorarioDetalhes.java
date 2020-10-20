@@ -12,7 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+
 @Entity
+
 public class HorarioDetalhes implements Serializable {
 	
 	private static final long serialVersionUID = 2103677445935061431L;

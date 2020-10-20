@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dois.pack.api.controllers.SameCpfException;
+import com.dois.pack.api.exceptions.SameCpfException;
 import com.dois.pack.api.models.Funcionario;
 import com.dois.pack.api.repositorys.FuncionarioRepository;
 
