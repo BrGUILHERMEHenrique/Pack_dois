@@ -49,7 +49,7 @@ public class HorarioService {
 			horarioAtualizado.setDescHorario(horario.getDescHorario());
 		}
 		
-		if(!horario.getDescHorario().equals("") && horario.getCodigoHorario() != null) {
+		if(horario.getCodigoHorario() != null) {
 			horarioAtualizado.setCodigoHorario(horario.getCodigoHorario());
 		}
 		

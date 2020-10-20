@@ -3,6 +3,7 @@ package com.dois.pack.api.models;
 import java.io.Serializable;
 import java.time.LocalTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ public class HorarioDetalhes implements Serializable {
 	private Integer id;
 	
 	@NotNull
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Horario idHorario;
 	
 	@NotNull
@@ -30,8 +31,8 @@ public class HorarioDetalhes implements Serializable {
 	private Boolean folga;
 	
 	@NotNull
-	@Column(name = "codigoDia", length = 15)
-	private String codigoDia;
+	@Column(name = "codigo_dia")
+	private Integer codigoDia;
 	
 	@NotNull
 	@Column(name = "entrada_1")
@@ -65,11 +66,11 @@ public class HorarioDetalhes implements Serializable {
 		this.folga = folga;
 	}
 
-	public String getCodigoDia() {
+	public Integer getCodigoDia() {
 		return codigoDia;
 	}
 
-	public void setCodigoDia(String codigoDia) {
+	public void setCodigoDia(Integer codigoDia) {
 		this.codigoDia = codigoDia;
 	}
 

@@ -22,19 +22,19 @@ public class Horario implements Serializable{
 	private Integer id;
 	
 	@NotNull
-	@Column(name = "codigo_horario", unique = true, length = 20)
-	private String codigoHorario;
+	@Column(name = "codigo_horario", unique = true)
+	private Integer codigoHorario;
 	
 	@NotNull
 	@Column(name = "desc_horario", unique = true, length = 50)
 	@Size(min = 1, max = 50)
 	private String descHorario;
 
-	public String getCodigoHorario() {
+	public Integer getCodigoHorario() {
 		return codigoHorario;
 	}
 
-	public void setCodigoHorario(String codigoHorario) {
+	public void setCodigoHorario(Integer codigoHorario) {
 		this.codigoHorario = codigoHorario;
 	}
 

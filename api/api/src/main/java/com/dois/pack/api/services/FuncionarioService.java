@@ -62,9 +62,11 @@ public class FuncionarioService {
 		if(!funcionario.getNome().equals("") && funcionario.getNome() != null) {
 			funcionarioAtualizado.setNome(funcionario.getNome());
 		}
+		
 		if(funcionario.getDataNascimento() != null) {
 			funcionarioAtualizado.setDataNascimento(funcionario.getDataNascimento());
 		}
+		
 		if(!funcionario.getTelefone().equals("") && funcionario.getTelefone() != null) {
 			funcionarioAtualizado.setTelefone(funcionario.getTelefone());
 		}
@@ -75,6 +77,10 @@ public class FuncionarioService {
 		
 		if(!funcionario.getCpf().equals("") && funcionario.getCpf() != null) {
 			funcionarioAtualizado.setCpf(funcionario.getCpf());
+		}
+		
+		if(funcionario.getIdEmpresa() != null) {
+			funcionarioAtualizado.setIdEmpresa(funcionario.getIdEmpresa());
 		}
 		
 		return funcionarioRepository.save(funcionarioAtualizado);

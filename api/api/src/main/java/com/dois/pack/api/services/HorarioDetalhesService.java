@@ -65,7 +65,7 @@ public class HorarioDetalhesService {
 			horarioDetalhesAtualizado.setSaida2(horarioDetalhes.getSaida2());
 		}
 		
-		if(!horarioDetalhes.getCodigoDia().equals("") && horarioDetalhes.getCodigoDia() != null) {
+		if(horarioDetalhes.getCodigoDia() != null) {
 			horarioDetalhesAtualizado.setCodigoDia(horarioDetalhes.getCodigoDia());
 		}
 		
