@@ -6,7 +6,7 @@ import { format } from 'date-fns'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
+import { TableCell } from './styles';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -49,6 +49,12 @@ const useStyles = makeStyles({
 
       return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
 }
+
+  String.prototype.cnpj = function(){
+    let cnpj = this.replace(/\D/g, '');
+
+    return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$2");
+  }
 
   String.prototype.numero = function(){
       let numero = this.replace(/\D/g, '');
@@ -127,4 +133,65 @@ const useStyles = makeStyles({
       )
   }
 
-  export default TableF;
+  const TableE = ({ empresas, handleEmpresa, removeEmpresa }) =>{
+    const classes = useStyles();
+
+    const [modalDeleteIsOpen, setModalDeleteisOpen] = useState(false);
+    const [empresa, setEmpresa] = useState({});
+
+    function createData(CodEmpresa, RazaoSocial, Cnpj) {
+      return { CodEmpresa, RazaoSocial, Cnpj};
+    }
+
+    const openModalDelete = (empresa) => {
+      setEmpresa(empresa);
+      setModalDeleteisOpen(true);
+    }
+
+    const closeModalDelete = () => {
+      setEmpresa({});
+      setModalDeleteisOpen(false);
+    }
+
+      return(
+        <>
+        <TableContainer component={Paper} className={classes.table}>
+        <Table  aria-label="Tabela Empresas">
+          <TableHead>
+            <TableRow>
+
+              <TableCell align="right">Razão Social</TableCell>
+              <TableCell align="right">Código da Empresa</TableCell>
+              <TableCell align="right">Cnpj</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {empresas.map((empresa) => (
+              <TableRow key={empresa.id}>
+                <TableCell component="th" scope="empresa" align="right">
+                  {empresa.razaoSocial}
+                </TableCell>
+                <TableCell align="right">{empresa.codEmpresa}</TableCell>
+                <TableCell align="right">{empresa.cnpj.cnpj()}</TableCell>
+                <TableCell align="right"><Button variant="contained" color="primary"
+                  onClick={() => {
+                    handleEmpresa(empresa.id);
+                  }}
+                >Atualizar</Button></TableCell>
+                <TableCell align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(empresa)}>Excluir</Button></TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+                  <ModalDelete obj={empresa}
+                              modalIsOpen={modalDeleteIsOpen}
+                              closeModal={closeModalDelete}
+                              deleteFunction={removeEmpresa}
+                              customStyles={customStyles}
+                  />
+      </>
+      )
+  }
+
+  export {TableF, TableE};

@@ -22,17 +22,17 @@ public class Empresa implements Serializable {
 	private Integer id;
 	
 	@NotNull
-	@Column(name = "codEmpresa", unique = true, length = 30)
+	@Column(name = "cod_empresa", unique = true, length = 20)
 	private String codEmpresa;
 	
 	@NotNull
-	@Column(name = "razaoSocial", length = 100)
+	@Column(name = "razao_social", length = 100)
 	@Size(min = 1, max = 100)
 	private String razaoSocial;	
 	
 	@NotNull
-	@Column(name = "cnpj", length = 18)
-	@Size(min = 18, max = 18)
+	@Column(name = "cnpj", length = 14)
+	@Size(min = 14, max = 14)
 	private String cnpj;
 
 	public String getCodEmpresa() {
