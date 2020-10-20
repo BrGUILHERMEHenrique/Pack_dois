@@ -1,12 +1,14 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-import Funcionarios from '../src/pages/Funcionarios';
+import Routes from './routes';
 
 function App() {
   return (
     <div className="App">
-        <Funcionarios />
-
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
     </div>
     
   );
