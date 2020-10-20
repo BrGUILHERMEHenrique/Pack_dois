@@ -1,6 +1,6 @@
 //importação padrão do react 
 import React, { useState } from 'react';
-import Modal from 'react-modal';
+
 import { format } from 'date-fns'
 //imortação para construir a tabela com material ui
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,7 +13,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
-import { HeaderModal, FooterModal, ModalBody, ModalText } from './styles'
+import ModalDelete from '../../components/ModalDelete';
+
 
 //styles criado através do material para a tabela
 const useStyles = makeStyles({
@@ -52,7 +53,12 @@ const useStyles = makeStyles({
   String.prototype.numero = function(){
       let numero = this.replace(/\D/g, '');
 
-      return numero.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+      if(numero.lenght === 10){
+        return numero.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3")
+      }else {
+        return numero.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+      }
+
 }
   
   const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
@@ -111,30 +117,12 @@ const useStyles = makeStyles({
           </TableBody>
         </Table>
       </TableContainer>
-      <Modal
-                isOpen={modalDeleteIsOpen}
-                onRequestClose={closeModalDelete}
-                style={customStyles}
-                contentLabel="Excluir"
-            >
-                <HeaderModal>
-                    <h2>Confirmar exclusão</h2>
-                </HeaderModal>
-                <hr />
-
-                <ModalBody>
-
-                    <ModalText>Deseja realmente EXCLUIR o funcionário {funcionario.nome}? </ModalText>
-
-                </ModalBody>
-
-                <FooterModal>
-                        <Button color="secundary" variant="contained" onClick={() => closeModalDelete()}>Cancelar</Button>
-                        <Button color="primary" variant="contained" onClick={() => {
-                            removeFuncionario(funcionario.id)
-                            closeModalDelete()}}>Excluir</Button>
-                </FooterModal>
-            </Modal>            
+                  <ModalDelete obj={funcionario}
+                              modalIsOpen={modalDeleteIsOpen}
+                              closeModal={closeModalDelete}
+                              deleteFunction={removeFuncionario}
+                              customStyles={customStyles}
+                  />
       </>
       )
   }
