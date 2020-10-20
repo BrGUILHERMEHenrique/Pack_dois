@@ -2,9 +2,13 @@ package com.dois.pack.api.services;
 
 import java.util.List;
 import java.util.Optional;
+
 import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.dois.pack.api.controllers.SameCpfException;
 import com.dois.pack.api.models.Funcionario;
 import com.dois.pack.api.repositorys.FuncionarioRepository;
 
@@ -15,8 +19,13 @@ public class FuncionarioService {
 	FuncionarioRepository funcionarioRepository;
 	
 	@Transactional
-	public Funcionario create(Funcionario funcionario) {
-		return funcionarioRepository.save(funcionario);
+	public Funcionario create(Funcionario funcionario) throws SameCpfException {
+		Funcionario funcionarioAchado = funcionarioRepository.getWithMatricula(funcionario.getCodMatricula());
+		if(funcionarioAchado == null) {
+			return funcionarioRepository.save(funcionario);	
+		} else {
+			throw new SameCpfException(funcionario.getCodMatricula());
+		}
 	}
 	
 	@Transactional
@@ -27,6 +36,11 @@ public class FuncionarioService {
 	@Transactional
 	public Optional<Funcionario> getbyId(Integer id) {
 		return funcionarioRepository.findById(id);
+	}
+	
+	@Transactional
+	public Funcionario getByMatricula(String codMatricula) {
+		return funcionarioRepository.getWithMatricula(codMatricula);
 	}
 	
 	@Transactional
