@@ -11,7 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-import { FormModal } from './styles';
+import { FormModal, Button, Container, Row, SubTitulo } from './styles';
 import { TableHD } from '../../components/Table';
 
 
@@ -101,13 +101,7 @@ const HorarioDetalhes = () => {
     }
     const closeModalAdd = () => {
         setModalAddIsOpen(false);
-        closeModalAdd();
-        setEntrada1('');
-        setEntrada2('');
-        setSaida1('');
-        setSaida2('');
-        setFolga(false);
-        setHorario({});
+        
     }
     
 
@@ -163,6 +157,13 @@ const HorarioDetalhes = () => {
                 loadHorarioDetahes();
                 setCodigoDia(ultimo + 1);
                 closeModalAdd();
+                setEntrada1('');
+                setEntrada2('');
+                setSaida1('');
+                setSaida2('');
+                setFolga(false);
+                setHorario({});
+                closeModalAdd();
             }
         }, [
             horario,  
@@ -199,7 +200,7 @@ const HorarioDetalhes = () => {
                 entrada2: entrada2Atualizado,
                 saida2: saida2Atualizado
             }
-            console.log(params)
+            console.log(params);
 
             try{
                 await api.put(`horario_detalhes/${horario}`, params);
@@ -230,10 +231,14 @@ const HorarioDetalhes = () => {
     return(
         <>
 
-        <h1>Detalhes de horário</h1>
-        <button
-            onClick={openModalAdd}
-        >Adicionar</button>
+        <Container>
+             <Row 
+            direction="row"
+            container>
+                <SubTitulo> Horário Detalhe </SubTitulo>
+                <Button variant="contained" color="primary" onClick={openModalAdd}>Adicionar</Button>
+            </Row>
+        </Container>
 
         <TableHD horarioDetalhes={ListHorarioDetalhes} removeHorarioDetalhes = {removeHorarioDetalhe} handleHorarioDetalhes={openModalWithData}/>
 
@@ -402,7 +407,7 @@ const HorarioDetalhes = () => {
 
                     <Input 
                         type="number"
-                        value={codigoDia || ultimo + 1}
+                        value={codigoDia}
                         onChange={e => {
                             setCodigoDia(e.target.value);
                             setUltimo(parseInt(e.target.value));
