@@ -53,15 +53,15 @@ public class HorarioDetalhesService {
 			horarioDetalhesAtualizado.setEntrada1(horarioDetalhes.getEntrada1());
 		}
 		
-		if(horarioDetalhes.getEntrada1() != null) {
+		if(horarioDetalhes.getEntrada2() != null) {
 			horarioDetalhesAtualizado.setEntrada2(horarioDetalhes.getEntrada2());
 		}
 		
-		if(horarioDetalhes.getEntrada1() != null) {
+		if(horarioDetalhes.getSaida1() != null) {
 			horarioDetalhesAtualizado.setSaida1(horarioDetalhes.getSaida1());
 		}
 		
-		if(horarioDetalhes.getEntrada1() != null) {
+		if(horarioDetalhes.getSaida2() != null) {
 			horarioDetalhesAtualizado.setSaida2(horarioDetalhes.getSaida2());
 		}
 		
