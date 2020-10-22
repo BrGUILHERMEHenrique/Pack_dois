@@ -52,6 +52,32 @@ public class Funcionario implements Serializable {
 	@JoinColumn(name = "id_empresa")
 	private Empresa idEmpresa;
 
+	public Funcionario() {
+		super();
+	}
+	
+
+	public Funcionario(Integer id, @NotNull String codMatricula, @NotNull @Size(min = 1, max = 100) String nome,
+			@NotNull LocalDate dataNascimento, @NotNull @Size(min = 11, max = 11) String cpf, @NotNull String telefone,
+			Empresa idEmpresa) {
+		super();
+		this.id = id;
+		this.codMatricula = codMatricula;
+		this.nome = nome;
+		this.dataNascimento = dataNascimento;
+		this.cpf = cpf;
+		this.telefone = telefone;
+		this.idEmpresa = idEmpresa;
+	}
+
+
+	public Funcionario(Integer id) {
+		super();
+		this.id = id;
+	}
+
+
+
 	public String getCodMatricula() {
 		return codMatricula;
 	}
