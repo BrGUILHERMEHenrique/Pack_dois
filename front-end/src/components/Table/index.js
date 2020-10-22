@@ -1,5 +1,6 @@
 //importação padrão do react 
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { format } from 'date-fns'
 //imortação para construir a tabela com material ui
@@ -22,6 +23,7 @@ const useStyles = makeStyles({
       minWidth: "400px",
       width: "80vw",
       height: "auto",
+
       margin: "auto",
       padding: "auto",
       marginTop: "50px"
@@ -69,6 +71,7 @@ const useStyles = makeStyles({
   
   const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     const classes = useStyles();
+    const history = useHistory();
 
     const [modalDeleteIsOpen, setModalDeleteisOpen] = useState(false);
     const [funcionario, setFuncionario] = useState({});
@@ -114,6 +117,9 @@ const useStyles = makeStyles({
                     handleFuncionario(funcionario.id);
                   }}
                 >Atualizar</Button></Tabela>
+                <Tabela align="center"><Button variant="contained" color="primary"
+                  onClick = {() => history.push('/funcionarioHorario', { id: funcionario.id })}
+                >Mais Detalhes</Button></Tabela>
                 <Tabela align="center"><Button variant="outlined" color="primary" onClick={() => openModalDelete(funcionario)}>Excluir</Button></Tabela>
               </TabelaRow>
             ))}
