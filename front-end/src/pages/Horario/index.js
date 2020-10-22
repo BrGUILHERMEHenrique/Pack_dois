@@ -4,8 +4,8 @@ import Button from '@material-ui/core/Button';
 
 import api from '../../services/api';
 
-const Horario = () => {
-
+const Horario = ({ location }) => {
+    const id = location.state.id;
     const [timeNow, setTimeNow] = useState ('');
     const [entrada1, setEntrada1] = useState('');
     const [entrada2, setEntrada2] = useState('');
@@ -150,17 +150,10 @@ const Horario = () => {
 
     useEffect(
         () => {
-            defineHour();
-        }, []
-    )
+            console.log("location_state: ",id);
+        }, [location]
+    ); 
 
-    useEffect(
-        () => {
-            setInterval(() => {
-                defineHour()
-            }, 60000);
-        }, []
-    )
 
     useEffect(
         () => {
@@ -222,6 +215,8 @@ const Horario = () => {
         >
             Parar
             </Button>    
+
+
         </>
     )
 }

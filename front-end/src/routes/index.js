@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import Funcionarios from '../pages/Funcionarios';
 import Horario from '../pages/Horario';
+import FuncionarioHorario  from '../pages/FuncionarioHorario'
 import Empresas from '../pages/Empresas';
 import HorarioDetalhes from '../pages/HorarioDetalhes';
 import HorarioTabela from '../pages/HorarioTabela';
@@ -16,6 +17,7 @@ const Routes = () => (
         <Route exact path="/horarios" component={HorarioTabela} />
         <Route exact path="/funcionarios" component={Funcionarios} />
         <Route exact path="/empresas" component={Empresas} />
+        <Route exact path="/funcionarioHorario" component={FuncionarioHorario} />
         
 
     </Switch>

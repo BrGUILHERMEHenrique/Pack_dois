@@ -83,10 +83,12 @@ const HorarioTabela = () => {
                 console.log(error)
             } finally {
                 loadHorarios();
+                closeModalUpdate();
             }
         }, [
             codigoHorario,
-            descHorario
+            descHorario,
+            loadHorarios
         ]
     )
 
@@ -104,10 +106,12 @@ const HorarioTabela = () => {
                 
             } finally {
                 loadHorarios();
+                closeModalUpdate();
             }
         }, [
             codigoHorarioAtualizado,
-            descHorarioAtualizado
+            descHorarioAtualizado,
+            loadHorarios
         ]
     )
 
