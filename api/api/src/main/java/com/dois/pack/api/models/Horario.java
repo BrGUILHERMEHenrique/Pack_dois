@@ -30,6 +30,27 @@ public class Horario implements Serializable{
 	@Size(min = 1, max = 50)
 	private String descHorario;
 
+	public Horario() {
+		super();
+	}
+	
+	
+
+	public Horario(Integer id, Integer codigoHorario, String descHorario) {
+		super();
+		this.id = id;
+		this.codigoHorario = codigoHorario;
+		this.descHorario = descHorario;
+	}
+	
+
+	public Horario(Integer id) {
+		super();
+		this.id = id;
+	}
+
+
+
 	public Integer getCodigoHorario() {
 		return codigoHorario;
 	}
