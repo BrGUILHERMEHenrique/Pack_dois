@@ -6,7 +6,8 @@ import { format } from 'date-fns'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import { TableCell } from './styles';
+import TableCell from '@material-ui/core/TableCell';
+// import { TableCell } from './styles';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -194,4 +195,70 @@ const useStyles = makeStyles({
       )
   }
 
-  export {TableF, TableE};
+  const TableHD = ({ horarioDetalhes, handleHorarioDetalhes, removeHorarioDetalhes }) => {
+    const classes = useStyles();
+
+    const [modalDeleteIsOpen, setModalDeleteisOpen] = useState(false);
+    const [horarioDetalhe, setHorarioDetalhe] = useState({});
+
+    const openModalDelete = (horario) => {
+      setHorarioDetalhe(horario);
+      setModalDeleteisOpen(true);
+    }
+
+    const closeModalDelete = () => {
+      setHorarioDetalhe({});
+      setModalDeleteisOpen(false);
+    }
+
+    return(
+      <>
+          <TableContainer component={Paper} className={classes.table}>
+        <Table aria-label="Tabela Empresas">
+          <TableHead>
+            <TableRow>
+
+              <TableCell align="right">id</TableCell>
+              <TableCell align="right">descrição horário</TableCell>
+              <TableCell align="right">Entrada</TableCell>
+              <TableCell align="right">Intervalo</TableCell>
+              <TableCell align="right">Volta intervalo</TableCell>
+              <TableCell align="right">Saida</TableCell>
+              <TableCell align="right">Folga</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {horarioDetalhes.map(horarioDetalhe => (
+              <TableRow key={horarioDetalhe.id}>
+                <TableCell component="th" scope="Detlhes de horário" align="right">
+                  {horarioDetalhe.id}
+                </TableCell>
+                <TableCell align="right">{horarioDetalhe.idHorario.descHorario}</TableCell>
+                <TableCell align="right">{horarioDetalhe.entrada1}</TableCell>
+                <TableCell align="right">{horarioDetalhe.saida1}</TableCell>
+                <TableCell align="right">{horarioDetalhe.entrada2}</TableCell>
+                <TableCell align="right">{horarioDetalhe.saida2}</TableCell>
+                <TableCell align="right">{horarioDetalhe.folga ? 'VERDADEIRO' : 'FALSO'}</TableCell>
+                <TableCell align="right"><Button variant="contained" color="primary"
+                  onClick={() => {
+                    handleHorarioDetalhes(horarioDetalhe.id);
+                  }}
+                >Atualizar</Button></TableCell>
+                <TableCell align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(horarioDetalhe)}>Excluir</Button></TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+                  <ModalDelete obj={horarioDetalhe}
+                              modalIsOpen={modalDeleteIsOpen}
+                              closeModal={closeModalDelete}
+                              deleteFunction={removeHorarioDetalhes}
+                              customStyles={customStyles}
+                  />
+
+      </>
+    )
+  }
+
+  export {TableF, TableE, TableHD};
