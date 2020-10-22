@@ -1,5 +1,7 @@
 package com.dois.pack.api.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.dois.pack.api.models.FuncionarioHorario;
 import com.dois.pack.api.services.FuncionarioHorarioService;
 
@@ -32,7 +35,7 @@ public class FuncionarioHorarioController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody FuncionarioHorario funcionarioHorario) {
+	public ResponseEntity<?> create(@Valid @RequestBody FuncionarioHorario funcionarioHorario) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioHorarioService.create(funcionarioHorario));
 	}
 
