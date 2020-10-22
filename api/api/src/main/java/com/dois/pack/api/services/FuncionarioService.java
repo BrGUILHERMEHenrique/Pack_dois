@@ -34,6 +34,11 @@ public class FuncionarioService {
 	}
 	
 	@Transactional
+	public List<?> getInnerJoin(){
+		return funcionarioRepository.getInnerJoin();
+	}
+	
+	@Transactional
 	public Optional<Funcionario> getbyId(Integer id) {
 		return funcionarioRepository.findById(id);
 	}
