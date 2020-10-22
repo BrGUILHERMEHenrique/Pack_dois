@@ -7,13 +7,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-
 import { AiOutlineClose } from 'react-icons/ai'
 
-
-
 //imports de dentro do diretório do projeto
-import TableF from '../../components/Table';
+import { TableF } from '../../components/Table';
 
 import api from '../../services/api';
 
@@ -57,7 +54,7 @@ const Funcionarios = () => {
     const [dataNascimento, setDataNascimento] = useState('');
     const [telefone, setTelefone] = useState('');
     const [nomeAtualizado, setNomeAtualizado] = useState('');
-    const [dataNascimentoAtulizado, setDataNascimentoAtualizado] = useState('');
+    const [dataNascimentoAtualizado, setDataNascimentoAtualizado] = useState('');
     const [telefoneAtualizado, setTelefoneAtualizado] = useState('');
 
 
@@ -96,12 +93,12 @@ const Funcionarios = () => {
             e.preventDefault();
 
             if(!nome || !codMatricula || !cpf.replace(/\D/g, '') || !dataNascimento.replace(/\D/g, '') || !telefone.replace(/\D/g, '')){
-                alert("por favor preencha todos os campos");
+                alert("Por favor, preencha todos os campos");
                 return;
             }
 
             if(!cpfValidator.isValid(cpf)){ 
-                alert('o cpf informado é inválido');
+                alert('O CPF informado é inválido');
                 return;
             }
             const params = {
@@ -155,21 +152,21 @@ const Funcionarios = () => {
                 } finally {
                     openModalUpdate();
                 }
-            }, [funcionario, nomeAtualizado, dataNascimentoAtulizado, telefoneAtualizado],
+            }, [funcionario, nomeAtualizado, dataNascimentoAtualizado, telefoneAtualizado],
         )
 
         const handleUpdateFuncionario = useCallback(
         async (e) => {
             e.preventDefault();
 
-            if(!nomeAtualizado || !dataNascimentoAtulizado.replace(/\D/g, '') || !telefoneAtualizado.replace(/\D/g, '')){
+            if(!nomeAtualizado || !dataNascimentoAtualizado.replace(/\D/g, '') || !telefoneAtualizado.replace(/\D/g, '')){
                 alert("por favor preencha todos os campos");
                 return;
             }
 
             const paramsUpdated = {
                 nome: nomeAtualizado,
-                dataNascimento: dataNascimentoAtulizado,
+                dataNascimento: dataNascimentoAtualizado,
                 telefone: telefoneAtualizado.replace(/\D/g, '')
             }
 
@@ -184,7 +181,7 @@ const Funcionarios = () => {
                 loadFuncionarios();
             }
             
-        }, [nomeAtualizado, dataNascimentoAtulizado, telefoneAtualizado],
+        }, [nomeAtualizado, dataNascimentoAtualizado, telefoneAtualizado],
         )
 
         const removeFuncionario = async (id) => {
@@ -313,9 +310,9 @@ const Funcionarios = () => {
                 <form className={classes.container} >
                     <TextField
                         id="date"
-                        label="Data de nascimento"
+                        label="Data de Nascimento"
                         type="date"
-                        defaultValue={dataNascimentoAtulizado}
+                        defaultValue={dataNascimentoAtualizado}
                         onChange={e => {
                             setDataNascimentoAtualizado(e.target.value)
                             console.log(e.target.value)
@@ -329,6 +326,7 @@ const Funcionarios = () => {
                 
                 <InputMask mask="(99) 99999-9999"
                     id="tel" 
+                    label="Telefone"
                     value={telefoneAtualizado} 
                     onChange={e => {
                     setTelefoneAtualizado(e.target.value);

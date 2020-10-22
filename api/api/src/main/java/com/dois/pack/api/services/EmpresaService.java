@@ -63,14 +63,6 @@ public class EmpresaService {
 			empresaAtualizada.setRazaoSocial(empresa.getRazaoSocial());
 		}
 		
-		if(!empresa.getCodEmpresa().equals("") && empresa.getCodEmpresa() != null) {
-			empresaAtualizada.setCodEmpresa(empresa.getCodEmpresa());
-		}
-		
-		if(!empresa.getCnpj().equals("") && empresa.getCnpj() != null) {
-			empresaAtualizada.setCnpj(empresa.getCnpj());
-		}
-		
 		return empresaRepository.save(empresaAtualizada);
 	}
 }

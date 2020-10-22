@@ -71,18 +71,6 @@ public class FuncionarioService {
 			funcionarioAtualizado.setTelefone(funcionario.getTelefone());
 		}
 		
-		if(!funcionario.getTelefone().equals("") && funcionario.getCodMatricula() != null) {
-			funcionarioAtualizado.setCodMatricula(funcionario.getCodMatricula());
-		}
-		
-		if(!funcionario.getCpf().equals("") && funcionario.getCpf() != null) {
-			funcionarioAtualizado.setCpf(funcionario.getCpf());
-		}
-		
-		if(funcionario.getIdEmpresa() != null) {
-			funcionarioAtualizado.setIdEmpresa(funcionario.getIdEmpresa());
-		}
-		
 		return funcionarioRepository.save(funcionarioAtualizado);
 	}
 }

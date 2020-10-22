@@ -27,7 +27,7 @@ public class Funcionario implements Serializable {
 	private Integer id;
 
 	@NotNull
-	@Column(name = "cod_matricula", unique = true)
+	@Column(name = "cod_matricula", unique = true, length = 20)
 	private String codMatricula;
 	
 	@NotNull
@@ -45,8 +45,7 @@ public class Funcionario implements Serializable {
 	private String cpf;
 
 	@NotNull
-	@Column(name = "telefone", length = 20)
-	@Size(min = 8, max = 20)
+	@Column(name = "telefone", length = 11)
 	private String telefone;
 	
 	@OneToOne(cascade = CascadeType.ALL)

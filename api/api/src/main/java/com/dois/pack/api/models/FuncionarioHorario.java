@@ -35,7 +35,7 @@ public class FuncionarioHorario implements Serializable {
     
     @NotNull
     @Column(name = "codigo_inicial", length = 15)
-    private String codigoInicial;
+    private Integer codigoInicial;
     
     @NotNull
     @Column (name = "vigencia_inicial")
@@ -61,11 +61,11 @@ public class FuncionarioHorario implements Serializable {
 		this.idHorario = idHorario;
 	}
 
-	public String getCodigoInicial() {
+	public Integer getCodigoInicial() {
 		return codigoInicial;
 	}
 
-	public void setCodigoInicial(String codigoInicial) {
+	public void setCodigoInicial(Integer codigoInicial) {
 		this.codigoInicial = codigoInicial;
 	}
 

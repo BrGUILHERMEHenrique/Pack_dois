@@ -45,7 +45,7 @@ public class FuncionarioHorarioService {
 		Optional<FuncionarioHorario> funcionarioHorarioAntigo = funcionarioHorarioRepository.findById(id);
 		FuncionarioHorario funcionarioHorarioAtualizado = funcionarioHorarioAntigo.get();
 		
-		if(!funcionarioHorario.getCodigoInicial().equals("") && funcionarioHorario.getCodigoInicial() != null) {
+		if(funcionarioHorario.getCodigoInicial() != null) {
 			funcionarioHorarioAtualizado.setCodigoInicial(funcionarioHorario.getCodigoInicial());
 		}
 		
