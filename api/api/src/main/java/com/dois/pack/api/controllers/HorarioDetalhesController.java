@@ -3,6 +3,8 @@ package com.dois.pack.api.controllers;
 
 
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,7 @@ public class HorarioDetalhesController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody HorarioDetalhes horarioDetalhes) {
+	public ResponseEntity<?> create(@Valid @RequestBody HorarioDetalhes horarioDetalhes) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(horarioDetalhesService.create(horarioDetalhes));
 	}
 
