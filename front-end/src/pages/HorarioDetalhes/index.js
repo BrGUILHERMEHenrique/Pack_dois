@@ -131,12 +131,18 @@ const HorarioDetalhes = () => {
 
     const handleAddHorarioDetalhe = useCallback(
         async (e) => {
+            e.preventDefault();
             if(parseInt(codigoDia) > 31){
                 alert("Por favor verifique os dados, não há um mês que passe do dia 31");
                 closeModalAdd();
                 return;
             }
-            e.preventDefault();
+            if(!folga){
+                if(!entrada1 || !saida1 && !entrada2 || !saida2 || !codigoDia){
+                alert("Por favor, preencha todos os campos");
+                return;
+                }
+            }
             const params = { 
                 idHorario: horario.id,
                 codigoDia: parseInt(codigoDia),
@@ -192,6 +198,15 @@ const HorarioDetalhes = () => {
     const handleHorarioDetalhe = useCallback(
         async (horario, e) => {
             e.preventDefault();
+            if(parseInt(codigoDia) > 31){
+                alert("Por favor verifique os dados, não há um mês que passe do dia 31");
+                closeModalAdd();
+                return;
+            }
+            if(!codigoDiaAtualizado || !folgaAtualizado || !entrada1Atualizado || !saida1Atualizado || !entrada2Atualizado || !saida2Atualizado && !folgaAtualizado){
+                alert("Por favor, preencha todos os campos");
+                return;
+            }
             const params = {
                 codigoDia: parseInt(codigoDiaAtualizado),
                 folga: folgaAtualizado,
@@ -247,7 +262,7 @@ const HorarioDetalhes = () => {
             onRequestClose={closeModalUpdate}
             style={customStyles}
             contentLabel="Modal"
-            >
+        >
     
             <h2>Atualizar</h2>
             <button onClick={closeModalUpdate}>Fechar</button>
