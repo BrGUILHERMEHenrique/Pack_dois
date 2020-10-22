@@ -33,7 +33,10 @@ public class FuncionarioHorarioController {
 	public ResponseEntity<?> get(@PathVariable Integer id) {
 		return ResponseEntity.ok(funcionarioHorarioService.getbyId(id));
 	}
-
+	@GetMapping("/idFuncionario/{idFuncionario}")
+	public ResponseEntity<?> getWithIdFuncionario(@PathVariable Integer idFuncionario){
+		return ResponseEntity.ok(funcionarioHorarioService.getWithIdFuncionario(idFuncionario));
+	}
 	@PostMapping
 	public ResponseEntity<?> create(@Valid @RequestBody FuncionarioHorario funcionarioHorario) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioHorarioService.create(funcionarioHorario));
