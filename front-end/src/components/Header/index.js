@@ -37,7 +37,7 @@ const Header = () => {
             container 
             direction="row"
             alignItems="center"
->
+        >
             <Image src = {Logo} />
             <Menu>
                 { menu.map(s => (

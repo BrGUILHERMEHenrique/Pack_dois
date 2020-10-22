@@ -8,10 +8,17 @@ export const Image = Styled.img`
 
 export const Container = Styled(Grid)`
     padding: 40px;
+    margin-bottom: 40px;
+    justify-content: space-around;
+    flex:1;
+    display: flex;
 `
 
 export const Menu = Styled(Grid)`
-    margin-left: 450px;
+    margin-top: 30px;
+    font-size: 1.1em;
+    font-family: 'Oxanium', cursive;
+
 `
 
 export const Link = Styled.a`

@@ -3,22 +3,19 @@ import Modal from 'react-modal';
 import { cnpj as cnpjValidator } from 'cpf-cnpj-validator';
 import InputMask from 'react-input-mask';
 import MaterialInput from '@material-ui/core/Input';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import { AiOutlineClose } from 'react-icons/ai'
 
 //imports de dentro do diretório do projeto
 import {TableE} from '../../components/Table';
 
 import api from '../../services/api';
 
-import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal } from './styles';
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button } from './styles';
 
-const customStyles = {
+const styleAdicionar = {
     content : {
         width               : '50%',
-        height              : '50%',
+        height              : '60%',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -28,20 +25,20 @@ const customStyles = {
     }
   };
 
-  const useStyles = makeStyles((theme) => ({
-    container: {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 200,
-    },
-  }));
+  const styleAtualizar = {
+    content : {
+        width               : '30%',
+        height              : '40%',
+        top                 : '50%',
+        left                : '50%',
+        right               : 'auto',
+        bottom              : 'auto',
+        marginRight         : '-50%',
+        transform           : 'translate(-50%, -50%)'
+    }
+  };
 
 const Empresas = () => {
-    const classes = useStyles();
 
     const [empresas, setEmpresas] = useState([]);
     const [empresa, setEmpresa] = useState({});
@@ -187,37 +184,51 @@ const Empresas = () => {
         }, [loadEmpresas],
     )
 
+
+    const inputStyle = {
+        width               : '70%',
+        height              : '70%' 
+    }
     return(
 
         <Container>
-            <Button variant="contained" color="primary" onClick={openModal}>Adicionar</Button>
+            <Row 
+            direction="row"
+            container>
+                <SubTitulo> Empresa </SubTitulo>
+                <Button variant="contained" color="primary" onClick={openModal}>Adicionar</Button>
+            </Row>
+            
             <Modal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
-            style={customStyles}
+            style={styleAdicionar}
             contentLabel="Modal"
             >
                 <HeaderModal>
                     <h2>Cadastro</h2>
-                    <AiOutlineClose onClick={closeModal} />
+                    {/* <AiOutlineClose onClick={closeModal} /> */}
                 </HeaderModal>
-                <hr />
+                {/* <hr /> */}
             <FormModal>
                 <Input 
                     placeholder="Razão Social"
                     fullWidth={true}
                     value={razaoSocial}
+                    style={inputStyle}
                     onChange={e => setRazaoSocial(e.target.value)}
                 />
                 <Input 
                     placeholder="Código da Empresa"
                     fullWidth={true}
                     value={codEmpresa}
+                    style={inputStyle}
                     onChange={e => setCodEmpresa(e.target.value)}
                 />
                 <ContainerInputs>
 
-                    <InputMask mask="99.999.999/9999-99" 
+                    <InputMask 
+                    mask="99.999.999/9999-99" 
                         id="cnpj"
                         placeholder="CNPJ"
                         value={cnpj} 
@@ -230,16 +241,16 @@ const Empresas = () => {
                 </ContainerInputs>
                 <FooterModal>
                     <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={e => handleAddEmpresa(e)}
+                    >Adicionar</Button>
+                    <Button
                         color="secundary"
                         variant="outlined"
                         onClick={closeModal}
                     >Cancelar</Button>
 
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        onClick={e => handleAddEmpresa(e)}
-                    >Adicionar</Button>
                     </FooterModal>
             </FormModal>
             </Modal>
@@ -249,21 +260,33 @@ const Empresas = () => {
             <Modal
             isOpen={modalPutIsOpen}
             onRequestClose={closeModalUpdate}
-            style={customStyles}
             contentLabel="Modal"
+            style={styleAtualizar}
             >
-    
+            <HeaderModal>
             <h2>Atualizar</h2>
-            <button onClick={closeModalUpdate}>Fechar</button>
+            {/* <AiOutlineClose onClick={closeModalUpdate} /> */}
+            </HeaderModal>
             <FormModal>
                 <Input 
+                    style={inputStyle}
                     placeholder="Razão Social"
                     value={razaoSocialAtualizada}
                     onChange={e => setRazaoSocialAtualizada(e.target.value)}
                 />
-                <button
-                    onClick={e => handleUpdateEmpresa(e)}
-                >Atualizar</button>
+                <FooterModal>
+                <Button
+                color="primary"
+                variant="contained"
+                onClick={e => handleUpdateEmpresa(e)}
+                >Atualizar</Button>
+
+                <Button
+                color="secundary"
+                variant="outlined"
+                onClick={closeModalUpdate}
+                >Cancelar</Button>
+                </FooterModal>
             </FormModal>
             </Modal>
 

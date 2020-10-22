@@ -6,12 +6,12 @@ import { format } from 'date-fns'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import { Tabela, TabelaRow } from './styles';
+import { Tabela, TabelaRow, THead, Button, TextoTh, TextoTr } from './styles';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 // import TabelaRow from '@material-ui/core/TabelaRow';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 
 import ModalDelete from '../../components/ModalDelete';
 
@@ -19,12 +19,12 @@ import ModalDelete from '../../components/ModalDelete';
 //styles criado através do material para a tabela
 const useStyles = makeStyles({
     table: {
-      minWidth: "480px",
+      minWidth: "400px",
       width: "80vw",
       height: "auto",
       margin: "auto",
       padding: "auto",
-      marginTop: "10%"
+      marginTop: "50px"
     },
   });
 
@@ -92,14 +92,11 @@ const useStyles = makeStyles({
         <TableContainer component={Paper} className={classes.table}>
         <Table  aria-label="Tabela Funcionários">
           <TableHead>
-            <TabelaRow>
-
-              <Tabela align="center">Nome</Tabela>
-              <Tabela align="center">Matricula</Tabela>
-              <Tabela align="center">CPF</Tabela>
-              <Tabela align="center">Data de nascimento</Tabela>
-              <Tabela align="center">Telefone</Tabela>
-            </TabelaRow>
+              <Tabela align="center"><TextoTh>Nome</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Matricula</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>CPF</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Data de Nascimento</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Telefone</TextoTh></Tabela>
           </TableHead>
           <TableBody>
             {funcionarios.map((funcionario) => (
@@ -108,10 +105,10 @@ const useStyles = makeStyles({
                   {funcionario.nome}
                 </Tabela>
 
-                <Tabela align="center">{funcionario.codMatricula}</Tabela>
-                <Tabela align="center">{funcionario.cpf.cpf()}</Tabela>
-                <Tabela align="center">{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</Tabela>
-                <Tabela align="center">{funcionario.telefone.numero()}</Tabela>
+                <Tabela align="center"><TextoTr>{funcionario.codMatricula}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
                 <Tabela align="center"><Button variant="contained" color="primary"
                   onClick={() => {
                     handleFuncionario(funcionario.id);
@@ -158,21 +155,18 @@ const useStyles = makeStyles({
         <TableContainer component={Paper} className={classes.table}>
         <Table  aria-label="Tabela Empresas">
           <TableHead>
-            <TabelaRow>
-
-              <Tabela align="center">Razão Social</Tabela>
-              <Tabela align="center">Código da Empresa</Tabela>
-              <Tabela align="center">Cnpj</Tabela>
-            </TabelaRow>
+              <Tabela align="center"><TextoTh>Razão Social</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Código da Empresa</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Cnpj</TextoTh></Tabela>
           </TableHead>
           <TableBody>
             {empresas.map((empresa) => (
               <TabelaRow key={empresa.id}>
                 <Tabela component="th" scope="empresa" align="center">
-                  {empresa.razaoSocial}
+                <TextoTr>{empresa.razaoSocial}</TextoTr>
                 </Tabela>
-                <Tabela align="center">{empresa.codEmpresa}</Tabela>
-                <Tabela align="center">{empresa.cnpj.cnpj()}</Tabela>
+                <Tabela align="center"><TextoTr>{empresa.codEmpresa}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{empresa.cnpj.cnpj()}</TextoTr></Tabela>
                 <Tabela align="center"><Button variant="contained" color="primary"
                   onClick={() => {
                     handleEmpresa(empresa.id);
