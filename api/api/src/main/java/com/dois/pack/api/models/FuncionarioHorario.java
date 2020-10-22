@@ -25,11 +25,11 @@ public class FuncionarioHorario implements Serializable {
 	@Column(name = "id")
 	private Integer id;
  
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_funcionario")
     private Funcionario idFuncionario;
  
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_horario")
     private Horario idHorario; 
     
