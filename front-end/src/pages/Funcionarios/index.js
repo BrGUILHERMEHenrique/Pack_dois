@@ -5,7 +5,7 @@ import InputMask from 'react-input-mask';
 import MaterialInput from '@material-ui/core/Input';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import { AiOutlineClose } from 'react-icons/ai'
 
@@ -14,9 +14,27 @@ import { TableF } from '../../components/Table';
 
 import api from '../../services/api';
 
-import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal } from './styles';
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button} from './styles';
 
-const customStyles = {
+const inputStyle = {
+    width               : '76%',
+    height              : '90%' 
+};
+
+const styleAdicionar = {
+    content : {
+        width               : '50%',
+        height              : '60%',
+        top                 : '50%',
+        left                : '50%',
+        right               : 'auto',
+        bottom              : 'auto',
+        marginRight         : '-50%',
+        transform           : 'translate(-50%, -50%)'
+    }
+  };
+
+  const styleAtualizar = {
     content : {
         width               : '50%',
         height              : '50%',
@@ -205,28 +223,33 @@ const Funcionarios = () => {
     return(
 
         <Container>
-            <Button variant="contained" color="primary" onClick={openModal}>Adicionar</Button>
+             <Row 
+            direction="row"
+            container>
+                <SubTitulo> Funcionário </SubTitulo>
+                <Button variant="contained" color="primary" onClick={openModal}>Adicionar</Button>
+            </Row>
             <Modal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
-            style={customStyles}
+            style={styleAdicionar}
             contentLabel="Modal"
             >
                 <HeaderModal>
                     <h2>Cadastro</h2>
-                    <AiOutlineClose onClick={closeModal} />
                 </HeaderModal>
-                <hr />
             <FormModal>
                 <Input 
                     placeholder="Nome"
                     fullWidth={true}
+                    style={inputStyle}
                     value={nome}
                     onChange={e => setNome(e.target.value)}
                 />
                 <Input 
                     placeholder="Matricula"
                     fullWidth={true}
+                    style={inputStyle}
                     value={codMatricula}
                     onChange={e => setCodMatricula(e.target.value)}
                 />
@@ -293,21 +316,21 @@ const Funcionarios = () => {
             <Modal
             isOpen={modalPutIsOpen}
             onRequestClose={closeModalUpdate}
-            style={customStyles}
+            style={styleAtualizar}
             contentLabel="Modal"
             >
-    
+            <HeaderModal>
             <h2>Atualizar</h2>
-            <button onClick={closeModalUpdate}>Fechar</button>
+            </HeaderModal>
             <FormModal>
                 <Input 
-                    placeholder="Nome"
-                    value={nomeAtualizado}
-                    onChange={e => setNomeAtualizado(e.target.value)}
+                 style={inputStyle}
+                 placeholder="Nome"
+                value={nomeAtualizado}
+                onChange={e => setNomeAtualizado(e.target.value)}
                 />
 
-                
-                <form className={classes.container} >
+                <FormModal className={classes.container} >
                     <TextField
                         id="date"
                         label="Data de Nascimento"
@@ -322,7 +345,7 @@ const Funcionarios = () => {
                         shrink: true,
                         }}
                     />
-                </form>
+                
                 
                 <InputMask mask="(99) 99999-9999"
                     id="tel" 
@@ -334,10 +357,12 @@ const Funcionarios = () => {
                     }}>
                     {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
                 </InputMask>
-                
-                <button
+                </FormModal>
+                 <FooterModal>
+                <Button
                     onClick={e => handleUpdateFuncionario(e)}
-                >Atualizar</button>
+                >Atualizar</Button>
+                </FooterModal>
             </FormModal>
             </Modal>
 

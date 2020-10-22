@@ -6,13 +6,17 @@ import { format } from 'date-fns'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
+<<<<<<< HEAD
 import TableCell from '@material-ui/core/TableCell';
 // import { TableCell } from './styles';
+=======
+import { Tabela, TabelaRow, THead, Button, TextoTh, TextoTr } from './styles';
+>>>>>>> cfe57e6569239aadde9271602830db26bcc0d027
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+// import TabelaRow from '@material-ui/core/TabelaRow';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 
 import ModalDelete from '../../components/ModalDelete';
 
@@ -20,12 +24,12 @@ import ModalDelete from '../../components/ModalDelete';
 //styles criado através do material para a tabela
 const useStyles = makeStyles({
     table: {
-      minWidth: "480px",
+      minWidth: "400px",
       width: "80vw",
       height: "auto",
       margin: "auto",
       padding: "auto",
-      marginTop: "10%"
+      marginTop: "50px"
     },
   });
 
@@ -36,9 +40,9 @@ const useStyles = makeStyles({
         height              : '50%',
         top                 : '50%',
         left                : '50%',
-        right               : 'auto',
+        center               : 'auto',
         bottom              : 'auto',
-        marginRight         : '-50%',
+        margincenter         : '-50%',
         transform           : 'translate(-50%, -50%)'
     }
   };
@@ -93,33 +97,30 @@ const useStyles = makeStyles({
         <TableContainer component={Paper} className={classes.table}>
         <Table  aria-label="Tabela Funcionários">
           <TableHead>
-            <TableRow>
-
-              <TableCell align="right">Nome</TableCell>
-              <TableCell align="right">Matricula</TableCell>
-              <TableCell align="right">CPF</TableCell>
-              <TableCell align="right">Data de nascimento</TableCell>
-              <TableCell align="right">Telefone</TableCell>
-            </TableRow>
+              <Tabela align="center"><TextoTh>Nome</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Matricula</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>CPF</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Data de Nascimento</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Telefone</TextoTh></Tabela>
           </TableHead>
           <TableBody>
             {funcionarios.map((funcionario) => (
-              <TableRow key={funcionario.id}>
-                <TableCell component="th" scope="funcionario" align="right">
+              <TabelaRow key={funcionario.id}>
+                <Tabela component="th" scope="funcionario" align="center">
                   {funcionario.nome}
-                </TableCell>
+                </Tabela>
 
-                <TableCell align="right">{funcionario.codMatricula}</TableCell>
-                <TableCell align="right">{funcionario.cpf.cpf()}</TableCell>
-                <TableCell align="right">{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</TableCell>
-                <TableCell align="right">{funcionario.telefone.numero()}</TableCell>
-                <TableCell align="right"><Button variant="contained" color="primary"
+                <Tabela align="center"><TextoTr>{funcionario.codMatricula}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
+                <Tabela align="center"><Button variant="contained" color="primary"
                   onClick={() => {
                     handleFuncionario(funcionario.id);
                   }}
-                >Atualizar</Button></TableCell>
-                <TableCell align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(funcionario)}>Excluir</Button></TableCell>
-              </TableRow>
+                >Atualizar</Button></Tabela>
+                <Tabela align="center"><Button variant="outlined" color="primary" onClick={() => openModalDelete(funcionario)}>Excluir</Button></Tabela>
+              </TabelaRow>
             ))}
           </TableBody>
         </Table>
@@ -159,28 +160,25 @@ const useStyles = makeStyles({
         <TableContainer component={Paper} className={classes.table}>
         <Table  aria-label="Tabela Empresas">
           <TableHead>
-            <TableRow>
-
-              <TableCell align="right">Razão Social</TableCell>
-              <TableCell align="right">Código da Empresa</TableCell>
-              <TableCell align="right">Cnpj</TableCell>
-            </TableRow>
+              <Tabela align="center"><TextoTh>Razão Social</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Código da Empresa</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Cnpj</TextoTh></Tabela>
           </TableHead>
           <TableBody>
             {empresas.map((empresa) => (
-              <TableRow key={empresa.id}>
-                <TableCell component="th" scope="empresa" align="right">
-                  {empresa.razaoSocial}
-                </TableCell>
-                <TableCell align="right">{empresa.codEmpresa}</TableCell>
-                <TableCell align="right">{empresa.cnpj.cnpj()}</TableCell>
-                <TableCell align="right"><Button variant="contained" color="primary"
+              <TabelaRow key={empresa.id}>
+                <Tabela component="th" scope="empresa" align="center">
+                <TextoTr>{empresa.razaoSocial}</TextoTr>
+                </Tabela>
+                <Tabela align="center"><TextoTr>{empresa.codEmpresa}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{empresa.cnpj.cnpj()}</TextoTr></Tabela>
+                <Tabela align="center"><Button variant="contained" color="primary"
                   onClick={() => {
                     handleEmpresa(empresa.id);
                   }}
-                >Atualizar</Button></TableCell>
-                <TableCell align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(empresa)}>Excluir</Button></TableCell>
-              </TableRow>
+                >Atualizar</Button></Tabela>
+                <Tabela align="center"><Button variant="outlined" color="primary" onClick={() => openModalDelete(empresa)}>Excluir</Button></Tabela>
+              </TabelaRow>
             ))}
           </TableBody>
         </Table>
