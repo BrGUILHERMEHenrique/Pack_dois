@@ -1,5 +1,7 @@
 package com.dois.pack.api.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +41,7 @@ public class EmpresaController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody Empresa empresa) throws SameCnpjException {
+	public ResponseEntity<?> create(@Valid @RequestBody Empresa empresa) throws SameCnpjException {
 		return ResponseEntity.status(HttpStatus.CREATED).body(empresaService.create(empresa));
 	}
 
