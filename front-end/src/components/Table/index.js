@@ -16,6 +16,9 @@ import Paper from '@material-ui/core/Paper';
 
 import ModalDelete from '../../components/ModalDelete';
 
+import swal from 'sweetalert';
+import 'sweetalert2/src/sweetalert2.scss'
+
 
 //styles criado através do material para a tabela
 const useStyles = makeStyles({
@@ -55,7 +58,7 @@ const useStyles = makeStyles({
   String.prototype.cnpj = function(){
     let cnpj = this.replace(/\D/g, '');
 
-    return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$2");
+    return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
   }
 
   String.prototype.numero = function(){
@@ -68,8 +71,31 @@ const useStyles = makeStyles({
       }
 
 }
+const OpenAlert = (id, remove) => {
+
+  swal({
+    title: 'Deseja REALMENTE excluir??',
+    text: 'Esses dados serão removidos permanentemente.', 
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal('Removido com sucesso!', {
+      icon: "success",
+    });
+    remove(id)
+  } else {
+    swal('Ação cancelada!');
+  }
+});
+}
+
+
   
-  const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
+
+const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     const classes = useStyles();
     const history = useHistory();
 
@@ -178,7 +204,7 @@ const useStyles = makeStyles({
                     handleEmpresa(empresa.id);
                   }}
                 >Atualizar</Button></Tabela>
-                <Tabela align="center"><Button variant="outlined" color="primary" onClick={() => openModalDelete(empresa)}>Excluir</Button></Tabela>
+                <Tabela align="center"><Button variant="outlined" color="primary" onClick={() => OpenAlert(empresa.id, removeEmpresa)}>Excluir</Button></Tabela>
               </TabelaRow>
             ))}
           </TableBody>

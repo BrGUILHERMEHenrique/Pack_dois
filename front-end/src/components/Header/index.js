@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Image, Container, Menu, Link } from './styles'
-import Logo from '../../assets/logo1.png'
+import Logo from '../../assets/logo4.png'
 import Empresas from '../../pages/Empresas';
 import Grid from '@material-ui/core/Grid';
 
@@ -28,7 +28,7 @@ const Header = () => {
     ] 
 
     const ativo = {
-        color:'grey'
+        color:'#CE0E2D'
         }
     
     const styles = {

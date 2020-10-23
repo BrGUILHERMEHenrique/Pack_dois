@@ -21,7 +21,6 @@ export const TabelaRow = styled(TableRow)`
         }
     }
 
-
 `;
 
 export const TextoTh = styled.p`
@@ -55,3 +54,4 @@ export const Button = styled.button`
     }
 
 `;
+

@@ -1,7 +1,10 @@
 import { Container } from '@material-ui/core';
-import React from 'react';
 import Modal from 'react-modal';
 import { SubTitulo } from '../../pages/Empresas/styles';
+import React, { Component } from 'react';
+import { withSwalInstance } from 'sweetalert2-react';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import 'sweetalert2/src/sweetalert2.scss'
 
 import { HeaderModal, FooterModal, ModalBody, ModalText, Button, TituloModal, Titulo } from './styles';
 
@@ -14,9 +17,7 @@ const ModalDelete = ({
     customStyles
 }) => {
 
-    return(
-        <Container>
-        <Modal
+        {/* <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
@@ -40,9 +41,10 @@ const ModalDelete = ({
             <Button color="secundary" variant="contained" onClick={() => closeModal()}>Cancelar</Button>
                 
         </FooterModal>
-    </Modal>
-    </Container>
-    )
-}
+    </Modal> */}
+   
+      return (<Button onClick={()=>deleteFunction(obj.id)}>Clique</Button>)
+    }
+    
 
 export default ModalDelete;
