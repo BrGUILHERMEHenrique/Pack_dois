@@ -26,11 +26,8 @@ const ModalDelete = ({
             <Titulo>Confirmar exclusão</Titulo>
         </HeaderModal>
 
-
         <ModalBody>
-
             <ModalText>Deseja realmente EXCLUIR? </ModalText>
-
         </ModalBody>
 
         <FooterModal>

@@ -7,7 +7,7 @@ import { format } from 'date-fns'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import { Tabela, TabelaRow, THead, Button, TextoTh, TextoTr } from './styles';
+import { Tabela, TabelaRow, THead, Button, TextoTh, TextoTr, ButtonU, ButtonD } from './styles';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 // import TabelaRow from '@material-ui/core/TabelaRow';
@@ -55,7 +55,7 @@ const useStyles = makeStyles({
   String.prototype.cnpj = function(){
     let cnpj = this.replace(/\D/g, '');
 
-    return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$2");
+    return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
   }
 
   String.prototype.numero = function(){
@@ -92,40 +92,38 @@ const useStyles = makeStyles({
 
       return(
         <>
-        <TableContainer component={Paper} className={classes.table}>
-        <Table  aria-label="Tabela Funcionários">
-          <TableHead>
+          <TableContainer component={Paper} className={classes.table}>
+            <Table  aria-label="Tabela Funcionários">
               <Tabela align="center"><TextoTh>Nome</TextoTh></Tabela>
               <Tabela align="center"><TextoTh>Matricula</TextoTh></Tabela>
               <Tabela align="center"><TextoTh>CPF</TextoTh></Tabela>
               <Tabela align="center"><TextoTh>Data de Nascimento</TextoTh></Tabela>
               <Tabela align="center"><TextoTh>Telefone</TextoTh></Tabela>
-          </TableHead>
-          <TableBody>
-            {funcionarios.map((funcionario) => (
-              <TabelaRow key={funcionario.id}>
-                <Tabela component="th" scope="funcionario" align="center">
-                  {funcionario.nome}
-                </Tabela>
+              <TableBody>
+                {funcionarios.map((funcionario) => (
+                  <TabelaRow key={funcionario.id}>
+                    <Tabela component="th" scope="funcionario" align="center">
+                      {funcionario.nome}
+                    </Tabela>
 
-                <Tabela align="center"><TextoTr>{funcionario.codMatricula}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
-                <Tabela align="center"><Button variant="contained" color="primary"
-                  onClick={() => {
-                    handleFuncionario(funcionario.id);
-                  }}
-                >Atualizar</Button></Tabela>
-                <Tabela align="center"><Button variant="contained" color="primary"
-                  onClick = {() => history.push('/funcionarioHorario', { id: funcionario.id })}
-                >Mais Detalhes</Button></Tabela>
-                <Tabela align="center"><Button variant="outlined" color="primary" onClick={() => openModalDelete(funcionario)}>Excluir</Button></Tabela>
-              </TabelaRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                    <Tabela align="center"><TextoTr>{funcionario.codMatricula}</TextoTr></Tabela>
+                    <Tabela align="center"><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
+                    <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</TextoTr></Tabela>
+                    <Tabela align="center"><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
+                    <Tabela align="center"><ButtonU
+                      onClick = {() => history.push('/funcionarioHorario', { id: funcionario.id })}
+                    >Horários</ButtonU></Tabela>
+                    <Tabela align="center"><ButtonU 
+                      onClick={() => {
+                        handleFuncionario(funcionario.id);
+                      }}
+                    >Atualizar</ButtonU></Tabela>
+                    <Tabela align="center"><ButtonD onClick={() => openModalDelete(funcionario)}>Excluir</ButtonD></Tabela>
+                  </TabelaRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
                   <ModalDelete obj={funcionario}
                               modalIsOpen={modalDeleteIsOpen}
                               closeModal={closeModalDelete}
@@ -158,32 +156,30 @@ const useStyles = makeStyles({
 
       return(
         <>
-        <TableContainer component={Paper} className={classes.table}>
-        <Table  aria-label="Tabela Empresas">
-          <TableHead>
+          <TableContainer component={Paper} className={classes.table}>
+            <Table  aria-label="Tabela Empresas">
               <Tabela align="center"><TextoTh>Razão Social</TextoTh></Tabela>
               <Tabela align="center"><TextoTh>Código da Empresa</TextoTh></Tabela>
               <Tabela align="center"><TextoTh>Cnpj</TextoTh></Tabela>
-          </TableHead>
-          <TableBody>
-            {empresas.map((empresa) => (
-              <TabelaRow key={empresa.id}>
-                <Tabela component="th" scope="empresa" align="center">
-                <TextoTr>{empresa.razaoSocial}</TextoTr>
-                </Tabela>
-                <Tabela align="center"><TextoTr>{empresa.codEmpresa}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{empresa.cnpj.cnpj()}</TextoTr></Tabela>
-                <Tabela align="center"><Button variant="contained" color="primary"
-                  onClick={() => {
-                    handleEmpresa(empresa.id);
-                  }}
-                >Atualizar</Button></Tabela>
-                <Tabela align="center"><Button variant="outlined" color="primary" onClick={() => openModalDelete(empresa)}>Excluir</Button></Tabela>
-              </TabelaRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+              <TableBody>
+                {empresas.map((empresa) => (
+                  <TabelaRow key={empresa.id}>
+                    <Tabela component="th" scope="empresa" align="center">
+                    <TextoTr>{empresa.razaoSocial}</TextoTr>
+                    </Tabela>
+                    <Tabela align="center"><TextoTr>{empresa.codEmpresa}</TextoTr></Tabela>
+                    <Tabela align="center"><TextoTr>{empresa.cnpj.cnpj()}</TextoTr></Tabela>
+                    <Tabela align="center"><ButtonU 
+                      onClick={() => {
+                        handleEmpresa(empresa.id);
+                      }}
+                    >Atualizar</ButtonU></Tabela>
+                    <Tabela align="center"><ButtonD onClick={() => openModalDelete(empresa)}>Excluir</ButtonD></Tabela>
+                  </TabelaRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
                   <ModalDelete obj={empresa}
                               modalIsOpen={modalDeleteIsOpen}
                               closeModal={closeModalDelete}
@@ -212,50 +208,49 @@ const useStyles = makeStyles({
 
     return(
       <>
-          <TableContainer component={Paper} className={classes.table}>
-        <Table aria-label="Tabela Empresas">
-          <TableHead>
-            <TabelaRow>
-
-              <Tabela align="right">id</Tabela>
-              <Tabela align="right">descrição horário</Tabela>
-              <Tabela align="right">Entrada</Tabela>
-              <Tabela align="right">Intervalo</Tabela>
-              <Tabela align="right">Volta intervalo</Tabela>
-              <Tabela align="right">Saida</Tabela>
-              <Tabela align="right">Folga</Tabela>
-            </TabelaRow>
-          </TableHead>
-          <TableBody>
-            {horarioDetalhes.map(horarioDetalhe => (
-              <TabelaRow key={horarioDetalhe.id}>
-                <Tabela component="th" scope="Detlhes de horário" align="right">
-                  {horarioDetalhe.id}
-                </Tabela>
-                <Tabela align="right">{horarioDetalhe.idHorario.descHorario}</Tabela>
-                <Tabela align="right">{horarioDetalhe.entrada1}</Tabela>
-                <Tabela align="right">{horarioDetalhe.saida1}</Tabela>
-                <Tabela align="right">{horarioDetalhe.entrada2}</Tabela>
-                <Tabela align="right">{horarioDetalhe.saida2}</Tabela>
-                <Tabela align="right">{horarioDetalhe.folga ? 'VERDADEIRO' : 'FALSO'}</Tabela>
-                <Tabela align="right"><Button variant="contained" color="primary"
-                  onClick={() => {
-                    handleHorarioDetalhes(horarioDetalhe.id);
-                  }}
-                >Atualizar</Button></Tabela>
-                <Tabela align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(horarioDetalhe)}>Excluir</Button></Tabela>
-              </TabelaRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-                  <ModalDelete obj={horarioDetalhe}
-                              modalIsOpen={modalDeleteIsOpen}
-                              closeModal={closeModalDelete}
-                              deleteFunction={removeHorarioDetalhes}
-                              customStyles={customStyles}
-                  />
-
+        <TableContainer component={Paper} className={classes.table}>
+          <Table aria-label="Tabela Empresas">
+              <Tabela align="center"><TextoTh>Id</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Descrição Horário</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Entrada</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Intervalo</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Retorno do Intervalo</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Saida</TextoTh></Tabela>
+              <Tabela align="center"><TextoTh>Folga</TextoTh></Tabela>
+            <TableBody>
+              {horarioDetalhes.map(horarioDetalhe => (
+                <TabelaRow key={horarioDetalhe.id}>
+                  <Tabela component="th" scope="Detalhes de horário" align="center">
+                  <TextoTr>{horarioDetalhe.id}</TextoTr>
+                  </Tabela>
+                  <Tabela align="center"><TextoTr>{horarioDetalhe.idHorario.descHorario}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{horarioDetalhe.entrada1}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{horarioDetalhe.saida1}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{horarioDetalhe.entrada2}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{horarioDetalhe.saida2}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{horarioDetalhe.folga ? 'VERDADEIRO' : 'FALSO'}</TextoTr></Tabela>
+                  <Tabela align="center"><ButtonU 
+                                          onClick={() => {
+                                            handleHorarioDetalhes(horarioDetalhe.id);
+                                          }}
+                                          >Atualizar</ButtonU>
+                  </Tabela>
+                  <Tabela align="center"><ButtonD
+                                          onClick={() => 
+                                          openModalDelete(horarioDetalhe)}  
+                                          >Excluir</ButtonD>
+                  </Tabela>
+                </TabelaRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+                    <ModalDelete obj={horarioDetalhe}
+                                modalIsOpen={modalDeleteIsOpen}
+                                closeModal={closeModalDelete}
+                                deleteFunction={removeHorarioDetalhes}
+                                customStyles={customStyles}
+                    />
       </>
     )
   }
@@ -278,35 +273,30 @@ const useStyles = makeStyles({
 
     return(
       <>
-          <TableContainer component={Paper} className={classes.table}>
-        <Table aria-label="Tabela Horários">
-          <TableHead>
-            <TabelaRow>
-
-              <Tabela align="right">id</Tabela>
-              <Tabela align="right">Codigo horário</Tabela>
-              <Tabela align="right">Descrição horário</Tabela>
-            </TabelaRow>
-          </TableHead>
-          <TableBody>
-            {horarios.map(horario => (
-              <TabelaRow key={horario.id}>
-                <Tabela component="th" scope="Detlhes de horário" align="right">
-                  {horario.id}
-                </Tabela>
-                <Tabela align="right">{horario.codigoHorario}</Tabela>
-                <Tabela align="right">{horario.descHorario}</Tabela>
-                <Tabela align="right"><Button variant="contained" color="primary"
-                  onClick={() => {
-                    handleHorario(horario.id);
-                  }}
-                >Atualizar</Button></Tabela>
-                <Tabela align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(horario)}>Excluir</Button></Tabela>
-              </TabelaRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+        <TableContainer component={Paper} className={classes.table}>
+          <Table aria-label="Tabela Horários">
+            <Tabela align="center"><TextoTh>Id</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Codigo do Horário</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Descrição do Horário</TextoTh></Tabela>
+            <TableBody>
+              {horarios.map(horario => (
+                <TabelaRow key={horario.id}>
+                  <Tabela component="th" scope="Detlhes de horário" align="center">
+                    <TextoTr>{horario.id}</TextoTr>
+                  </Tabela>
+                  <Tabela align="center"><TextoTr>{horario.codigoHorario}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{horario.descHorario}</TextoTr></Tabela>
+                  <Tabela align="center"><ButtonU
+                    onClick={() => {
+                      handleHorario(horario.id);
+                    }}
+                  >Atualizar</ButtonU></Tabela>
+                  <Tabela align="center"><ButtonD onClick={() => openModalDelete(horario)}>Excluir</ButtonD></Tabela>
+                </TabelaRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
                   <ModalDelete obj={horario}
                               modalIsOpen={modalDeleteIsOpen}
                               closeModal={closeModalDelete}
@@ -317,6 +307,5 @@ const useStyles = makeStyles({
       </>
     )
   }
-  
 
   export {TableF, TableE, TableHD, TableH};

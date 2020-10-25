@@ -178,7 +178,7 @@ const Funcionarios = () => {
             e.preventDefault();
 
             if(!nomeAtualizado || !dataNascimentoAtualizado.replace(/\D/g, '') || !telefoneAtualizado.replace(/\D/g, '')){
-                alert("por favor preencha todos os campos");
+                alert("Por favor, preencha todos os campos");
                 return;
             }
 
@@ -269,7 +269,7 @@ const Funcionarios = () => {
                     <form className={classes.container} >
                         <TextField
                             id="date"
-                            label="Data de nascimento"
+                            label="Data de Nascimento"
                             type="date"
                             defaultValue={dataNascimento}
                             onChange={e => {
@@ -278,11 +278,10 @@ const Funcionarios = () => {
                             }}
                             className={classes.textField}
                             InputLabelProps={{
-                            shrink: true,
+                            shrink: true
                             }}
                         />
                     </form>
-
                     
                     <InputMask mask="(99) 99999-9999"
                         id="tel" 
@@ -297,20 +296,19 @@ const Funcionarios = () => {
                 </ContainerInputs>
                 <FooterModal>
                     <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={e => handleAddFuncionario(e)}
+                    >Adicionar</Button>
+                    <Button
                         color="secundary"
                         variant="outlined"
                         onClick={closeModal}
                     >Cancelar</Button>
 
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        onClick={e => handleAddFuncionario(e)}
-                    >Adicionar</Button>
                     </FooterModal>
             </FormModal>
             </Modal>
-
 
                     {/* segundo modal para atualização ! */}
             <Modal
@@ -333,7 +331,7 @@ const Funcionarios = () => {
                 <FormModal className={classes.container} >
                     <TextField
                         id="date"
-                        label="Data de Nascimento"
+                        
                         type="date"
                         defaultValue={dataNascimentoAtualizado}
                         onChange={e => {
@@ -341,9 +339,7 @@ const Funcionarios = () => {
                             console.log(e.target.value)
                         }}
                         className={classes.textField}
-                        InputLabelProps={{
-                        shrink: true,
-                        }}
+                    
                     />
                 
                 
@@ -367,7 +363,6 @@ const Funcionarios = () => {
             </Modal>
 
             <TableF funcionarios = {funcionarios} handleFuncionario = {openModalWithData} removeFuncionario = {removeFuncionario}/> 
-   
         </Container>
         
     );

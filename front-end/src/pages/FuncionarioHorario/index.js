@@ -6,6 +6,7 @@ const FuncionarioHorario = ({ location }) => {
 
     return(
         <h1>Id Funcionário: {id}</h1>
+        
     )
 }
 

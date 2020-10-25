@@ -8,19 +8,19 @@ export const Tabela = styled(TableCell)`
 `
 
 export const TabelaRow = styled(TableRow)`
+
     &:nth-child(even) {
-        background-color: rgba(131,151,176,0.1);
-        &:hover {
-            background-color:rgba(131,151,176,0.3);
+        background-color: rgba(162, 169, 173, 0.1);
+        &:hover {   
+            background-color: rgba(162, 169, 173, 0.3)
         }
     }
 
     &:nth-child(odd) {
         &:hover {
-            background-color:rgba(131,151,176,0.2);
+            background-color: rgba(166,169,173,0.3);
         }
     }
-
 
 `;
 
@@ -38,13 +38,51 @@ export const TextoTr = styled.p`
 `;
 
 
+export const ButtonU = styled.button`
+    width: 85px;
+    height: 35px;
+    color: #A2A9AD;
+    border: 2px solid #A2A9AD;
+    border-radius: 5px;
+    background-color: transparent;
+    font-family: 'Oxanium', cursive;
+    outline: none;
+
+    &:hover{
+        background-color: #A2A9AD;
+        cursor: pointer;
+        color: white;
+    }
+
+`;
+
+
+
+export const ButtonD = styled.button`
+    width: 85px;
+    height: 35px;
+    color: rgba(206,14,45,0.8);
+    border: 2px solid rgba(206,14,45,0.7) ;
+    border-radius: 5px;
+    background-color: transparent;
+    font-family: 'Oxanium', cursive;
+    outline: none;
+
+    &:hover{
+        background-color: rgba(206,14,45,0.9) ;
+        cursor: pointer;
+        color: white;
+    }
+
+`;
+
 export const Button = styled.button`
     width: 85px;
     height: 35px;
     color: #fff;
     border: 0;
     border-radius: 5px;
-    background-color: #8397B0;
+    background-color: #A2A9AD;
     font-family: 'Oxanium', cursive;
     outline: none;
 
@@ -55,3 +93,8 @@ export const Button = styled.button`
     }
 
 `;
+
+
+
+
+

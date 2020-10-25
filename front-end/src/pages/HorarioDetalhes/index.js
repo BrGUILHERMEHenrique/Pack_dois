@@ -11,7 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-import { FormModal, Button, Container, Row, SubTitulo } from './styles';
+import { FormModal, Button, Container, Row, SubTitulo, HeaderModal, FooterModal } from './styles';
 import { TableHD } from '../../components/Table';
 
 
@@ -138,7 +138,7 @@ const HorarioDetalhes = () => {
                 return;
             }
             if(!folga){
-                if(!entrada1 || !saida1 && !entrada2 || !saida2 || !codigoDia){
+                if(!entrada1 || !saida1 || !entrada2 || !saida2 || !codigoDia){
                 alert("Por favor, preencha todos os campos");
                 return;
                 }
@@ -203,7 +203,7 @@ const HorarioDetalhes = () => {
                 closeModalAdd();
                 return;
             }
-            if(!codigoDiaAtualizado || !folgaAtualizado || !entrada1Atualizado || !saida1Atualizado || !entrada2Atualizado || !saida2Atualizado && !folgaAtualizado){
+            if(!codigoDiaAtualizado || !folgaAtualizado || !entrada1Atualizado || !saida1Atualizado || !entrada2Atualizado || !saida2Atualizado || !folgaAtualizado){
                 alert("Por favor, preencha todos os campos");
                 return;
             }
@@ -253,7 +253,6 @@ const HorarioDetalhes = () => {
                 <SubTitulo> Horário Detalhe </SubTitulo>
                 <Button variant="contained" color="primary" onClick={openModalAdd}>Adicionar</Button>
             </Row>
-        </Container>
 
         <TableHD horarioDetalhes={ListHorarioDetalhes} removeHorarioDetalhes = {removeHorarioDetalhe} handleHorarioDetalhes={openModalWithData}/>
 
@@ -263,10 +262,13 @@ const HorarioDetalhes = () => {
             style={customStyles}
             contentLabel="Modal"
         >
-    
-            <h2>Atualizar</h2>
-            <button onClick={closeModalUpdate}>Fechar</button>
+            <HeaderModal>
+                <h2>Atualizar</h2>
+            </HeaderModal>
+            
+            {/* <button onClick={closeModalUpdate}>Fechar</button> */}
             <FormModal>
+                <Row>
                 <Input 
                     onChange={e => setEntrada1Atualizado(e.target.value)}
                     value={entrada1Atualizado}
@@ -276,7 +278,8 @@ const HorarioDetalhes = () => {
                     onChange={e => setEntrada2Atualizado(e.target.value)}
                     value={entrada2Atualizado}
                 />
-                
+                </Row>
+                <Row>
                 <Input   
                     onChange={e => setSaida1Atualizado(e.target.value)}
                     value={saida1Atualizado}
@@ -285,6 +288,8 @@ const HorarioDetalhes = () => {
                     onChange={e => setSaida2Atualizado(e.target.value)} 
                     value={saida2Atualizado}
                 />
+                </Row>
+                <Row>
                 <Input 
                     type="number"
                     value={codigoDiaAtualizado}
@@ -293,9 +298,9 @@ const HorarioDetalhes = () => {
                         setCodigoDiaAtualizado(e.target.value);
                     }}
                 />
-            
+                
                     <FormControl className={classes.formControl}>
-                        <InputLabel id="Folga">Folga</InputLabel>
+                        <InputLabel shrink={true} id="Folga">Folga</InputLabel>
                         <Select
                         labelId="Folga"
                         id="Folga"
@@ -306,10 +311,15 @@ const HorarioDetalhes = () => {
                             <MenuItem value={false}>Falso</MenuItem>
                         </Select>
                     </FormControl>
-                
-                <button
+                </Row>
+                    <FooterModal>
+                <Button
                     onClick={e => handleHorarioDetalhe(horarioDetalhe.id, e)}
-                >Atualizar</button>
+                >Atualizar</Button>
+                <Button
+                    onClick={closeModalUpdate}
+                >Cancelar</Button>
+                </FooterModal>
             </FormModal>
             </Modal>
 
@@ -319,13 +329,14 @@ const HorarioDetalhes = () => {
             style={customStyles}
             contentLabel="Modal"
             >
-    
-            <h2>Cadastrar</h2>
-            <button onClick={closeModalAdd}>Fechar</button>
+                <HeaderModal>
+                  <h2>Cadastrar</h2>  
+                </HeaderModal>
+            
             <FormModal>
-               
+               <Row>
                  <FormControl className={classes.formControl}>
-                        <InputLabel id={entrada1}>Horário Entrada</InputLabel>
+                        <InputLabel shrink={true} id={entrada1}>Horário Entrada</InputLabel>
                         <Select
                         labelId={entrada1}
                         id={entrada1}
@@ -341,7 +352,7 @@ const HorarioDetalhes = () => {
                         </Select>
                     </FormControl>
                     <FormControl className={classes.formControl}>
-                        <InputLabel id={saida1}>Horário saida almoço</InputLabel>
+                        <InputLabel shrink={true} id={saida1}>Horário saida almoço</InputLabel>
                         <Select
                         labelId={saida1}
                         id={saida1}
@@ -358,7 +369,7 @@ const HorarioDetalhes = () => {
                     </FormControl>
                 
                     <FormControl className={classes.formControl}>
-                        <InputLabel id={entrada2}>Horário volta almoço</InputLabel>
+                        <InputLabel shrink={true} id={entrada2}>Horário volta almoço</InputLabel>
                         <Select
                         labelId={entrada2}
                         id={entrada2}
@@ -373,9 +384,10 @@ const HorarioDetalhes = () => {
                         
                         </Select>
                     </FormControl>
-
+                    </Row>
+                    <Row>
                     <FormControl className={classes.formControl}>
-                        <InputLabel id={saida2}>Horário final expediente</InputLabel>
+                        <InputLabel shrink={true} id={saida2}>Horário final expediente</InputLabel>
                         <Select
                         labelId={saida2}
                         id={saida2}
@@ -408,7 +420,7 @@ const HorarioDetalhes = () => {
                         </Select>
                     </FormControl>
                     <FormControl className={classes.formControl}>
-                        <InputLabel id="Folga">Folga</InputLabel>
+                        <InputLabel shrink={true} id="Folga">Folga</InputLabel>
                         <Select
                         labelId="Folga"
                         id="Folga"
@@ -419,23 +431,29 @@ const HorarioDetalhes = () => {
                             <MenuItem value={false}>Falso</MenuItem>
                         </Select>
                     </FormControl>
+                    </Row>
 
                     <Input 
+                        min={1}
                         type="number"
+                        size="small"
                         value={codigoDia}
                         onChange={e => {
                             setCodigoDia(e.target.value);
                             setUltimo(parseInt(e.target.value));
                         }}
                     />
-                <button
-                    onClick={closeModalAdd}
-                >Cancelar</button>
-                <button
+                    <FooterModal>
+                <Button
                     onClick={e => handleAddHorarioDetalhe(e)}
-                >Atualizar</button>
+                >Adicionar</Button>
+                <Button
+                    onClick={closeModalAdd}
+                >Cancelar</Button>
+                </FooterModal>
             </FormModal>
             </Modal>
+            </Container>
         </>
     )
 
