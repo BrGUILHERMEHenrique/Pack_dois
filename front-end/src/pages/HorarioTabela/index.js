@@ -5,14 +5,14 @@ import Input from '@material-ui/core/Input';
 
 import api from '../../services/api';
 
-import { FormModal, Button, Container, Row, SubTitulo } from './styles';
+import { FormModal, Button, Container, Row, SubTitulo, FooterModal, HeaderModal } from './styles';
 
 import { TableH } from '../../components/Table';
 
 const customStyles = {
     content : {
-        width               : '50%',
-        height              : '50%',
+        width               : '40%',
+        height              : '40%',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -115,6 +115,18 @@ const HorarioTabela = () => {
         ]
     )
 
+    
+    const removeHorario = async (id) => {
+        try {
+            const response = await api.delete(`horario/${id}`);
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            loadHorarios();
+        }
+    }
+
     useEffect(
         () => {
             loadHorarios();
@@ -131,8 +143,7 @@ const HorarioTabela = () => {
                 <SubTitulo> Horários </SubTitulo>
                 <Button variant="contained" color="primary" onClick={openModalAdd}>Adicionar</Button>
             </Row>
-        </Container>
-        <TableH horarios={horarios} handleHorario={openModalWithData}/>
+        <TableH horarios={horarios} handleHorario={openModalWithData} removeHorario={removeHorario}/>
 
         <Modal
             isOpen={modalPutIsOpen}
@@ -140,9 +151,10 @@ const HorarioTabela = () => {
             style={customStyles}
             contentLabel="Modal"
             >
-    
+                
+            <HeaderModal>
             <h2>Atualizar</h2>
-            <button onClick={closeModalUpdate}>Fechar</button>
+            </HeaderModal>
             <FormModal>
                 <Input 
                     type="number"
@@ -154,10 +166,11 @@ const HorarioTabela = () => {
                     onChange={e => setDescHorarioAtualizado(e.target.value)}
                     value={descHorarioAtualizado}
                 />
-                
-                <button
+                <FooterModal>
+                <Button
                     onClick={e => handleHorario(horario.id, e)}
-                >Atualizar</button>
+                >Atualizar</Button>
+                </FooterModal>
             </FormModal>
             </Modal>
 
@@ -168,9 +181,11 @@ const HorarioTabela = () => {
             contentLabel="Modal"
             >
     
+            <HeaderModal>
             <h2>Cadastrar</h2>
-            <button onClick={closeModalAdd}>Fechar</button>
+            </HeaderModal>
             <FormModal>
+          
                 <Input 
                     type="number"
                     onChange={e => setCodigoHorario(e.target.value)}
@@ -181,12 +196,15 @@ const HorarioTabela = () => {
                     onChange={e => setDescHorario(e.target.value)}
                     value={descHorario}
                 />
-                
-                <button
+
+                <FooterModal>
+                <Button
                     onClick={e => handleAddHorario(e)}
-                >Cadastrar</button>
+                >Cadastrar</Button>
+                </FooterModal>
             </FormModal>
             </Modal>
+            </Container>
             </>
     );
 

@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box
+}
+
+html, body, #root {
+    font-family: 'Oxanium';
+    height: 100%;
+    margin: 0 auto;
+}
+
+body, input, button {
+    font: 16px;
+}
+
+button{
+    cursor: pointer;
+}
+
+;

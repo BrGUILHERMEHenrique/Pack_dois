@@ -10,7 +10,7 @@ import {TableE} from '../../components/Table';
 
 import api from '../../services/api';
 
-import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button } from './styles';
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, SearchRow } from './styles';
 
 const styleAdicionar = {
     content : {
@@ -195,8 +195,11 @@ const Empresas = () => {
             <Row 
             direction="row"
             container>
-                <SubTitulo> Empresa </SubTitulo>
-                <Button variant="contained" color="primary" onClick={openModal}>Adicionar</Button>
+                <SubTitulo> Empresas </SubTitulo>
+                <Button onClick={openModal}>Adicionar</Button>
+              {/* <SearchRow>
+                <input></input>
+              </SearchRow> */}
             </Row>
             
             <Modal

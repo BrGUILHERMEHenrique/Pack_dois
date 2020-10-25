@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid';
 
 
 export const Container = styled(Grid)`
-
     padding: 20px;
 
 `;  
@@ -12,21 +11,24 @@ export const SubTitulo = styled.p`
     margin: 10px 40px 10px 9%;
     font-family: 'Oxanium', cursive;
     font-size: 2.4rem;
+    color: rgb(206,14,45)
+    
 
 `
 
 export const Row = styled(Grid)`
     align-items: center;
+    margin-top: 15%;
 
 `
 
 export const Button = styled.button`
     width: 85px;
-    height: 35px;
-    color: #fff;
+   height: 35px;
+   color: #fff;
     border: 0;
     border-radius: 5px;
-    background-color: #8397B0;
+    background-color: rgba(162, 169, 173,0.9); 
     font-family: 'Oxanium', cursive;
     outline: none;
 
@@ -35,6 +37,7 @@ export const Button = styled.button`
         cursor: pointer;
         color: black;
     }
+
 `;
 
 export const FormModal = styled.form`
