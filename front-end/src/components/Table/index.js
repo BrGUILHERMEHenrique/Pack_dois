@@ -9,12 +9,9 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import { Tabela, TabelaRow, THead, Button, TextoTh, TextoTr, ButtonU, ButtonD } from './styles';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-// import TabelaRow from '@material-ui/core/TabelaRow';
 import Paper from '@material-ui/core/Paper';
-// import Button from '@material-ui/core/Button';
-
-import ModalDelete from '../../components/ModalDelete';
+import swal from 'sweetalert';
+import 'sweetalert2/src/sweetalert2.scss'
 
 
 //styles criado através do material para a tabela
@@ -68,30 +65,33 @@ const useStyles = makeStyles({
       }
 
 }
-  
-  const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
+const OpenAlert = (id, remove) => {
+
+  swal({
+    title: 'Deseja REALMENTE excluir??',
+    text: 'Esses dados serão removidos permanentemente.', 
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal('Removido com sucesso!', {
+      icon: "success",
+    });
+    remove(id)
+  } else {
+    swal('Ação cancelada!');
+  }
+});
+}
+
+
+const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     const classes = useStyles();
     const history = useHistory();
 
-    const [modalDeleteIsOpen, setModalDeleteisOpen] = useState(false);
-    const [funcionario, setFuncionario] = useState({});
-
-    function createData(Nome, Matricula, CPF, Data_de_nascimento, Telefone) {
-      return { Nome, Matricula, CPF, Data_de_nascimento, Telefone };
-    }
-
-    const openModalDelete = (funcionario) => {
-      setFuncionario(funcionario);
-      setModalDeleteisOpen(true);
-    }
-
-    const closeModalDelete = () => {
-      setFuncionario({});
-      setModalDeleteisOpen(false);
-    }
-
       return(
-        <>
           <TableContainer component={Paper} className={classes.table}>
             <Table  aria-label="Tabela Funcionários">
               <Tabela align="center"><TextoTh>Nome</TextoTh></Tabela>
@@ -118,96 +118,61 @@ const useStyles = makeStyles({
                         handleFuncionario(funcionario.id);
                       }}
                     >Atualizar</ButtonU></Tabela>
-                    <Tabela align="center"><ButtonD onClick={() => openModalDelete(funcionario)}>Excluir</ButtonD></Tabela>
+                    <Tabela align="center"><ButtonD 
+                                          onClick={() => {
+                                              OpenAlert(funcionario.id, removeFuncionario)
+                                            }}
+                                            >Excluir</ButtonD>
+                    </Tabela>
                   </TabelaRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
-                  <ModalDelete obj={funcionario}
-                              modalIsOpen={modalDeleteIsOpen}
-                              closeModal={closeModalDelete}
-                              deleteFunction={removeFuncionario}
-                              customStyles={customStyles}
-                  />
-      </>
+
       )
   }
 
   const TableE = ({ empresas, handleEmpresa, removeEmpresa }) =>{
     const classes = useStyles();
 
-    const [modalDeleteIsOpen, setModalDeleteisOpen] = useState(false);
-    const [empresa, setEmpresa] = useState({});
-
-    function createData(CodEmpresa, RazaoSocial, Cnpj) {
-      return { CodEmpresa, RazaoSocial, Cnpj};
-    }
-
-    const openModalDelete = (empresa) => {
-      setEmpresa(empresa);
-      setModalDeleteisOpen(true);
-    }
-
-    const closeModalDelete = () => {
-      setEmpresa({});
-      setModalDeleteisOpen(false);
-    }
-
-      return(
-        <>
-          <TableContainer component={Paper} className={classes.table}>
-            <Table  aria-label="Tabela Empresas">
-              <Tabela align="center"><TextoTh>Razão Social</TextoTh></Tabela>
-              <Tabela align="center"><TextoTh>Código da Empresa</TextoTh></Tabela>
-              <Tabela align="center"><TextoTh>Cnpj</TextoTh></Tabela>
-              <TableBody>
-                {empresas.map((empresa) => (
-                  <TabelaRow key={empresa.id}>
-                    <Tabela component="th" scope="empresa" align="center">
-                    <TextoTr>{empresa.razaoSocial}</TextoTr>
-                    </Tabela>
-                    <Tabela align="center"><TextoTr>{empresa.codEmpresa}</TextoTr></Tabela>
-                    <Tabela align="center"><TextoTr>{empresa.cnpj.cnpj()}</TextoTr></Tabela>
-                    <Tabela align="center"><ButtonU 
-                      onClick={() => {
-                        handleEmpresa(empresa.id);
-                      }}
-                    >Atualizar</ButtonU></Tabela>
-                    <Tabela align="center"><ButtonD onClick={() => openModalDelete(empresa)}>Excluir</ButtonD></Tabela>
-                  </TabelaRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-                  <ModalDelete obj={empresa}
-                              modalIsOpen={modalDeleteIsOpen}
-                              closeModal={closeModalDelete}
-                              deleteFunction={removeEmpresa}
-                              customStyles={customStyles}
-                  />
-      </>
-      )
+    return(
+        <TableContainer component={Paper} className={classes.table}>
+          <Table  aria-label="Tabela Empresas">
+            <Tabela align="center"><TextoTh>Razão Social</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Código da Empresa</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Cnpj</TextoTh></Tabela>
+            <TableBody>
+              {empresas.map((empresa) => (
+                <TabelaRow key={empresa.id}>
+                  <Tabela component="th" scope="empresa" align="center">
+                  <TextoTr>{empresa.razaoSocial}</TextoTr>
+                  </Tabela>
+                  <Tabela align="center"><TextoTr>{empresa.codEmpresa}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{empresa.cnpj.cnpj()}</TextoTr></Tabela>
+                  <Tabela align="center"><ButtonU 
+                                          onClick={() => {
+                                            handleEmpresa(empresa.id);
+                                          }}
+                                          >Atualizar</ButtonU></Tabela>
+                  <Tabela align="center"><ButtonD 
+                                          onClick={() => {
+                                              OpenAlert(empresa.id, removeEmpresa)
+                                            }}
+                                            >Excluir</ButtonD>
+                  </Tabela>
+                </TabelaRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+    )
   }
 
-  const TableHD = ({ horarioDetalhes, handleHorarioDetalhes, removeHorarioDetalhes }) => {
+  const TableHD = ({ horarioDetalhes, handleHorarioDetalhes, removeHorarioDetalhe }) => {
     const classes = useStyles();
 
-    const [modalDeleteIsOpen, setModalDeleteisOpen] = useState(false);
-    const [horarioDetalhe, setHorarioDetalhe] = useState({});
-
-    const openModalDelete = (horario) => {
-      setHorarioDetalhe(horario);
-      setModalDeleteisOpen(true);
-    }
-
-    const closeModalDelete = () => {
-      setHorarioDetalhe({});
-      setModalDeleteisOpen(false);
-    }
-
     return(
-      <>
         <TableContainer component={Paper} className={classes.table}>
           <Table aria-label="Tabela Empresas">
               <Tabela align="center"><TextoTh>Id</TextoTh></Tabela>
@@ -235,44 +200,24 @@ const useStyles = makeStyles({
                                           }}
                                           >Atualizar</ButtonU>
                   </Tabela>
-                  <Tabela align="center"><ButtonD
-                                          onClick={() => 
-                                          openModalDelete(horarioDetalhe)}  
-                                          >Excluir</ButtonD>
+                  <Tabela align="center"><ButtonD 
+                                          onClick={() => {
+                                              OpenAlert(horarioDetalhe.id, removeHorarioDetalhe)
+                                            }}
+                                            >Excluir</ButtonD>
                   </Tabela>
                 </TabelaRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-                    <ModalDelete obj={horarioDetalhe}
-                                modalIsOpen={modalDeleteIsOpen}
-                                closeModal={closeModalDelete}
-                                deleteFunction={removeHorarioDetalhes}
-                                customStyles={customStyles}
-                    />
-      </>
     )
   }
   
   const TableH = ({ horarios, handleHorario, removeHorario }) => {
     const classes = useStyles();
 
-    const [modalDeleteIsOpen, setModalDeleteisOpen] = useState(false);
-    const [horario, setHorario] = useState({});
-
-    const openModalDelete = (horario) => {
-      setHorario(horario);
-      setModalDeleteisOpen(true);
-    }
-
-    const closeModalDelete = () => {
-      setHorario({});
-      setModalDeleteisOpen(false);
-    }
-
     return(
-      <>
         <TableContainer component={Paper} className={classes.table}>
           <Table aria-label="Tabela Horários">
             <Tabela align="center"><TextoTh>Id</TextoTh></Tabela>
@@ -291,20 +236,17 @@ const useStyles = makeStyles({
                       handleHorario(horario.id);
                     }}
                   >Atualizar</ButtonU></Tabela>
-                  <Tabela align="center"><ButtonD onClick={() => openModalDelete(horario)}>Excluir</ButtonD></Tabela>
+                  <Tabela align="center"><ButtonD 
+                                          onClick={() => {
+                                              OpenAlert(horario.id, removeHorario)
+                                            }}
+                                            >Excluir</ButtonD>
+                  </Tabela>
                 </TabelaRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-                  <ModalDelete obj={horario}
-                              modalIsOpen={modalDeleteIsOpen}
-                              closeModal={closeModalDelete}
-                              deleteFunction={removeHorario}
-                              customStyles={customStyles}
-                  />
-
-      </>
     )
   }
 
