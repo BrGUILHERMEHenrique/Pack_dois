@@ -16,6 +16,9 @@ import Paper from '@material-ui/core/Paper';
 
 import ModalDelete from '../../components/ModalDelete';
 
+import swal from 'sweetalert';
+import 'sweetalert2/src/sweetalert2.scss'
+
 
 //styles criado através do material para a tabela
 const useStyles = makeStyles({
@@ -68,8 +71,31 @@ const useStyles = makeStyles({
       }
 
 }
+const OpenAlert = (id, remove) => {
+
+  swal({
+    title: 'Deseja REALMENTE excluir??',
+    text: 'Esses dados serão removidos permanentemente.', 
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal('Removido com sucesso!', {
+      icon: "success",
+    });
+    remove(id)
+  } else {
+    swal('Ação cancelada!');
+  }
+});
+}
+
+
   
-  const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
+
+const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     const classes = useStyles();
     const history = useHistory();
 
