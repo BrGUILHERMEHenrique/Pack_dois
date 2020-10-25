@@ -13,6 +13,9 @@ import Paper from '@material-ui/core/Paper';
 import swal from 'sweetalert';
 import 'sweetalert2/src/sweetalert2.scss'
 
+import swal from 'sweetalert';
+import 'sweetalert2/src/sweetalert2.scss'
+
 
 //styles criado através do material para a tabela
 const useStyles = makeStyles({
