@@ -5,8 +5,11 @@ import InputMask from 'react-input-mask';
 import MaterialInput from '@material-ui/core/Input';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+
 // import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
+import Select from '@material-ui/core/Select';
 import { AiOutlineClose } from 'react-icons/ai';
 
 //imports de dentro do diretório do projeto
@@ -71,6 +74,8 @@ const Funcionarios = () => {
     const [cpf, setCpf] = useState('');
     const [dataNascimento, setDataNascimento] = useState('');
     const [telefone, setTelefone] = useState('');
+    const [empresa, setEmpresa] = useState('');
+    const [listaEmpresas, setListaEmpresas] = useState([]);
     const [nomeAtualizado, setNomeAtualizado] = useState('');
     const [dataNascimentoAtualizado, setDataNascimentoAtualizado] = useState('');
     const [telefoneAtualizado, setTelefoneAtualizado] = useState('');
@@ -105,12 +110,24 @@ const Funcionarios = () => {
             }
         }, [],
     );
+
+    const loadEmpresas = useCallback(
+        async () => {
+            try{
+                const response = await api.get('empresa');
+                console.log(response.data);
+                setListaEmpresas(response.data);
+            }catch(error){
+                console.log(error);
+            }
+        }, [],
+    );
     
     const handleAddFuncionario = useCallback(
         async (e) => {
             e.preventDefault();
 
-            if(!nome || !codMatricula || !cpf.replace(/\D/g, '') || !dataNascimento.replace(/\D/g, '') || !telefone.replace(/\D/g, '')){
+            if(!nome || !codMatricula || !cpf.replace(/\D/g, '') || !dataNascimento.replace(/\D/g, '') || !telefone.replace(/\D/g, '') || !empresa){
                 alert("Por favor, preencha todos os campos");
                 return;
             }
@@ -121,6 +138,7 @@ const Funcionarios = () => {
             }
             const params = {
                 nome: nome,
+                idEmpresa: empresa.id,
                 codMatricula: codMatricula,
                 cpf: cpf.replace(/\D/g, ''),
                 dataNascimento: dataNascimento,
@@ -139,10 +157,11 @@ const Funcionarios = () => {
                 setCpf('');
                 setDataNascimento('');
                 setTelefone('');
+                setEmpresa('');
                 closeModal();
                 loadFuncionarios();
             }
-        }, [nome, codMatricula, cpf, dataNascimento, telefone],
+        }, [nome, codMatricula, cpf, dataNascimento, telefone, empresa],
     )
 
         const getFuncionarioById = useCallback(
@@ -154,7 +173,7 @@ const Funcionarios = () => {
                 } catch(error){
                     console.log(error);
                 } 
-            }, [nome, cpf, dataNascimento, codMatricula, telefone, funcionario]
+            }, [nome, cpf, dataNascimento, codMatricula, telefone, funcionario, empresa]
         )
 
         const openModalWithData = useCallback(
@@ -213,21 +232,27 @@ const Funcionarios = () => {
             }
         }
 
-
     useEffect(
         () => {
             loadFuncionarios();
         }, [loadFuncionarios],
     )
 
+    useEffect(
+        () => {
+            loadEmpresas();
+        }, [loadEmpresas],
+    )
+
     return(
 
         <Container>
+
              <Row 
             direction="row"
             container>
                 <SubTitulo> Funcionário </SubTitulo>
-                <Button variant="contained" color="primary" onClick={openModal}>Adicionar</Button>
+                <Button onClick={openModal}>Adicionar</Button>
             </Row>
             <Modal
             isOpen={modalIsOpen}
@@ -282,6 +307,18 @@ const Funcionarios = () => {
                             }}
                         />
                     </form>
+                    <Select
+                        labelId={empresa}
+                        id={empresa}
+                        value={empresa}
+                        onChange={e => setEmpresa(e.target.value)}
+                        >
+                            {
+                                listaEmpresas.map(emp => (
+                                    <MenuItem value={emp}>{emp.razaoSocial}</MenuItem>
+                                ))                                
+                            }
+                    </Select>
                     
                     <InputMask mask="(99) 99999-9999"
                         id="tel" 
@@ -296,13 +333,9 @@ const Funcionarios = () => {
                 </ContainerInputs>
                 <FooterModal>
                     <Button
-                        color="primary"
-                        variant="contained"
                         onClick={e => handleAddFuncionario(e)}
                     >Adicionar</Button>
                     <Button
-                        color="secundary"
-                        variant="outlined"
                         onClick={closeModal}
                     >Cancelar</Button>
 
@@ -339,9 +372,7 @@ const Funcionarios = () => {
                             console.log(e.target.value)
                         }}
                         className={classes.textField}
-                    
                     />
-                
                 
                 <InputMask mask="(99) 99999-9999"
                     id="tel" 

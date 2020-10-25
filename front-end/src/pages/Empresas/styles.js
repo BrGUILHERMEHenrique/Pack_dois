@@ -22,12 +22,6 @@ export const Row = styled(Grid)`
 
 `
 
-export const SearchRow = styled(Grid)`
-    align-items: center;
-    flex-direction: row;
-
-`
-
 export const Button = styled.button`
     width: 85px;
    height: 35px;

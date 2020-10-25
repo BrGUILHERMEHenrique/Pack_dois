@@ -203,7 +203,7 @@ const HorarioDetalhes = () => {
                 closeModalAdd();
                 return;
             }
-            if(!codigoDiaAtualizado || !folgaAtualizado || !entrada1Atualizado || !saida1Atualizado || !entrada2Atualizado || !saida2Atualizado || !folgaAtualizado){
+            if(!codigoDiaAtualizado || !folgaAtualizado || !entrada1Atualizado || !saida1Atualizado || !entrada2Atualizado || !saida2Atualizado && !folgaAtualizado){
                 alert("Por favor, preencha todos os campos");
                 return;
             }
@@ -254,7 +254,7 @@ const HorarioDetalhes = () => {
                 <Button variant="contained" color="primary" onClick={openModalAdd}>Adicionar</Button>
             </Row>
 
-        <TableHD horarioDetalhes={ListHorarioDetalhes} removeHorarioDetalhes = {removeHorarioDetalhe} handleHorarioDetalhes={openModalWithData}/>
+        <TableHD horarioDetalhes={ListHorarioDetalhes} removeHorarioDetalhe = {removeHorarioDetalhe} handleHorarioDetalhes={openModalWithData}/>
 
         <Modal
             isOpen={modalPutIsOpen}

@@ -91,46 +91,47 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     const classes = useStyles();
     const history = useHistory();
 
-      return(
-          <TableContainer component={Paper} className={classes.table}>
-            <Table  aria-label="Tabela Funcionários">
-              <Tabela align="center"><TextoTh>Nome</TextoTh></Tabela>
-              <Tabela align="center"><TextoTh>Matricula</TextoTh></Tabela>
-              <Tabela align="center"><TextoTh>CPF</TextoTh></Tabela>
-              <Tabela align="center"><TextoTh>Data de Nascimento</TextoTh></Tabela>
-              <Tabela align="center"><TextoTh>Telefone</TextoTh></Tabela>
-              <TableBody>
-                {funcionarios.map((funcionario) => (
-                  <TabelaRow key={funcionario.id}>
-                    <Tabela component="th" scope="funcionario" align="center">
-                      {funcionario.nome}
-                    </Tabela>
+    return(
+        <TableContainer component={Paper} className={classes.table}>
+          <Table  aria-label="Tabela Funcionários">
+            <Tabela align="center"><TextoTh>Nome</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Empresa</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Matricula</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>CPF</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Data de Nascimento</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Telefone</TextoTh></Tabela>
+            <TableBody>
+              {funcionarios.map((funcionario) => (
+                <TabelaRow key={funcionario.id}>
+                  <Tabela component="th" scope="funcionario" align="center">
+                    {funcionario.nome}
+                  </Tabela>
 
-                    <Tabela align="center"><TextoTr>{funcionario.codMatricula}</TextoTr></Tabela>
-                    <Tabela align="center"><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
-                    <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</TextoTr></Tabela>
-                    <Tabela align="center"><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
-                    <Tabela align="center"><ButtonU
-                      onClick = {() => history.push('/funcionarioHorario', { id: funcionario.id })}
-                    >Horários</ButtonU></Tabela>
-                    <Tabela align="center"><ButtonU 
-                      onClick={() => {
-                        handleFuncionario(funcionario.id);
-                      }}
-                    >Atualizar</ButtonU></Tabela>
-                    <Tabela align="center"><ButtonD 
-                                          onClick={() => {
-                                              OpenAlert(funcionario.id, removeFuncionario)
-                                            }}
-                                            >Excluir</ButtonD>
-                    </Tabela>
-                  </TabelaRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-
-      )
+                  <Tabela align="center"><TextoTr>{funcionario.idEmpresa.razaoSocial}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{funcionario.codMatricula}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
+                  <Tabela align="center"><ButtonU
+                    onClick = {() => history.push('/funcionarioHorario', { id: funcionario.id })}
+                  >Horários</ButtonU></Tabela>
+                  <Tabela align="center"><ButtonU 
+                    onClick={() => {
+                      handleFuncionario(funcionario.id);
+                    }}
+                  >Atualizar</ButtonU></Tabela>
+                  <Tabela align="center"><ButtonD 
+                                        onClick={() => {
+                                            OpenAlert(funcionario.id, removeFuncionario)
+                                          }}
+                                          >Excluir</ButtonD>
+                  </Tabela>
+                </TabelaRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+    )
   }
 
   const TableE = ({ empresas, handleEmpresa, removeEmpresa }) =>{

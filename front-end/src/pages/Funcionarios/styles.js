@@ -43,7 +43,6 @@ export const FormModal = styled.form`
     margin-top: 40px;
     font-family: 'Oxanium', cursive;
 
-
     input{
         width: 100%;
         height: 100%;
@@ -53,21 +52,7 @@ export const FormModal = styled.form`
         margin-top: 20px;
         border: 0;
         outline: none;
-
         color: #3a3a3a;
-
-
-        &#date{
-            border: 0;
-        }
-        &#tel{
-            border: 0;  
-        }
-
-        &#cpf{
-            border: 0; 
-        }
-    }
 
 `;
 
