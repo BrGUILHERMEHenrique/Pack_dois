@@ -1,7 +1,6 @@
 //importação padrão do react 
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
 import { format } from 'date-fns'
 //imortação para construir a tabela com material ui
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,9 +9,6 @@ import TableBody from '@material-ui/core/TableBody';
 import { Tabela, TabelaRow, THead, Button, TextoTh, TextoTr, ButtonU, ButtonD } from './styles';
 import TableContainer from '@material-ui/core/TableContainer';
 import Paper from '@material-ui/core/Paper';
-import swal from 'sweetalert';
-import 'sweetalert2/src/sweetalert2.scss'
-
 import swal from 'sweetalert';
 import 'sweetalert2/src/sweetalert2.scss'
 
@@ -107,9 +103,8 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
               {funcionarios.map((funcionario) => (
                 <TabelaRow key={funcionario.id}>
                   <Tabela component="th" scope="funcionario" align="center">
-                    {funcionario.nome}
+                  <TextoTr>{funcionario.nome}</TextoTr>
                   </Tabela>
-
                   <Tabela align="center"><TextoTr>{funcionario.idEmpresa.razaoSocial}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{funcionario.codMatricula}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>

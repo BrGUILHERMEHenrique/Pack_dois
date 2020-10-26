@@ -5,6 +5,40 @@ import Logo from '../../assets/pack.svg'
 import Empresas from '../../pages/Empresas';
 import Grid from '@material-ui/core/Grid';
 
+const ativo = {
+    color:'#CE0E2D'
+    }
+const activeMenuImage = {
+    width: '10%'
+}
+
+const inactiveMenuImage = {
+    width: '25%'
+}
+
+const activeMenuContainer = {
+    backgroundColor: '#fff',
+    padding: '0.9%'
+}
+
+const inactiveMenuContainer = {
+    padding: '2%',
+    marginBottom: '4%'
+}
+
+const activeMenuLink = {
+    color: '#7B7B7B',
+    textDecoration: 'none',
+    fontSize: '0.9em',
+    padding: '15px'
+}
+
+const inactiveMenuLink = {
+    textDecoration: 'none',
+    padding: '15px',
+    color: '#7B7B7B'
+}
+
 const Header = () => {
 
     const [menuActivity, setMenuActivity] = useState(false);
@@ -29,17 +63,8 @@ const Header = () => {
 
     ] 
 
-    const ativo = {
-        color:'#CE0E2D'
-        }
-    
-    const styles = {
-        color: 'black',
-        
-        }
-
     const resizeMenu = () => {
-        if (window.scrollY >= 80) {
+        if (window.scrollY >= 100) {
             setMenuActivity(true)
         } else {
             setMenuActivity(false);
@@ -47,40 +72,6 @@ const Header = () => {
     }
 
     window.addEventListener('scroll', resizeMenu);
-
-    const activeMenuImage = {
-        width: '10%'
-    }
-
-    const inactiveMenuImage = {
-        width: '25%'
-    }
-
-    const activeMenuContainer = {
-        backgroundColor: '#fff',
-        padding: '0.9%'
-    }
-
-    const inactiveMenuContainer = {
-        padding: '2%',
-        marginBottom: '4%'
-        
-    }
-
-    const activeMenuLink = {
-       color: '#7B7B7B',
-       textDecoration: 'none',
-       fontSize: '0.9em',
-       padding: '15px'
-
-    }
-
-    const inactiveMenuLink = {
-        textDecoration: 'none',
-        padding: '15px',
-        color: '#7B7B7B'
-    }
-
 
     return (
         <Container 

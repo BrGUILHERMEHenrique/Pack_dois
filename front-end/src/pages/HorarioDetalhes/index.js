@@ -1,24 +1,52 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-import Input from '@material-ui/core/Input';
-
 import Modal from 'react-modal';
 import api from '../../services/api';
-
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
 
-import { FormModal, Button, Container, Row, SubTitulo, HeaderModal, FooterModal } from './styles';
+
+import { FormModal, Button, Container, Row, SubTitulo, HeaderModal, FooterModal, InputContainer } from './styles';
 import { TableHD } from '../../components/Table';
 
 
-const customStyles = {
-    content : {
-        width               : '50%',
-        height              : '50%',
+// const customStyles = {
+//     content : {
+//         width               : '50%',
+//         height              : '50%',
+//         top                 : '50%',
+//         left                : '50%',
+//         right               : 'auto',
+//         bottom              : 'auto',
+//         marginRight         : '-50%',
+//         transform           : 'translate(-50%, -50%)'
+//     }
+//   };
+
+const inputStyle = {
+    horario: {
+        width: '8vw',
+        height: '100%',
+        marginRight: '10px',
+        marginTop: '3%', 
+    },
+    horarioUp: {
+        width: '8vw',
+        height: '100%',
+        marginRight: '10px',
+        marginTop: '3%', 
+    },
+    
+};
+
+
+const modalStyleAtualizar = {
+    content: {
+        width               : '45%',
+        height              : '55%',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -26,20 +54,35 @@ const customStyles = {
         marginRight         : '-50%',
         transform           : 'translate(-50%, -50%)'
     }
-  };
+};
+
+const modalStyleAdicionar = {
+    content: {
+        width               : '50%',
+        height              : '55%',
+        top                 : '50%',
+        left                : '50%',
+        right               : 'auto',
+        bottom              : 'auto',
+        marginRight         : '-50%',
+        transform           : 'translate(-50%, -50%)'
+    }
+}
+
 
   const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
       minWidth: 120,
     },
-    selectEmpty: {
+    TextFieldEmpty: {
       marginTop: theme.spacing(2),
     }
   }));
   
 const HorarioDetalhes = () => {
     const classes = useStyles();
+
     const [ListHorarioDetalhes, setListHorarioDetalhes] = useState([]);
     const [folga, setFolga] = useState(false);
     const [horarios, setHorarios] = useState([]);
@@ -203,9 +246,11 @@ const HorarioDetalhes = () => {
                 closeModalAdd();
                 return;
             }
-            if(!codigoDiaAtualizado || !folgaAtualizado || !entrada1Atualizado || !saida1Atualizado || !entrada2Atualizado || !saida2Atualizado && !folgaAtualizado){
+            if(!folgaAtualizado){
+                if(!entrada1Atualizado || !saida1Atualizado || !entrada2Atualizado || !saida2Atualizado || !codigoDiaAtualizado){
                 alert("Por favor, preencha todos os campos");
                 return;
+                }
             }
             const params = {
                 codigoDia: parseInt(codigoDiaAtualizado),
@@ -244,103 +289,116 @@ const HorarioDetalhes = () => {
     )
 
     return(
-        <>
-
         <Container>
-             <Row 
+            <Row 
             direction="row"
             container>
                 <SubTitulo> Horário Detalhe </SubTitulo>
                 <Button variant="contained" color="primary" onClick={openModalAdd}>Adicionar</Button>
             </Row>
 
-        <TableHD horarioDetalhes={ListHorarioDetalhes} removeHorarioDetalhe = {removeHorarioDetalhe} handleHorarioDetalhes={openModalWithData}/>
+            <TableHD horarioDetalhes={ListHorarioDetalhes} removeHorarioDetalhe = {removeHorarioDetalhe} handleHorarioDetalhes={openModalWithData}/>
 
-        <Modal
-            isOpen={modalPutIsOpen}
-            onRequestClose={closeModalUpdate}
-            style={customStyles}
-            contentLabel="Modal"
-        >
-            <HeaderModal>
-                <h2>Atualizar</h2>
-            </HeaderModal>
-            
-            {/* <button onClick={closeModalUpdate}>Fechar</button> */}
-            <FormModal>
-                <Row>
-                <Input 
-                    onChange={e => setEntrada1Atualizado(e.target.value)}
-                    value={entrada1Atualizado}
-                />
-               
-                <Input 
-                    onChange={e => setEntrada2Atualizado(e.target.value)}
-                    value={entrada2Atualizado}
-                />
-                </Row>
-                <Row>
-                <Input   
-                    onChange={e => setSaida1Atualizado(e.target.value)}
-                    value={saida1Atualizado}
-                />
-                <Input
-                    onChange={e => setSaida2Atualizado(e.target.value)} 
-                    value={saida2Atualizado}
-                />
-                </Row>
-                <Row>
-                <Input 
-                    type="number"
-                    value={codigoDiaAtualizado}
-                    
-                    onChange={e => {
-                        setCodigoDiaAtualizado(e.target.value);
-                    }}
-                />
+            <Modal
+                isOpen={modalPutIsOpen}
+                onRequestClose={closeModalUpdate}
+                style={modalStyleAtualizar}
+                contentLabel="Modal"
+            >
+                <HeaderModal>
+                    <h2>Atualizar</h2>
+                </HeaderModal>
                 
-                    <FormControl className={classes.formControl}>
-                        <InputLabel shrink={true} id="Folga">Folga</InputLabel>
-                        <Select
+                {/* <button onClick={closeModalUpdate}>Fechar</button> */}
+                <FormModal>
+                    <InputContainer>
+                        <TextField
+                            style={inputStyle.horarioUp}
+                            label="Horário Entrada"
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => setEntrada1Atualizado(e.target.value)}
+                            value={entrada1Atualizado}
+                        />
+                        <TextField 
+                            style={inputStyle.horarioUp}
+                            label="Horário Almoço"
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => setSaida1Atualizado(e.target.value)}
+                            value={saida1Atualizado}
+                        />
+                    
+                        <TextField 
+                            style={inputStyle.horarioUp}
+                            label="Horário Retorno"
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => setEntrada2Atualizado(e.target.value)}
+                            value={entrada2Atualizado}
+                        />
+                        <TextField
+                            style={inputStyle.horarioUp}
+                            label="Horário Saída"
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => setSaida2Atualizado(e.target.value)} 
+                            value={saida2Atualizado}
+                        />
+                    </InputContainer>
+                    <InputContainer>
+                        <TextField 
+                            type="number"
+                            value={codigoDiaAtualizado}
+                            style={inputStyle.horarioUp}
+                            label="Código do Dia"
+                            InputProps={{ inputProps: { min: 1} }}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => {
+                                setCodigoDiaAtualizado(e.target.value);
+                            }}
+                        />
+                        <TextField
+                        select
+                        style={inputStyle.horarioUp}
                         labelId="Folga"
                         id="Folga"
                         value={folgaAtualizado}
+                        label="Folga"
+                        InputLabelProps={{ shrink: true }}
                         onChange={e => setFolgaAtualizado(e.target.value)}
                         >
                             <MenuItem value={true}>Verdadeiro</MenuItem>
                             <MenuItem value={false}>Falso</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Row>
+                        </TextField>
+                    </InputContainer>
                     <FooterModal>
-                <Button
-                    onClick={e => handleHorarioDetalhe(horarioDetalhe.id, e)}
-                >Atualizar</Button>
-                <Button
-                    onClick={closeModalUpdate}
-                >Cancelar</Button>
-                </FooterModal>
-            </FormModal>
+                        <Button
+                            onClick={e => handleHorarioDetalhe(horarioDetalhe.id, e)}
+                        >Atualizar</Button>
+                        <Button
+                            onClick={closeModalUpdate}
+                        >Cancelar</Button>
+                    </FooterModal>
+                </FormModal>
             </Modal>
-
             <Modal
             isOpen={modalAddIsOpen}
             onRequestClose={closeModalAdd}
-            style={customStyles}
+            style={modalStyleAdicionar}
             contentLabel="Modal"
             >
                 <HeaderModal>
-                  <h2>Cadastrar</h2>  
+                <h2>Cadastrar</h2>  
                 </HeaderModal>
             
-            <FormModal>
-               <Row>
-                 <FormControl className={classes.formControl}>
-                        <InputLabel shrink={true} id={entrada1}>Horário Entrada</InputLabel>
-                        <Select
+                <FormModal>
+                    <InputContainer>
+                        {/* <InputLabel shrink={true} id={entrada1}>Horário Entrada</InputLabel> */}
+                        <TextField
+                        select
+                        label="Horário Entrada"
                         labelId={entrada1}
                         id={entrada1}
                         value={entrada1}
+                        style={inputStyle.horario}
+                        InputLabelProps={{ shrink: true }}
                         onChange={e => setEntrada1(e.target.value)}
                         >
                             {
@@ -349,14 +407,15 @@ const HorarioDetalhes = () => {
                                 ))
                             }
                         
-                        </Select>
-                    </FormControl>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel shrink={true} id={saida1}>Horário saida almoço</InputLabel>
-                        <Select
+                        </TextField>
+                        <TextField
+                        TextField
                         labelId={saida1}
                         id={saida1}
                         value={saida1}
+                        style={inputStyle.horario}
+                        label="Horário Almoço"
+                        InputLabelProps={{ shrink: true }}
                         onChange={e => setSaida1(e.target.value)}
                         >
                             {
@@ -365,12 +424,12 @@ const HorarioDetalhes = () => {
                                 ))
                             }
                         
-                        </Select>
-                    </FormControl>
-                
-                    <FormControl className={classes.formControl}>
-                        <InputLabel shrink={true} id={entrada2}>Horário volta almoço</InputLabel>
-                        <Select
+                        </TextField>
+                        <TextField
+                        select
+                        style={inputStyle.horario}
+                        label="Horário Retorno"
+                        InputLabelProps={{ shrink: true }}
                         labelId={entrada2}
                         id={entrada2}
                         value={entrada2}
@@ -382,79 +441,79 @@ const HorarioDetalhes = () => {
                                 ))
                             }
                         
-                        </Select>
-                    </FormControl>
-                    </Row>
-                    <Row>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel shrink={true} id={saida2}>Horário final expediente</InputLabel>
-                        <Select
-                        labelId={saida2}
-                        id={saida2}
-                        value={saida2}
-                        onChange={e => setSaida2(e.target.value)}
-                        >
-                            {
-                                listHorarios.map(horario => (
-                                    <MenuItem value={horario}>{horario}</MenuItem>
-                                ))
-                            }
-                        
-                        </Select>
-                    </FormControl>
-
-                <FormControl className={classes.formControl}>
-                        <InputLabel id={horario.id}>Horário</InputLabel>
-                        <Select
-                        labelId="Horarios"
-                        id={horario.id}
-                        value={horario}
-                        onChange={e => setHorario(e.target.value)}
-                        >
-                            {
-                                horarios.map(horario => (
-                                    <MenuItem value={horario}>{horario.codigoHorario}-{horario.descHorario}</MenuItem>
-                                )) 
-                            }
-                        
-                        </Select>
-                    </FormControl>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel shrink={true} id="Folga">Folga</InputLabel>
-                        <Select
-                        labelId="Folga"
-                        id="Folga"
-                        value={folga}
-                        onChange={e => setFolga(e.target.value)}
-                        >
-                            <MenuItem value={true}>Verdadeiro</MenuItem>
-                            <MenuItem value={false}>Falso</MenuItem>
-                        </Select>
-                    </FormControl>
-                    </Row>
-
-                    <Input 
-                        min={1}
-                        type="number"
-                        size="small"
-                        value={codigoDia}
-                        onChange={e => {
-                            setCodigoDia(e.target.value);
-                            setUltimo(parseInt(e.target.value));
-                        }}
-                    />
+                        </TextField>
+                            <TextField
+                            select
+                            style={inputStyle.horario}
+                            label="Horário Saída"
+                            InputLabelProps={{ shrink: true }}
+                            labelId={saida2}
+                            id={saida2}
+                            value={saida2}
+                            onChange={e => setSaida2(e.target.value)}
+                            >
+                                {
+                                    listHorarios.map(horario => (
+                                        <MenuItem value={horario}>{horario}</MenuItem>
+                                    ))
+                                }
+                            
+                            </TextField>
+                    </InputContainer>
+                    <InputContainer>
+                            <TextField
+                            select
+                            style={inputStyle.horario}
+                            label="Horário"
+                            labelId="Horarios"
+                            id={horario.id}
+                            value={horario}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => setHorario(e.target.value)}
+                            >
+                                {
+                                    horarios.map(horario => (
+                                        <MenuItem value={horario}>{horario.codigoHorario}-{horario.descHorario}</MenuItem>
+                                    )) 
+                                }
+                            
+                            </TextField>
+                            <TextField
+                            select
+                            style={inputStyle.horario}
+                            label="Folga"
+                            labelId="Folga"
+                            id="Folga"
+                            value={folga}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => setFolga(e.target.value)}
+                            >
+                                <MenuItem value={true}>Verdadeiro</MenuItem>
+                                <MenuItem value={false}>Falso</MenuItem>
+                            </TextField>
+                        <TextField 
+                            style={inputStyle.horario}
+                            type="number"
+                            label="Código do Dia"
+                            value={codigoDia}
+                            InputProps={{ inputProps: { min: 1} }}
+                            onChange={e => {
+                                setCodigoDia(e.target.value);
+                                setUltimo(parseInt(e.target.value));
+                            }}
+                        />
+                    </InputContainer>
                     <FooterModal>
-                <Button
-                    onClick={e => handleAddHorarioDetalhe(e)}
-                >Adicionar</Button>
-                <Button
-                    onClick={closeModalAdd}
-                >Cancelar</Button>
-                </FooterModal>
-            </FormModal>
+                        <Button
+                            onClick={e => handleAddHorarioDetalhe(e)}
+                        >Adicionar</Button>
+                        <Button
+                            onClick={closeModalAdd}
+                        >Cancelar</Button>
+                    </FooterModal>
+                </FormModal>
             </Modal>
-            </Container>
-        </>
+        </Container>
     )
 
 

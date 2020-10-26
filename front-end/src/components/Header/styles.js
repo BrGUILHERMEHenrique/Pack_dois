@@ -14,6 +14,7 @@ export const Container = Styled(Grid)`
     background-color: white;
     position: fixed;
     color: rgb(162, 169, 173);
+    flex-wrap: wrap;
 `
 
 export const Menu = Styled(Grid)`

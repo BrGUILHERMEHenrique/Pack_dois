@@ -39,7 +39,7 @@ export const TextoTr = styled.p`
 
 
 export const ButtonU = styled.button`
-    width: 85px;
+    width: 75px;
     height: 35px;
     color: #A2A9AD;
     border: 2px solid #A2A9AD;
@@ -59,7 +59,7 @@ export const ButtonU = styled.button`
 
 
 export const ButtonD = styled.button`
-    width: 85px;
+    width: 70px;
     height: 35px;
     color: rgba(206,14,45,0.8);
     border: 2px solid rgba(206,14,45,0.7) ;

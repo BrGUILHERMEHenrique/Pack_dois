@@ -39,34 +39,30 @@ export const FormModal = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     margin-top: 40px;
     font-family: 'Oxanium', cursive;
 
     input{
-        width: 100%;
-        height: 100%;
         border: 0;
         outline: none;
         color: #3a3a3a;
-        margin-top: 20px;
-        border: 0;
-        outline: none;
-        color: #3a3a3a;
+    }
 
-`;
+ `;
 
 export const ContainerInputs = styled.div`
     display: flex;
     flex-direction: row;
     font-family: 'Oxanium', cursive;
-
+    justify-content: center;
+   
 `;
 
 export const HeaderModal = styled.div`
     flex-direction: row;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 5%;
     font-family: 'Oxanium', cursive;
     h2{
         font-size: 2em;
@@ -77,13 +73,12 @@ export const HeaderModal = styled.div`
 
 export const FooterModal = styled.div`
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: flex-end;
     margin-top: 10%;
 
     Button+Button{
         margin-left: 10px;
-
     }
 `;
 

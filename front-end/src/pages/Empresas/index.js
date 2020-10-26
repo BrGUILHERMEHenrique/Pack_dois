@@ -12,22 +12,9 @@ import api from '../../services/api';
 
 import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, SearchRow } from './styles';
 
-const styleAdicionar = {
-    content : {
-        width               : '50%',
-        height              : '60%',
-        top                 : '50%',
-        left                : '50%',
-        right               : 'auto',
-        bottom              : 'auto',
-        marginRight         : '-50%',
-        transform           : 'translate(-50%, -50%)'
-    }
-  };
-
-  const styleAtualizar = {
-    content : {
-        width               : '30%',
+const modalStyleAtualizar = {
+    content: {
+        width               : '40%',
         height              : '40%',
         top                 : '50%',
         left                : '50%',
@@ -36,10 +23,44 @@ const styleAdicionar = {
         marginRight         : '-50%',
         transform           : 'translate(-50%, -50%)'
     }
-  };
+};
+
+const modalStyleAdicionar = {
+    content: {
+        width               : '50%',
+        height              : '50%',
+        top                 : '50%',
+        left                : '50%',
+        right               : 'auto',
+        bottom              : 'auto',
+        marginRight         : '-50%',
+        transform           : 'translate(-50%, -50%)'
+    }
+}
+
+const inputStyle = {
+    razaoSocial: {
+        width: '61%',
+        height: '60%',
+    },
+    matricula: {
+        width: '30%',
+        height: '60%',
+    },
+    cnpj: {
+        width: '30%',
+        height: '60%',
+        marginLeft: '1%',
+    }, 
+    razaoSocialUp: {
+        width: '60%',
+        height: '60%',
+
+    }
+}
 
 const Empresas = () => {
-
+    
     const [empresas, setEmpresas] = useState([]);
     const [empresa, setEmpresa] = useState({});
     const [modalIsOpen,setIsOpen] = useState(false);
@@ -183,12 +204,6 @@ const Empresas = () => {
             loadEmpresas();
         }, [loadEmpresas],
     )
-
-
-    const inputStyle = {
-        width               : '70%',
-        height              : '70%' 
-    }
     return(
 
         <Container>
@@ -205,7 +220,7 @@ const Empresas = () => {
             <Modal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
-            style={styleAdicionar}
+            style={modalStyleAdicionar}
             contentLabel="Modal"
             >
                 <HeaderModal>
@@ -218,19 +233,19 @@ const Empresas = () => {
                     placeholder="Razão Social"
                     fullWidth={true}
                     value={razaoSocial}
-                    style={inputStyle}
+                    style={inputStyle.razaoSocial}
                     onChange={e => setRazaoSocial(e.target.value)}
                 />
-                <Input 
-                    placeholder="Código da Empresa"
-                    fullWidth={true}
-                    value={codEmpresa}
-                    style={inputStyle}
-                    onChange={e => setCodEmpresa(e.target.value)}
-                />
                 <ContainerInputs>
-
+                    <Input 
+                        placeholder="Código da Empresa"
+                        fullWidth={true}
+                        value={codEmpresa}
+                        style={inputStyle.matricula}
+                        onChange={e => setCodEmpresa(e.target.value)}
+                    />
                     <InputMask 
+                    style={inputStyle.cnpj}
                     mask="99.999.999/9999-99" 
                         id="cnpj"
                         placeholder="CNPJ"
@@ -264,29 +279,27 @@ const Empresas = () => {
             isOpen={modalPutIsOpen}
             onRequestClose={closeModalUpdate}
             contentLabel="Modal"
-            style={styleAtualizar}
+            style={modalStyleAtualizar}
             >
             <HeaderModal>
             <h2>Atualizar</h2>
             {/* <AiOutlineClose onClick={closeModalUpdate} /> */}
             </HeaderModal>
             <FormModal>
+            <ContainerInputs>
                 <Input 
-                    style={inputStyle}
+                    style={inputStyle.razaoSocialUp}
                     placeholder="Razão Social"
                     value={razaoSocialAtualizada}
                     onChange={e => setRazaoSocialAtualizada(e.target.value)}
                 />
+                </ContainerInputs>
                 <FooterModal>
                 <Button
-                color="primary"
-                variant="contained"
                 onClick={e => handleUpdateEmpresa(e)}
                 >Atualizar</Button>
 
                 <Button
-                color="secundary"
-                variant="outlined"
                 onClick={closeModalUpdate}
                 >Cancelar</Button>
                 </FooterModal>
