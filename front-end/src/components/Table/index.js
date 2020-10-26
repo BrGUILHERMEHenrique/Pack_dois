@@ -13,8 +13,6 @@ import Paper from '@material-ui/core/Paper';
 import swal from 'sweetalert';
 import 'sweetalert2/src/sweetalert2.scss'
 
-import swal from 'sweetalert';
-import 'sweetalert2/src/sweetalert2.scss'
 
 
 //styles criado através do material para a tabela
@@ -220,6 +218,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
   
   const TableH = ({ horarios, handleHorario, removeHorario }) => {
     const classes = useStyles();
+    const history = useHistory();
 
     return(
         <TableContainer component={Paper} className={classes.table}>
@@ -240,6 +239,11 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                       handleHorario(horario.id);
                     }}
                   >Atualizar</ButtonU></Tabela>
+                  <Tabela align="center"><ButtonU
+                    onClick={() => {
+                      history.push('/horarioDetalhes', {id: horario.id});
+                    }}
+                  >Detalhes</ButtonU></Tabela>
                   <Tabela align="center"><ButtonD 
                                           onClick={() => {
                                               OpenAlert(horario.id, removeHorario)
@@ -275,7 +279,6 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
       <>
       <TableContainer component={Paper} className={classes.table}>
     <Table aria-label="Tabela Horários">
-      <TableHead>
         <TabelaRow>
 
           <Tabela align="right">Nome</Tabela>
@@ -284,7 +287,6 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
           <Tabela align="right">VIgência Inicial</Tabela>
           <Tabela align="right">Vigência Final</Tabela>
         </TabelaRow>
-      </TableHead>
       <TableBody>
         {funcionarioHorarios.map(funcionarioHorario => (
           <TabelaRow key={funcionarioHorario.id}>
@@ -306,12 +308,6 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
       </TableBody>
     </Table>
   </TableContainer>
-              <ModalDelete obj={funcionarioHorario}
-                          modalIsOpen={modalDeleteIsOpen}
-                          closeModal={closeModalDelete}
-                          deleteFunction={removeFuncionarioHorario}
-                          customStyles={customStyles}
-              />
 
   </>
 

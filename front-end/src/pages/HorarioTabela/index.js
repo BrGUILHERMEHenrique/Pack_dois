@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Modal from 'react-modal';
+import { useHistory } from 'react-router-dom';
 
 import Input from '@material-ui/core/Input';
 
@@ -24,6 +25,7 @@ const customStyles = {
 
 
 const HorarioTabela = () => {
+    const history = useHistory();
     const [horarios, setHorarios] = useState([]);
     const [horario, setHorario] = useState({});
     const [codigoHorario, setCodigoHorario] = useState('');

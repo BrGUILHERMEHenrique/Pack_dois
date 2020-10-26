@@ -38,7 +38,8 @@ const customStyles = {
     }
   }));
   
-const HorarioDetalhes = () => {
+const HorarioDetalhes = ({ location }) => {
+    const id = location.state.id;
     const classes = useStyles();
     const [ListHorarioDetalhes, setListHorarioDetalhes] = useState([]);
     const [folga, setFolga] = useState(false);
@@ -108,26 +109,14 @@ const HorarioDetalhes = () => {
     const loadHorarioDetahes = useCallback(
     async () => {
         try {
-            const response = await api.get('horario_detalhes');
+            const response = await api.get(`horario_detalhes/idHorario/${id}`);
             console.log(response.data);
             setListHorarioDetalhes(response.data);
         } catch (error) {
             console.log(error);
         }
-    }, [],
+    }, [id],
     );
-
-    const loadHorarios = useCallback(
-        async () => {
-            try{
-                const response = await api.get('horario');
-                setHorarios(response.data);
-                console.log(response.data);
-            } catch(error) {
-                console.log(error);
-            }
-        }, [],
-    )
 
     const handleAddHorarioDetalhe = useCallback(
         async (e) => {
@@ -144,7 +133,7 @@ const HorarioDetalhes = () => {
                 }
             }
             const params = { 
-                idHorario: horario.id,
+                idHorario: id,
                 codigoDia: parseInt(codigoDia),
                 folga,
                 entrada1: entrada1,
@@ -171,8 +160,7 @@ const HorarioDetalhes = () => {
                 setHorario({});
                 closeModalAdd();
             }
-        }, [
-            horario,  
+        }, [ 
             codigoDia,
             folga,
             entrada1,
@@ -239,8 +227,7 @@ const HorarioDetalhes = () => {
     useEffect(
         () => {
             loadHorarioDetahes();
-            loadHorarios();
-        }, [loadHorarioDetahes, loadHorarios],
+        }, [loadHorarioDetahes],
     )
 
     return(
@@ -398,23 +385,6 @@ const HorarioDetalhes = () => {
                                 listHorarios.map(horario => (
                                     <MenuItem value={horario}>{horario}</MenuItem>
                                 ))
-                            }
-                        
-                        </Select>
-                    </FormControl>
-
-                <FormControl className={classes.formControl}>
-                        <InputLabel id={horario.id}>Horário</InputLabel>
-                        <Select
-                        labelId="Horarios"
-                        id={horario.id}
-                        value={horario}
-                        onChange={e => setHorario(e.target.value)}
-                        >
-                            {
-                                horarios.map(horario => (
-                                    <MenuItem value={horario}>{horario.codigoHorario}-{horario.descHorario}</MenuItem>
-                                )) 
                             }
                         
                         </Select>
