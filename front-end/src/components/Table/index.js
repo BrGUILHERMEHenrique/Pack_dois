@@ -249,4 +249,70 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     )
   }
 
-  export {TableF, TableE, TableHD, TableH};
+  const TableFH = ({ funcionarioHorarios, handleFuncionarioHorario, removeFuncionarioHorario }) => {
+
+    const classes = useStyles();
+
+    const [modalDeleteIsOpen, setModalDeleteisOpen] = useState(false);
+    const [funcionarioHorario, setFuncionarioHorario] = useState({});
+
+    const openModalDelete = (funcionarioHorario) => {
+      setFuncionarioHorario(funcionarioHorario);
+      setModalDeleteisOpen(true);
+    }
+
+    const closeModalDelete = () => {
+      setFuncionarioHorario({});
+      setModalDeleteisOpen(false);
+    }
+
+    return(
+      <>
+      <TableContainer component={Paper} className={classes.table}>
+    <Table aria-label="Tabela Horários">
+      <TableHead>
+        <TabelaRow>
+
+          <Tabela align="right">Nome</Tabela>
+          <Tabela align="right">Codigo Inicial</Tabela>
+          <Tabela align="right">Descrição Horário</Tabela>
+          <Tabela align="right">VIgência Inicial</Tabela>
+          <Tabela align="right">Vigência Final</Tabela>
+        </TabelaRow>
+      </TableHead>
+      <TableBody>
+        {funcionarioHorarios.map(funcionarioHorario => (
+          <TabelaRow key={funcionarioHorario.id}>
+            <Tabela component="th" scope="Funcionário-Horario" align="right">
+              {funcionarioHorario.idFuncionario.nome}
+            </Tabela>
+            <Tabela align="right">{funcionarioHorario.codigoInicial}</Tabela>
+            <Tabela align="right">{funcionarioHorario.idHorario.descHorario}</Tabela>
+            <Tabela align="right">{funcionarioHorario.vigenciaInicial}</Tabela>
+            <Tabela align="right">{funcionarioHorario.vigenciaFinal}</Tabela>
+            <Tabela align="right"><Button variant="contained" color="primary"
+              onClick={() => {
+                handleFuncionarioHorario(funcionarioHorario.id);
+              }}
+            >Atualizar</Button></Tabela>
+            <Tabela align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(funcionarioHorario)}>Excluir</Button></Tabela>
+          </TabelaRow>
+        ))}
+      </TableBody>
+    </Table>
+  </TableContainer>
+              <ModalDelete obj={funcionarioHorario}
+                          modalIsOpen={modalDeleteIsOpen}
+                          closeModal={closeModalDelete}
+                          deleteFunction={removeFuncionarioHorario}
+                          customStyles={customStyles}
+              />
+
+  </>
+
+    )
+
+  }
+
+  export {TableF, TableE, TableHD, TableH, TableFH};
+  
