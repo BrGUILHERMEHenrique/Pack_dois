@@ -17,13 +17,13 @@ const inactiveMenuImage = {
 }
 
 const activeMenuContainer = {
-    backgroundColor: '#fff',
-    padding: '0.9%'
+    padding: '0.9%',
+    boxShadow: '1px 1px 2px 2px rgba(0, 0, 0, 0.1)'
+
 }
 
 const inactiveMenuContainer = {
-    padding: '2%',
-    marginBottom: '4%'
+    padding: '2%'
 }
 
 const activeMenuLink = {
@@ -64,7 +64,7 @@ const Header = () => {
     ] 
 
     const resizeMenu = () => {
-        if (window.scrollY >= 100) {
+        if (window.scrollY >= 70) {
             setMenuActivity(true)
         } else {
             setMenuActivity(false);
@@ -81,16 +81,37 @@ const Header = () => {
             alignItems="center"
         >
             <Image
-            style={!menuActivity ?  inactiveMenuImage : activeMenuImage }
-            src = {Logo} />
+                style={
+                    !menuActivity ?  
+                    inactiveMenuImage 
+                    : 
+                    activeMenuImage 
+                }
+                src = {Logo} 
+            />
             <Menu>
                 { menu.map(s => (
-                    <NavLink style={menuActivity ? activeMenuLink : inactiveMenuLink }
-                            activeStyle={ativo} exact to={s.rota}>
+                    <NavLink 
+                        style={
+                            menuActivity ? 
+                            activeMenuLink 
+                            : 
+                            inactiveMenuLink 
+                        }
+                        activeStyle={ativo} 
+                        exact to={s.rota}
+                    >
                         {s.pagina}
                     </NavLink>
                 ))}
-                <a style={menuActivity ? activeMenuLink : inactiveMenuLink }>
+                <a 
+                    style={
+                        menuActivity ? 
+                        activeMenuLink 
+                        : 
+                        inactiveMenuLink 
+                    }
+                >
                     Sair
                 </a>
             </Menu>
