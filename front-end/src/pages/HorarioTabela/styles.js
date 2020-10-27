@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 
 export const FormModal = styled.form`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     margin-top: 40px;
@@ -16,7 +16,6 @@ export const FormModal = styled.form`
     }
 
 `;
-
 
 export const SubTitulo = styled.p`
     margin: 10px 40px 10px 9%;
@@ -50,12 +49,20 @@ export const Button = styled.button`
 export const FooterModal = styled.div`
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
+    margin-top: 7%;
 
     Button+Button{
         margin-left: 10px;
 
     }
+`;
+
+export const InputContainer = styled(Grid)`
+    display: flex;
+    flex-direction: row;
+    font-family: 'Oxanium', cursive;
+    justify-content: center;
 `;
 
 export const Container = styled(Grid)`
