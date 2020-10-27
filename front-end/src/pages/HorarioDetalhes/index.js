@@ -80,7 +80,8 @@ const modalStyleAdicionar = {
     }
   }));
   
-const HorarioDetalhes = () => {
+const HorarioDetalhes = ({ location }) => {
+    const id = location.state.id;
     const classes = useStyles();
 
     const [ListHorarioDetalhes, setListHorarioDetalhes] = useState([]);
@@ -151,26 +152,14 @@ const HorarioDetalhes = () => {
     const loadHorarioDetahes = useCallback(
     async () => {
         try {
-            const response = await api.get('horario_detalhes');
+            const response = await api.get(`horario_detalhes/idHorario/${id}`);
             console.log(response.data);
             setListHorarioDetalhes(response.data);
         } catch (error) {
             console.log(error);
         }
-    }, [],
+    }, [id],
     );
-
-    const loadHorarios = useCallback(
-        async () => {
-            try{
-                const response = await api.get('horario');
-                setHorarios(response.data);
-                console.log(response.data);
-            } catch(error) {
-                console.log(error);
-            }
-        }, [],
-    )
 
     const handleAddHorarioDetalhe = useCallback(
         async (e) => {
@@ -187,7 +176,7 @@ const HorarioDetalhes = () => {
                 }
             }
             const params = { 
-                idHorario: horario.id,
+                idHorario: id,
                 codigoDia: parseInt(codigoDia),
                 folga,
                 entrada1: entrada1,
@@ -214,8 +203,7 @@ const HorarioDetalhes = () => {
                 setHorario({});
                 closeModalAdd();
             }
-        }, [
-            horario,  
+        }, [ 
             codigoDia,
             folga,
             entrada1,
@@ -284,8 +272,7 @@ const HorarioDetalhes = () => {
     useEffect(
         () => {
             loadHorarioDetahes();
-            loadHorarios();
-        }, [loadHorarioDetahes, loadHorarios],
+        }, [loadHorarioDetahes],
     )
 
     return(

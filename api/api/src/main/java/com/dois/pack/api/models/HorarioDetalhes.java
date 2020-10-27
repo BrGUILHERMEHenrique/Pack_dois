@@ -3,7 +3,6 @@ package com.dois.pack.api.models;
 import java.io.Serializable;
 import java.time.LocalTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,11 +12,13 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name="horario_detalhes", 
+@Table(name="horario_detalhes",
+			uniqueConstraints = {@UniqueConstraint (columnNames = "id_horario", name = "Existe_uma_relação_com_esse_id_de_funcionario")},
 			indexes = {@Index(name = "codigo_dia", columnList = "codigo_dia", unique=true)})
 public class HorarioDetalhes implements Serializable {
 	
@@ -37,23 +38,23 @@ public class HorarioDetalhes implements Serializable {
 	@Column(name = "folga")
 	private Boolean folga;
 	
-	@NotNull
+
 	@Column(name = "codigo_dia")
 	private Integer codigoDia;
 	
-	@NotNull
+
 	@Column(name = "entrada_1")
 	private LocalTime entrada1;
 	
-	@NotNull
+
 	@Column(name = "entrada_2")
 	private LocalTime entrada2;
 	
-	@NotNull
+
 	@Column(name = "saida_1")
 	private LocalTime saida1;
 	
-	@NotNull
+
 	@Column(name = "saida_2")
 	private LocalTime saida2;
 

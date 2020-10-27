@@ -195,6 +195,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
   
   const TableH = ({ horarios, handleHorario, removeHorario }) => {
     const classes = useStyles();
+    const history = useHistory();
 
     return(
         <TableContainer component={Paper} className={classes.table}>
@@ -215,6 +216,11 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                       handleHorario(horario.id);
                     }}
                   >Atualizar</ButtonU></Tabela>
+                  <Tabela align="center"><ButtonU
+                    onClick={() => {
+                      history.push('/horarioDetalhes', {id: horario.id});
+                    }}
+                  >Detalhes</ButtonU></Tabela>
                   <Tabela align="center"><ButtonD 
                                           onClick={() => {
                                               OpenAlert(horario.id, removeHorario)

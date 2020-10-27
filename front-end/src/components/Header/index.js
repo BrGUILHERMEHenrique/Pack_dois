@@ -53,10 +53,6 @@ const Header = () => {
             rota: '/funcionarios'
         },
         {
-            pagina: 'Horário Detalhes',
-            rota: '/horarioDetalhes'
-        }, 
-        {
             pagina: 'Horários',
             rota: '/horarios'
         }

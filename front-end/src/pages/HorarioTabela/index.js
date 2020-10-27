@@ -1,5 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Modal from 'react-modal';
+<<<<<<< HEAD
+=======
+import { useHistory } from 'react-router-dom';
+
+>>>>>>> 966b1bcc7018d604ddcf50892b6ccc98d899775e
 import Input from '@material-ui/core/Input';
 import TextField from '@material-ui/core/TextField';
 import api from '../../services/api';
@@ -21,6 +26,7 @@ const customStyles = {
 
 
 const HorarioTabela = () => {
+    const history = useHistory();
     const [horarios, setHorarios] = useState([]);
     const [horario, setHorario] = useState({});
     const [codigoHorario, setCodigoHorario] = useState('');
