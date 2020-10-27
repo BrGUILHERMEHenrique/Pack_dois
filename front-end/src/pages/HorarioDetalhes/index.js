@@ -390,7 +390,6 @@ const HorarioDetalhes = () => {
             
                 <FormModal>
                     <InputContainer>
-                        {/* <InputLabel shrink={true} id={entrada1}>Horário Entrada</InputLabel> */}
                         <TextField
                         select
                         label="Horário Entrada"
@@ -409,7 +408,7 @@ const HorarioDetalhes = () => {
                         
                         </TextField>
                         <TextField
-                        TextField
+                        select
                         labelId={saida1}
                         id={saida1}
                         value={saida1}

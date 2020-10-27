@@ -1,14 +1,9 @@
-//importação padrão do react 
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { format } from 'date-fns'
-//imortação para construir a tabela com material ui
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
+import {TableBody, Table, TableContainer, Paper} from '@material-ui/core';
 import { Tabela, TabelaRow, THead, Button, TextoTh, TextoTr, ButtonU, ButtonD } from './styles';
-import TableContainer from '@material-ui/core/TableContainer';
-import Paper from '@material-ui/core/Paper';
 import swal from 'sweetalert';
 import 'sweetalert2/src/sweetalert2.scss'
 
@@ -25,21 +20,6 @@ const useStyles = makeStyles({
       marginTop: "50px"
     },
   });
-
-  //Styles do modal
-  const customStyles = {
-    content : {
-        width               : '50%',
-        height              : '50%',
-        top                 : '50%',
-        left                : '50%',
-        center               : 'auto',
-        bottom              : 'auto',
-        margincenter         : '-50%',
-        transform           : 'translate(-50%, -50%)'
-    }
-  };
-  
 
   //protoypes que formataram os dados em tela  
   String.prototype.cpf = function(){
@@ -174,13 +154,13 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     return(
         <TableContainer component={Paper} className={classes.table}>
           <Table aria-label="Tabela Empresas">
-              <Tabela align="center"><TextoTh>Id</TextoTh></Tabela>
-              <Tabela align="center"><TextoTh>Descrição Horário</TextoTh></Tabela>
-              <Tabela align="center"><TextoTh>Entrada</TextoTh></Tabela>
-              <Tabela align="center"><TextoTh>Intervalo</TextoTh></Tabela>
-              <Tabela align="center"><TextoTh>Retorno do Intervalo</TextoTh></Tabela>
-              <Tabela align="center"><TextoTh>Saida</TextoTh></Tabela>
-              <Tabela align="center"><TextoTh>Folga</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Id</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Descrição Horário</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Entrada</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Intervalo</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Retorno do Intervalo</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Saida</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Folga</TextoTh></Tabela>
             <TableBody>
               {horarioDetalhes.map(horarioDetalhe => (
                 <TabelaRow key={horarioDetalhe.id}>
@@ -253,62 +233,40 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
 
     const classes = useStyles();
 
-    const [modalDeleteIsOpen, setModalDeleteisOpen] = useState(false);
-    const [funcionarioHorario, setFuncionarioHorario] = useState({});
-
-    const openModalDelete = (funcionarioHorario) => {
-      setFuncionarioHorario(funcionarioHorario);
-      setModalDeleteisOpen(true);
-    }
-
-    const closeModalDelete = () => {
-      setFuncionarioHorario({});
-      setModalDeleteisOpen(false);
-    }
-
     return(
-      <>
       <TableContainer component={Paper} className={classes.table}>
-    <Table aria-label="Tabela Horários">
-      <TableHead>
-        <TabelaRow>
-
-          <Tabela align="right">Nome</Tabela>
-          <Tabela align="right">Codigo Inicial</Tabela>
-          <Tabela align="right">Descrição Horário</Tabela>
-          <Tabela align="right">VIgência Inicial</Tabela>
-          <Tabela align="right">Vigência Final</Tabela>
-        </TabelaRow>
-      </TableHead>
-      <TableBody>
-        {funcionarioHorarios.map(funcionarioHorario => (
-          <TabelaRow key={funcionarioHorario.id}>
-            <Tabela component="th" scope="Funcionário-Horario" align="right">
-              {funcionarioHorario.idFuncionario.nome}
-            </Tabela>
-            <Tabela align="right">{funcionarioHorario.codigoInicial}</Tabela>
-            <Tabela align="right">{funcionarioHorario.idHorario.descHorario}</Tabela>
-            <Tabela align="right">{funcionarioHorario.vigenciaInicial}</Tabela>
-            <Tabela align="right">{funcionarioHorario.vigenciaFinal}</Tabela>
-            <Tabela align="right"><Button variant="contained" color="primary"
-              onClick={() => {
-                handleFuncionarioHorario(funcionarioHorario.id);
-              }}
-            >Atualizar</Button></Tabela>
-            <Tabela align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(funcionarioHorario)}>Excluir</Button></Tabela>
-          </TabelaRow>
-        ))}
-      </TableBody>
-    </Table>
-  </TableContainer>
-              <ModalDelete obj={funcionarioHorario}
-                          modalIsOpen={modalDeleteIsOpen}
-                          closeModal={closeModalDelete}
-                          deleteFunction={removeFuncionarioHorario}
-                          customStyles={customStyles}
-              />
-
-  </>
+        <Table aria-label="Tabela Horários">
+          <Tabela align="center"><TextoTh>Nome</TextoTh></Tabela>
+          <Tabela align="center"><TextoTh>Codigo Inicial</TextoTh></Tabela>
+          <Tabela align="center"><TextoTh>Descrição Horário</TextoTh></Tabela>
+          <Tabela align="center"><TextoTh>VIgência Inicial</TextoTh></Tabela>
+          <Tabela align="center"><TextoTh>Vigência Final</TextoTh></Tabela>
+          <TableBody>
+            {funcionarioHorarios.map(funcionarioHorario => (
+              <TabelaRow key={funcionarioHorario.id}>
+                <Tabela component="th" scope="Funcionário-Horario" align="center">
+                <TextoTr>{funcionarioHorario.idFuncionario.nome}</TextoTr>
+                </Tabela>
+                <Tabela align="center"><TextoTr>{funcionarioHorario.codigoInicial}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{funcionarioHorario.idHorario.descHorario}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{funcionarioHorario.vigenciaInicial}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{funcionarioHorario.vigenciaFinal}</TextoTr></Tabela>
+                <Tabela align="center"><ButtonU
+                  onClick={() => {
+                    handleFuncionarioHorario(funcionarioHorario.id);
+                  }}
+                >Atualizar</ButtonU></Tabela>
+                <Tabela align="center"><ButtonD 
+                                          onClick={() => {
+                                              OpenAlert(funcionarioHorario.id, removeFuncionarioHorario)
+                                            }}
+                                            >Excluir</ButtonD>
+                </Tabela>
+              </TabelaRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
     )
 

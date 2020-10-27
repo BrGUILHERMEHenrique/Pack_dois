@@ -184,17 +184,13 @@ const FuncionarioHorario = ({ location }) => {
             loadHorarios();
         }, [loadFuncionarioHorarios, loadHorarios],
     )
-    return(
-        <>
-        <h1>Id Funcionário: {id}</h1>
-
-       
+    return(     
         <Container>
             <Row 
             direction="row"
             container>
-                <SubTitulo> Relação: Funcionário-Horário </SubTitulo>
-                <Button variant="contained" color="primary" onClick={openModal}>Adicionar</Button>
+                <SubTitulo> Horários do Funcionário</SubTitulo>
+                <Button onClick={openModal}>Adicionar</Button>
             </Row>
             <TableFH funcionarioHorarios={funcionarioHorarios} handleFuncionarioHorario={openModalWithData} removeFuncionarioHorario={removeFuncionarioHorario} />
             <Modal
@@ -304,7 +300,6 @@ const FuncionarioHorario = ({ location }) => {
 
    
         </Container>
-        </>
         
     )
 }
