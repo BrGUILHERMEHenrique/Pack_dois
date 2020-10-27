@@ -7,7 +7,7 @@ import FuncionarioHorario  from '../pages/FuncionarioHorario'
 import Empresas from '../pages/Empresas';
 import HorarioDetalhes from '../pages/HorarioDetalhes';
 import HorarioTabela from '../pages/HorarioTabela';
-
+import Apontamento from  '../pages/Apontamento';
 
 const Routes = () => (
     <Switch>
@@ -18,6 +18,7 @@ const Routes = () => (
         <Route exact path="/funcionarios" component={Funcionarios} />
         <Route exact path="/empresas" component={Empresas} />
         <Route exact path="/funcionarioHorario" component={FuncionarioHorario} />
+        <Route exact path="/apontamentos" component={Apontamento} />
         <Route exact path="/ponto" component={Horario} />
         
 

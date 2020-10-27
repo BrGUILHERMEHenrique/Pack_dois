@@ -281,28 +281,28 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     <Table aria-label="Tabela Horários">
         <TabelaRow>
 
-          <Tabela align="right">Nome</Tabela>
-          <Tabela align="right">Codigo Inicial</Tabela>
-          <Tabela align="right">Descrição Horário</Tabela>
-          <Tabela align="right">VIgência Inicial</Tabela>
-          <Tabela align="right">Vigência Final</Tabela>
+          <Tabela align="center">Nome</Tabela>
+          <Tabela align="center">Codigo Inicial</Tabela>
+          <Tabela align="center">Descrição Horário</Tabela>
+          <Tabela align="center">VIgência Inicial</Tabela>
+          <Tabela align="center">Vigência Final</Tabela>
         </TabelaRow>
       <TableBody>
         {funcionarioHorarios.map(funcionarioHorario => (
           <TabelaRow key={funcionarioHorario.id}>
-            <Tabela component="th" scope="Funcionário-Horario" align="right">
+            <Tabela component="th" scope="Funcionário-Horario" align="center">
               {funcionarioHorario.idFuncionario.nome}
             </Tabela>
-            <Tabela align="right">{funcionarioHorario.codigoInicial}</Tabela>
-            <Tabela align="right">{funcionarioHorario.idHorario.descHorario}</Tabela>
-            <Tabela align="right">{funcionarioHorario.vigenciaInicial}</Tabela>
-            <Tabela align="right">{funcionarioHorario.vigenciaFinal}</Tabela>
-            <Tabela align="right"><Button variant="contained" color="primary"
+            <Tabela align="center">{funcionarioHorario.codigoInicial}</Tabela>
+            <Tabela align="center">{funcionarioHorario.idHorario.descHorario}</Tabela>
+            <Tabela align="center">{funcionarioHorario.vigenciaInicial}</Tabela>
+            <Tabela align="center">{funcionarioHorario.vigenciaFinal}</Tabela>
+            <Tabela align="center"><Button variant="contained" color="primary"
               onClick={() => {
                 handleFuncionarioHorario(funcionarioHorario.id);
               }}
             >Atualizar</Button></Tabela>
-            <Tabela align="right"><Button variant="outlined" color="primary" onClick={() => openModalDelete(funcionarioHorario)}>Excluir</Button></Tabela>
+            <Tabela align="center"><Button variant="outlined" color="primary" onClick={() => openModalDelete(funcionarioHorario)}>Excluir</Button></Tabela>
           </TabelaRow>
         ))}
       </TableBody>
@@ -312,8 +312,66 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
   </>
 
     )
+}
+
+    const TableA = ({ apontamentos, handleapontamento, removeapontamento }) => {
+
+      const classes = useStyles();
+  
+      const [apontamento, setApontamento] = useState({});
+
+      return(
+        <>
+        <TableContainer component={Paper} className={classes.table}>
+      <Table aria-label="Tabela Apontamentos">
+          <TabelaRow>
+  
+            <Tabela align="center">Funcionário</Tabela>
+            <Tabela align="center">Horario</Tabela>
+            <Tabela align="center">Data</Tabela>
+            <Tabela align="center">Primeira Entrada</Tabela>
+            <Tabela align="center">Saida Almoço</Tabela>
+            <Tabela align="center">Volta Almoço</Tabela>
+            <Tabela align="center">Horário Final</Tabela>
+            <Tabela align="center">Total Trabalhado</Tabela>
+            <Tabela align="center">Saldo Hora Extra</Tabela>
+            <Tabela align="center">Saldo Atraso</Tabela>
+
+
+          </TabelaRow>
+        <TableBody>
+          {apontamentos.map(apontameto => (
+            <TabelaRow key={apontameto.id}>
+              <Tabela component="th" scope="Funcionário-Horario" align="center">
+                {apontameto.idFuncionario.nome}
+              </Tabela>
+              <Tabela align="center">{apontameto.idHorario.descHorario}</Tabela>
+              <Tabela align="center">{apontameto.data}</Tabela>
+              <Tabela align="center">{apontameto.entrada1}</Tabela>
+              <Tabela align="center">{apontameto.saida1}</Tabela>
+              <Tabela align="center">{apontameto.entrada2}</Tabela>
+              <Tabela align="center">{apontameto.saida2}</Tabela>
+              <Tabela align="center">{apontameto.totalTrabalhado}</Tabela>
+              <Tabela align="center">{apontameto.saldoHe}</Tabela>
+              <Tabela align="center">{apontameto.saldoAtraso}</Tabela>
+
+              <Tabela align="center"><Button variant="contained" color="primary"
+                onClick={() => {
+                  handleapontamento(apontameto.id);
+                }}
+              >Atualizar</Button></Tabela>
+              <Tabela align="center"><Button variant="outlined" color="primary" onClick={() => OpenAlert(apontamento.id, removeapontamento)}>Excluir</Button></Tabela>
+            </TabelaRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  
+    </>
+  
+      )
 
   }
 
-  export {TableF, TableE, TableHD, TableH, TableFH};
+  export {TableF, TableE, TableHD, TableH, TableFH, TableA};
   
