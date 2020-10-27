@@ -1,19 +1,20 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Modal from 'react-modal';
+<<<<<<< HEAD
+=======
 import { useHistory } from 'react-router-dom';
 
+>>>>>>> 966b1bcc7018d604ddcf50892b6ccc98d899775e
 import Input from '@material-ui/core/Input';
-
+import TextField from '@material-ui/core/TextField';
 import api from '../../services/api';
-
 import { FormModal, Button, Container, Row, SubTitulo, FooterModal, HeaderModal } from './styles';
-
 import { TableH } from '../../components/Table';
 
 const customStyles = {
     content : {
-        width               : '40%',
-        height              : '40%',
+        width               : '50%',
+        height              : '50%',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -135,79 +136,89 @@ const HorarioTabela = () => {
         }, [loadHorarios]
     );
 
-    return(
-        <>
+    const inputStyle = {
+            width: '1vw',
+            height: '100%',
+            marginRight: '10px'
+    };
 
+    return(
         <Container>
-             <Row 
+            <Row 
             direction="row"
             container>
                 <SubTitulo> Horários </SubTitulo>
                 <Button variant="contained" color="primary" onClick={openModalAdd}>Adicionar</Button>
             </Row>
-        <TableH horarios={horarios} handleHorario={openModalWithData} removeHorario={removeHorario}/>
+            <TableH horarios={horarios} handleHorario={openModalWithData} removeHorario={removeHorario}/>
 
-        <Modal
-            isOpen={modalPutIsOpen}
-            onRequestClose={closeModalUpdate}
-            style={customStyles}
-            contentLabel="Modal"
+            <Modal
+                isOpen={modalPutIsOpen}
+                onRequestClose={closeModalUpdate}
+                style={customStyles}
+                contentLabel="Modal"
             >
+                    
+                <HeaderModal>
+                <h2>Atualizar</h2>
+                </HeaderModal>
+                <FormModal>
+                    <TextField
+                        style={inputStyle}
+                        type="number"
+                        onChange={e => setCodigoHorarioAtualizado(e.target.value)}
+                        value={codigoHorarioAtualizado}
+                    />
                 
-            <HeaderModal>
-            <h2>Atualizar</h2>
-            </HeaderModal>
-            <FormModal>
-                <Input 
-                    type="number"
-                    onChange={e => setCodigoHorarioAtualizado(e.target.value)}
-                    value={codigoHorarioAtualizado}
-                />
-               
-                <Input 
-                    onChange={e => setDescHorarioAtualizado(e.target.value)}
-                    value={descHorarioAtualizado}
-                />
+                    <TextField
+                    style={inputStyle}
+                        onChange={e => setDescHorarioAtualizado(e.target.value)}
+                        value={descHorarioAtualizado}
+                    />
+                </FormModal>
                 <FooterModal>
-                <Button
-                    onClick={e => handleHorario(horario.id, e)}
-                >Atualizar</Button>
+                    <Button
+                        onClick={e => handleHorario(horario.id, e)}
+                    >Atualizar</Button>
+                    <Button
+                        onClick={closeModalUpdate}
+                    >Cancelar</Button>
                 </FooterModal>
-            </FormModal>
+                
+                
             </Modal>
 
             <Modal
-            isOpen={modalAddIsOpen}
-            onRequestClose={closeModalAdd}
-            style={customStyles}
-            contentLabel="Modal"
+                isOpen={modalAddIsOpen}
+                onRequestClose={closeModalAdd}
+                style={customStyles}
+                contentLabel="Modal"
             >
-    
-            <HeaderModal>
-            <h2>Cadastrar</h2>
-            </HeaderModal>
-            <FormModal>
-          
-                <Input 
-                    type="number"
-                    onChange={e => setCodigoHorario(e.target.value)}
-                    value={codigoHorario}
-                />
-               
-                <Input 
-                    onChange={e => setDescHorario(e.target.value)}
-                    value={descHorario}
-                />
-
+                <HeaderModal>
+                <h2>Cadastrar</h2>
+                </HeaderModal>
+                <FormModal>         
+                    <TextField
+                        type="number"
+                        onChange={e => setCodigoHorario(e.target.value)}
+                        value={codigoHorario}
+                    />
+                
+                    <TextField
+                        onChange={e => setDescHorario(e.target.value)}
+                        value={descHorario}
+                    />
+                </FormModal>
                 <FooterModal>
-                <Button
-                    onClick={e => handleAddHorario(e)}
-                >Cadastrar</Button>
+                    <Button
+                        onClick={e => handleAddHorario(e)}
+                    >Cadastrar</Button>
+                     <Button
+                    onClick={closeModalAdd}
+                     >Cancelar</Button>
                 </FooterModal>
-            </FormModal>
             </Modal>
-            </Container>
-            </>
+        </Container>
     );
 
 }

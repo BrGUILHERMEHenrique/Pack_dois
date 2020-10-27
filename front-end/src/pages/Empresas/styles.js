@@ -44,43 +44,32 @@ export const FormModal = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
-    margin-top: 40px;
+    justify-content: center;
+    margin-top: 5%;
     font-family: 'Oxanium', cursive;
 
+
     input{
-        width: 100%;
-        height: 100%;
-        border: 0;
-        outline: none;
-        color: #3a3a3a;
-        margin-top: 20px;
-
-        &#date{
-            border: 0;
-        }
-        &#tel{
-            border: 0;  
-        }
-
-        &#cpf{
-            text-align: center;
-            border: 0; 
-        }
+        margin-top: 5%;
     }
 
 `;
 
 export const ContainerInputs = styled.div`
     display: flex;
+    align-items: center;
     flex-direction: row;
     font-family: 'Oxanium', cursive;
+    margin-bottom: 8%;
+    width: 100%;
+    justify-content: center;
+
 `;
 
 export const HeaderModal = styled.div`
     flex-direction: row;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 5%;
     font-family: 'Oxanium', cursive;
     h2{
         font-size: 2em;
@@ -93,7 +82,7 @@ export const FooterModal = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    margin-top: 10%;
+    margin-bottom: 1%;
 
     Button+Button{
         margin-left: 10px;

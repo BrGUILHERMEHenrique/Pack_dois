@@ -5,18 +5,14 @@ export const FormModal = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
-
+    justify-content: center;
+    margin-top: 40px;
+    font-family: 'Oxanium', cursive;
 
     input{
-        width: 90%;
-        height: 40%;
-        padding: 6px;
-        flex: 1;
         border: 0;
         outline: none;
         color: #3a3a3a;
-        margin-top: 10px;
     }
 
 `;
@@ -53,9 +49,8 @@ export const Button = styled.button`
 `;
 export const FooterModal = styled.div`
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    margin-top: 10%;
+    justify-content: center;
+    align-items: center;
 
     Button+Button{
         margin-left: 10px;

@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 
+
 // import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
@@ -20,12 +21,72 @@ import api from '../../services/api';
 import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button} from './styles';
 
 const inputStyle = {
-    width               : '76%',
-    height              : '90%' 
+    nome: {
+        width: '64%',
+        height: '64%',
+    },
+    matricula: {
+        width: '100%',
+        height: '100%',
+        marginTop: '19px',
+        marginRight: '10px'
+    },
+    cpf: {
+        width: '25%',
+        height: '25%',
+        marginTop: '3%', 
+        marginRight: '10px'
+
+    }, 
+    data: {
+        width: '30%',
+        height: '30%',
+        marginTop: '3%',
+        marginRight: '10px'
+    },
+    tel: {
+        width: '25%',
+        height: '25%',
+        marginTop: '3%'
+        
+    },
+    empresa: {
+        width: '100%',
+        height: '100%',
+        marginTop: '3px'
+    },
+    dataUp: {
+        width: '50%',
+        height: '50%',
+        marginRight: '10px',
+        marginTop: '10px'
+    },
+    telUp: {
+        width: '50%',
+        height: '50%',
+        marginTop: '10px'
+    },
+    nomeUp: {
+        width: '55%',
+        height: '55%',
+    }
 };
 
-const styleAdicionar = {
-    content : {
+const modalStyleAtualizar = {
+    content: {
+        width               : '45%',
+        height              : '50%',
+        top                 : '50%',
+        left                : '50%',
+        right               : 'auto',
+        bottom              : 'auto',
+        marginRight         : '-50%',
+        transform           : 'translate(-50%, -50%)'
+    }
+};
+
+const modalStyleAdicionar = {
+    content: {
         width               : '50%',
         height              : '60%',
         top                 : '50%',
@@ -35,20 +96,7 @@ const styleAdicionar = {
         marginRight         : '-50%',
         transform           : 'translate(-50%, -50%)'
     }
-  };
-
-  const styleAtualizar = {
-    content : {
-        width               : '50%',
-        height              : '50%',
-        top                 : '50%',
-        left                : '50%',
-        right               : 'auto',
-        bottom              : 'auto',
-        marginRight         : '-50%',
-        transform           : 'translate(-50%, -50%)'
-    }
-  };
+}
 
   const useStyles = makeStyles((theme) => ({
     container: {
@@ -247,8 +295,7 @@ const Funcionarios = () => {
     return(
 
         <Container>
-
-             <Row 
+            <Row 
             direction="row"
             container>
                 <SubTitulo> Funcionário </SubTitulo>
@@ -257,43 +304,36 @@ const Funcionarios = () => {
             <Modal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
-            style={styleAdicionar}
+            style={modalStyleAdicionar}
             contentLabel="Modal"
             >
                 <HeaderModal>
                     <h2>Cadastro</h2>
                 </HeaderModal>
-            <FormModal>
-                <Input 
-                    placeholder="Nome"
-                    fullWidth={true}
-                    style={inputStyle}
-                    value={nome}
-                    onChange={e => setNome(e.target.value)}
-                />
-                <Input 
-                    placeholder="Matricula"
-                    fullWidth={true}
-                    style={inputStyle}
-                    value={codMatricula}
-                    onChange={e => setCodMatricula(e.target.value)}
-                />
-                <ContainerInputs>
-
-                    <InputMask mask="999.999.999-99" 
-                        id="cpf"
-                        placeholder="CPF"
-                        value={cpf} 
-                        onChange={e => {
-                        setCpf(e.target.value);
-                        console.log(e.target.value);
-                        }}>
-                        {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
-                    </InputMask>
-
-                    <form className={classes.container} >
-                        <TextField
+                <FormModal>
+                    <Input 
+                        placeholder="Nome"
+                        fullWidth={true}
+                        style={inputStyle.nome}
+                        value={nome}
+                        onChange={e => setNome(e.target.value)}
+                    />
+                    <ContainerInputs>
+                        <InputMask 
+                            style={inputStyle.cpf}
+                            mask="999.999.999-99" 
+                            id="cpf"
+                            placeholder="CPF"
+                            value={cpf} 
+                            onChange={e => {
+                            setCpf(e.target.value);
+                            console.log(e.target.value);
+                            }}>
+                            {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
+                        </InputMask>
+                        <Input
                             id="date"
+                            style={inputStyle.data}
                             label="Data de Nascimento"
                             type="date"
                             defaultValue={dataNascimento}
@@ -301,96 +341,110 @@ const Funcionarios = () => {
                                 setDataNascimento(e.target.value)
                                 console.log(e.target.value)
                             }}
-                            className={classes.textField}
+                            // className={classes.textField}
                             InputLabelProps={{
                             shrink: true
                             }}
                         />
-                    </form>
-                    <Select
-                        labelId={empresa}
-                        id={empresa}
-                        value={empresa}
-                        onChange={e => setEmpresa(e.target.value)}
-                        >
-                            {
-                                listaEmpresas.map(emp => (
-                                    <MenuItem value={emp}>{emp.razaoSocial}</MenuItem>
-                                ))                                
-                            }
-                    </Select>
-                    
-                    <InputMask mask="(99) 99999-9999"
-                        id="tel" 
-                        placeholder="Numero"
-                        value={telefone} 
-                        onChange={e => {
-                        setTelefone(e.target.value);
-                        console.log(e.target.value);
-                        }}>
-                        {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
-                    </InputMask>
-                </ContainerInputs>
-                <FooterModal>
-                    <Button
-                        onClick={e => handleAddFuncionario(e)}
-                    >Adicionar</Button>
-                    <Button
-                        onClick={closeModal}
-                    >Cancelar</Button>
-
-                    </FooterModal>
-            </FormModal>
+                        <InputMask 
+                            mask="(99) 99999-9999"
+                            style={inputStyle.tel}
+                            id="tel" 
+                            placeholder="Numero"
+                            value={telefone} 
+                            onChange={e => {
+                            setTelefone(e.target.value);
+                            console.log(e.target.value);
+                            }}>
+                            {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
+                        </InputMask>
+                    </ContainerInputs>
+                    <ContainerInputs>
+                        <Input
+                            type="text"
+                            inputProps = {{maxLength:6}}
+                            placeholder="Matricula"
+                            style={inputStyle.matricula}
+                            value={codMatricula}
+                            onChange={e => setCodMatricula(e.target.value)}
+                        />
+                        <TextField
+                            labelId={empresa}
+                            label='Empresa'
+                            placeholder="Matricula"
+                            style={inputStyle.empresa}
+                            select
+                            value={empresa}
+                            onChange={e => setEmpresa(e.target.value)}
+                            >
+                                {
+                                    listaEmpresas.map(emp => (
+                                        <MenuItem value={emp}>{emp.razaoSocial}</MenuItem>
+                                    ))                                
+                                }
+                        </TextField>
+                    </ContainerInputs>
+                        <FooterModal>
+                            <Button
+                                onClick={e => handleAddFuncionario(e)}
+                            >Adicionar</Button>
+                            <Button
+                                onClick={closeModal}
+                            >Cancelar</Button>
+                        </FooterModal>
+                </FormModal>
             </Modal>
 
                     {/* segundo modal para atualização ! */}
             <Modal
             isOpen={modalPutIsOpen}
             onRequestClose={closeModalUpdate}
-            style={styleAtualizar}
+            style={modalStyleAtualizar}
             contentLabel="Modal"
             >
-            <HeaderModal>
-            <h2>Atualizar</h2>
-            </HeaderModal>
-            <FormModal>
-                <Input 
-                 style={inputStyle}
-                 placeholder="Nome"
-                value={nomeAtualizado}
-                onChange={e => setNomeAtualizado(e.target.value)}
-                />
-
-                <FormModal className={classes.container} >
-                    <TextField
-                        id="date"
-                        
-                        type="date"
-                        defaultValue={dataNascimentoAtualizado}
-                        onChange={e => {
-                            setDataNascimentoAtualizado(e.target.value)
-                            console.log(e.target.value)
-                        }}
-                        className={classes.textField}
+                <HeaderModal>
+                <h2>Atualizar</h2>
+                </HeaderModal>
+                <FormModal>
+                    <Input 
+                    style={inputStyle.nomeUp}
+                    placeholder="Nome"
+                    value={nomeAtualizado}
+                    onChange={e => setNomeAtualizado(e.target.value)}
                     />
-                
-                <InputMask mask="(99) 99999-9999"
-                    id="tel" 
-                    label="Telefone"
-                    value={telefoneAtualizado} 
-                    onChange={e => {
-                    setTelefoneAtualizado(e.target.value);
-                    console.log(e.target.value);
-                    }}>
-                    {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
-                </InputMask>
+                    <ContainerInputs>
+                        <TextField
+                            id="date"
+                            style={inputStyle.dataUp}
+                            type="date"
+                            defaultValue={dataNascimentoAtualizado}
+                            onChange={e => {
+                                setDataNascimentoAtualizado(e.target.value)
+                                console.log(e.target.value)
+                            }}
+                        />
+                        <InputMask 
+                            style={inputStyle.telUp}
+                            mask="(99) 99999-9999"
+                            id="tel" 
+                            label="Telefone"
+                            value={telefoneAtualizado} 
+                            onChange={e => {
+                            setTelefoneAtualizado(e.target.value);
+                            console.log(e.target.value);
+                            }}>
+                            {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
+                        </InputMask>
+                    </ContainerInputs> 
                 </FormModal>
-                 <FooterModal>
-                <Button
-                    onClick={e => handleUpdateFuncionario(e)}
-                >Atualizar</Button>
+                <FooterModal>
+                    <Button
+                        onClick={e => handleUpdateFuncionario(e)}
+                        >Atualizar</Button>
+                    <Button
+                        onClick={closeModalUpdate}
+                        >Cancelar</Button>
                 </FooterModal>
-            </FormModal>
             </Modal>
 
             <TableF funcionarios = {funcionarios} handleFuncionario = {openModalWithData} removeFuncionario = {removeFuncionario}/> 
