@@ -18,6 +18,7 @@ const Routes = () => (
         <Route exact path="/funcionarios" component={Funcionarios} />
         <Route exact path="/empresas" component={Empresas} />
         <Route exact path="/funcionarioHorario" component={FuncionarioHorario} />
+        <Route exact path="/ponto" component={Horario} />
         
 
     </Switch>

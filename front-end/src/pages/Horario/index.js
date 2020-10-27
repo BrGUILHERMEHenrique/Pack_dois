@@ -1,33 +1,36 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
 
 import api from '../../services/api';
 
-const Horario = ({ location }) => {
-    const id = location.state.id;
+import { Container, ContainerButtons, Clock, ContainerLogin } from './styles';
+
+const Horario = () => {
     const [timeNow, setTimeNow] = useState ('');
     const [entrada1, setEntrada1] = useState('');
     const [entrada2, setEntrada2] = useState('');
     const [saida1, setSaida1] = useState('');
     const [saida2, setSaida2] = useState('');
     const [funcionario, setFuncionario] = useState({});
-    const [funcionarios, setFuncionarios] = useState([]);
-    const [descHorario, setDescHorario] = useState('');
     const [horario, setHorario] = useState(Number);
     const [horarios, setHorarios] = useState([]);
     const [hora, setHora] = useState('');
     const [minuto, setMinuto] = useState('');
     const [segundo, setSegundo] = useState('');
-    const [dia, setDia] = useState(Number);
-    const listaDias = [1, 2, 3, 4, 5, 6, 7];
+    const [codMatricula, setCodMatricula] = useState(''); 
+    const dateNow = new Date();
 
 
     const getTimeNow = () => {
-        const dateNow = new Date();
+        if(!funcionario.id){
+            alert("Antes de fazer qualquer coisa, informe sua Matricula");
+            return;
+        } 
         let hour = dateNow.getHours();
         let minute = dateNow.getMinutes();
-        let second = dateNow.getSeconds();
+        let second = dateNow.getSeconds(); 
         if(dateNow.getHours() < 10){
             hour = `0${dateNow.getHours()}`;
         }
@@ -48,8 +51,39 @@ const Horario = ({ location }) => {
         console.log(entrada1);
     }
 
-    const timeStop = () =>{
-        const dateNow = new Date();
+    const handleAddHorarioDetalhes = useCallback(
+        async (saida2) => {
+            
+            console.log(saida2);
+            const paramsHoraDetalhe = {
+                idFuncionario: funcionario.id,
+                // idHorarioDetalhe: funcionarioHorario.idHorario.id,
+                entrada1: entrada1,
+                saida1: saida1,
+                entrada2: entrada2,
+                saida2: saida2
+            }
+            try {               
+            // const response = await api.post('horario_detalhes', paramsHoraDetalhe);
+                // console.log();
+                console.log(paramsHoraDetalhe);
+            } catch (error) {
+                console.log(error.response.data);
+                console.log(error);
+            }
+        }, [horario, 
+            funcionario, 
+            entrada1, 
+            entrada2, 
+            saida1, 
+            saida2]
+    )
+    const timeStop = useCallback(
+    () =>{
+        if(!funcionario.id){
+            alert("Antes de fazer qualquer coisa, informe sua Matricula");
+            return;
+        }
         let hour = dateNow.getHours();
         let minute = dateNow.getMinutes();
         let second = dateNow.getSeconds();
@@ -67,157 +101,107 @@ const Horario = ({ location }) => {
             setSaida1(dateTotal);
         } else if(!saida2 && !!entrada2 && !!saida1) {
             setSaida2(dateTotal);
+            handleAddHorarioDetalhes(dateTotal);
         }
-
+        
         console.log(dateTotal);
-    }
+      
+    }, [
+        entrada1,
+        entrada2,
+        saida1,
+        saida2,
+        handleAddHorarioDetalhes
+    ], 
+    );
 
     
-    const loadFuncionarios = useCallback(
+    const loadFuncionario = useCallback(
         async () => {
             try {
-                const response = await api.get('funcionario');
+                const response = await api.get(`funcionario/cod/${codMatricula}`);
                 console.log(response);
-                setFuncionarios(response.data);
+                setFuncionario(response.data);
             } catch (error) {
                 console.log(error);
             }
-        }, [],
+        }, [codMatricula],
     )
 
     const  loadHorarios = useCallback(
         async () => {
             try{
-                const response = await api.get('horario');
+                const response = await api.get('horario_detalhes');
                 console.log(response.data);
                 setHorarios(response.data);
             } catch(error){
-                console.log(error)
+                console.log(error);
             }
         }, []
     )
-    const handleAddHorario = useCallback(
-        async () => {
-            const paramsHorario = {
-                codigoHorario: 5,
-                descHorario: "Horário comercial"
-            }
-            try {
-                const response = await api.post('horario', paramsHorario);
-                console.log(response.data);
-                setHorario(response.data);
- 
-            } catch (error) {
-                console.log(error);
-            }
-    }, [],
-    );
 
-    const handleAddHorarioDetalhes = useCallback(
-        async () => {
-            const paramsHoraDetalhe = {
-                idHorario: horario,
-                codigoDia: dia,
-                folga: false,
-                entrada1: entrada1,
-                saida1: saida1,
-                entrada2: entrada2,
-                saida2: saida2
-            }
-            try {               
-                // const response = await api.post('horario_detalhes', paramsHoraDetalhe);
-                // console.log(response.data);
-                console.log(paramsHoraDetalhe);
-            } catch (error) {
-                console.log(error.response.data);
-                console.log(error);
-            }
-        }, [horario, funcionario, handleAddHorario, entrada1, entrada2, saida1, saida2]
-    )
+    
 
     const defineHour = useCallback(
         () => {
-            const timer = new Date();
-            setHora(timer.getHours());
-            setMinuto(timer.getMinutes());
-            setSegundo(timer.getSeconds());
-            if(parseInt(timer.getMinutes()) >= 60){
-                setHora(timer.getHours());
+            setHora(dateNow.getHours());
+            setMinuto(dateNow.getMinutes());
+            setSegundo(dateNow.getSeconds());
+            if(parseInt(dateNow.getMinutes()) >= 59){
+                setHora(dateNow.getHours());
             }
-            console.log(timer.getHours() +":"+ timer.getMinutes());
+            console.log(dateNow.getHours() +":"+ dateNow.getMinutes());
             }, [],
     )
 
+    useEffect (
+        () => {
+            defineHour();
+        }, [defineHour]
+    )
     useEffect(
         () => {
-            console.log("location_state: ",id);
-        }, [location]
+            setInterval(() => {
+                defineHour();
+            }, 300000);
+        }, [defineHour]
     ); 
 
 
-    useEffect(
-        () => {
-            loadFuncionarios();
-            loadHorarios();
-        }, [loadFuncionarios, loadHorarios]
-    )
-
+ 
     return(
-        <>
-            <h1>{`${hora}:${minuto}`}</h1>
-        <Button variant="contained" color="primary" 
-            onClick={getTimeNow}
-        >
-            Iniciar
-        </Button >
+        <Container>
+            <ContainerLogin>
+            <Input 
+                placeholder="Matricula"
+                value={codMatricula}
+                onChange={e => setCodMatricula(e.target.value)}
+                />
+            <Button variant="contained" color="primary"
+                onClick={() => loadFuncionario()}
+                disabled={!!funcionario.id ? true : false}
+            >
+                Logar
+            </Button>
+            </ContainerLogin>
+            <Clock>{`${hora}:${minuto}`}</Clock>
+            <ContainerButtons>
+                <Button variant="contained" color="primary" 
+                    onClick={getTimeNow}
+                    disabled={!!entrada1 && !saida1 || !!entrada2 ? true : false}
+                >
+                    Gravar {!entrada1 ? "entrada" : "volta do almoço"}
+                </Button >
 
-        <select
-        value={dia.id}
-        onSelect={(e) => setDia(e.target.value)}
-        >
-            {
-                listaDias.map(dia => (
-                    <option value={dia.id} key={dia.id} >{dia}</option>
-                ))
-            }
-        </select>
+                <Button variant="outlined" color="primary" 
+                    onClick={() => timeStop()}
+                    disabled={!!saida1 && !entrada2 || !!saida2 ? true : false}
+                >
+                    {!saida1 ? "Saida almoço" : "Encerrar dia"}
+                    </Button>    
+            </ContainerButtons>
 
-        <select
-            value={horario.id}
-            onSelect={(e) => setHorario(e.target.value)}
-        >
-            {
-                horarios.map(horario => (
-                <option value={horario.id} key={horario.id} >{horario.codigoHorario}-{horario.descHorario}</option>
-                ))
-            }
-        </select>
-
-        <select
-            value={funcionario.id}
-            onSelect={(e) => setFuncionario(e.target.value)}
-        >
-            {
-                funcionarios.map(func => (
-                    <option value={func.id} key={func.id} >{func.nome}</option>
-                ))
-            }
-        </select>
-
-        <Button variant="contained" color="secundary"
-            onClick={() => handleAddHorarioDetalhes()}
-        >
-            Gravar
-        </Button>
-
-        <Button variant="outlined" color="primary" 
-            onClick={() => timeStop()}
-        >
-            Parar
-            </Button>    
-
-
-        </>
+        </Container>
     )
 }
 

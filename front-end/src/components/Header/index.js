@@ -21,6 +21,10 @@ const Header = () => {
         {
             pagina: 'Horários',
             rota: '/horarios'
+        },
+        {
+            pagina: 'Ponto',
+            rota: '/ponto'
         }
 
     ] 
