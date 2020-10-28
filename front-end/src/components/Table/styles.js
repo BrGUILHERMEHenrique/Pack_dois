@@ -1,5 +1,4 @@
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
+import { TableCell, TableRow, Paper } from '@material-ui/core';
 import styled from 'styled-components';
 
 
@@ -21,7 +20,6 @@ export const TabelaRow = styled(TableRow)`
             background-color: rgba(166,169,173,0.3);
         }
     }
-
 `;
 
 export const TextoTh = styled.p`
@@ -37,6 +35,67 @@ export const TextoTr = styled.p`
 
 `;
 
+export const TableOptions = styled(Paper)`
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    padding: 12px 16px;
+    z-index: 1;
+    display: inline-block;
+
+`;
+
+export const ButtonIcon = styled.button`
+width: 32px;
+height: 30px;
+color: #A2A9AD;
+border: 2px solid #A2A9AD;
+border-radius: 10px;
+background-color: transparent;
+outline: none;
+
+&:hover{
+    background-color: #A2A9AD;
+    cursor: pointer;
+    color: white;
+}
+
+&+button {
+    margin-left: 8px;
+}
+
+`
+
+export const ButtonIconD = styled.button`
+width: 32px;
+height: 30px;
+color: rgba(206,14,45,0.7);
+border: 2px solid rgba(206,14,45,0.7);
+border-radius: 10px;
+background-color: transparent;
+outline: none;
+
+&:hover{
+    background-color: rgba(206,14,45,0.9);
+    cursor: pointer;
+    color: white;
+}
+
+&+button {
+    margin-left: 8px;
+}
+
+`
+
+export const MenuList = styled.div`
+    position: relative;
+    display: inline-block;
+
+    &:hover Paper{
+
+    }
+
+`
 
 export const ButtonU = styled.button`
     width: 75px;

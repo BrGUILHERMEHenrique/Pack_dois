@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { format } from 'date-fns'
 import { makeStyles } from '@material-ui/core/styles';
-import {TableBody, Table, TableContainer, Paper} from '@material-ui/core';
-import { Tabela, TabelaRow, THead, Button, TextoTh, TextoTr, ButtonU, ButtonD } from './styles';
+import {TableBody, Table, TableContainer, Paper, Menu, MenuItem} from '@material-ui/core';
+import { Tabela, TabelaRow, THead, Button, TextoTh, TextoTr, ButtonU, ButtonD, TableOptions, MenuList, ButtonIcon, ButtonIconD } from './styles';
 import swal from 'sweetalert';
 import 'sweetalert2/src/sweetalert2.scss'
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import DateRangeIconRounded from '@material-ui/icons/DateRangeRounded';
 
 
 //styles criado através do material para a tabela
@@ -70,6 +73,18 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     const classes = useStyles();
     const history = useHistory();
 
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+
     return(
         <TableContainer component={Paper} className={classes.table}>
           <Table  aria-label="Tabela Funcionários">
@@ -90,19 +105,36 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   <Tabela align="center"><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
-                  <Tabela align="center"><ButtonU
-                    onClick = {() => history.push('/funcionarioHorario', { id: funcionario.id })}
-                  >Horários</ButtonU></Tabela>
-                  <Tabela align="center"><ButtonU 
-                    onClick={() => {
-                      handleFuncionario(funcionario.id);
-                    }}
-                  >Atualizar</ButtonU></Tabela>
-                  <Tabela align="center"><ButtonD 
-                                        onClick={() => {
-                                            OpenAlert(funcionario.id, removeFuncionario)
-                                          }}
-                                          >Excluir</ButtonD>
+                   <Tabela align="center">
+                     <ButtonIcon
+                        onClick = {() => {
+                          history.push('/funcionarioHorario', { id: funcionario.id })
+                        }}
+                      >
+                        <DateRangeIconRounded 
+                          fontSize="small" 
+                          style={{marginTop: '3px'}}
+                        />
+                      </ButtonIcon>
+                    <ButtonIcon 
+                      onClick={() => {
+                        handleFuncionario(funcionario.id);
+                      }}
+                    >
+                      <EditIcon 
+                        fontSize="small"
+                        style={{textAlign: 'center', marginTop: '3px'}}
+                      />
+                    </ButtonIcon>
+                    <ButtonIconD
+                      onClick={() => {
+                        OpenAlert(funcionario.id, removeFuncionario)
+                      }}
+                    >
+                      <DeleteForeverIcon 
+                        fontSize="small" 
+                        style={{marginTop: '3px'}}/>                    
+                    </ButtonIconD>
                   </Tabela>
                 </TabelaRow>
               ))}
@@ -283,8 +315,68 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
       </TableContainer>
 
     )
+}
+
+    const TableA = ({ apontamentos, handleapontamento, removeapontamento }) => {
+
+      const classes = useStyles();
+  
+      const [apontamento, setApontamento] = useState({});
+
+      return(
+        <TableContainer component={Paper} className={classes.table}>
+          <Table aria-label="Tabela Apontamentos">
+            <Tabela align="center"><TextoTh>Funcionário</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Horario</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Data</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Primeira Entrada</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Saida Almoço</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Volta Almoço</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Horário Final</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Total Trabalhado</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Saldo Hora Extra</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>Saldo Atraso</TextoTh></Tabela>
+            <TableBody>
+              {apontamentos.map(apontameto => (
+                <TabelaRow key={apontameto.id}>
+                  <Tabela component="th" scope="Funcionário-Horario" align="center">
+                  <TextoTr>{apontameto.idFuncionario.nome}</TextoTr>
+                  </Tabela>
+                  <Tabela align="center"><TextoTr>{apontameto.idHorario.descHorario}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontameto.data}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontameto.entrada1}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontameto.saida1}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontameto.entrada2}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontameto.saida2}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontameto.totalTrabalhado}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontameto.saldoHe}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontameto.saldoAtraso}</TextoTr></Tabela>
+
+                  {/* <Tabela align="center">
+                    <ButtonU
+                      onClick={() => {
+                        handleapontamento(apontameto.id);
+                      }}
+                    >Atualizar
+                    </ButtonU>
+                  </Tabela>
+                  <Tabela align="center">
+                    <ButtonD 
+                      onClick={() => {
+                        OpenAlert(apontamento.id, removeapontamento)
+                      }}
+                    >Excluir
+                    </ButtonD>
+                  </Tabela> */}
+                </TabelaRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+  
+      )
 
   }
 
-  export {TableF, TableE, TableHD, TableH, TableFH};
+  export {TableF, TableE, TableHD, TableH, TableFH, TableA};
   
