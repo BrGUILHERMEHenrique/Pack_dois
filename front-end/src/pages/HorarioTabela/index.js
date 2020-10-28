@@ -1,17 +1,16 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useHistory } from 'react-router-dom';
-
 import Input from '@material-ui/core/Input';
 import TextField from '@material-ui/core/TextField';
 import api from '../../services/api';
-import { FormModal, Button, Container, Row, SubTitulo, FooterModal, HeaderModal } from './styles';
+import { FormModal, Button, Container, Row, SubTitulo, FooterModal, HeaderModal, InputContainer } from './styles';
 import { TableH } from '../../components/Table';
 
 const customStyles = {
     content : {
-        width               : '50%',
-        height              : '50%',
+        width               : '40%',
+        height              : '40%',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -20,6 +19,21 @@ const customStyles = {
         transform           : 'translate(-50%, -50%)'
     }
   };
+
+  const inputStyle = {
+
+    codigo: { 
+        width: '7vw',
+        height: '100%',
+        marginRight: '10px'
+    }, 
+    descHorario: { 
+        width: '15vw',
+        height: '100%',
+        marginRight: '10px'
+    }
+};
+
 
 
 const HorarioTabela = () => {
@@ -114,7 +128,6 @@ const HorarioTabela = () => {
             loadHorarios
         ]
     )
-
     
     const removeHorario = async (id) => {
         try {
@@ -133,19 +146,13 @@ const HorarioTabela = () => {
         }, [loadHorarios]
     );
 
-    const inputStyle = {
-            width: '1vw',
-            height: '100%',
-            marginRight: '10px'
-    };
-
     return(
         <Container>
             <Row 
             direction="row"
             container>
                 <SubTitulo> Horários </SubTitulo>
-                <Button variant="contained" color="primary" onClick={openModalAdd}>Adicionar</Button>
+                <Button onClick={openModalAdd}>Adicionar</Button>
             </Row>
             <TableH horarios={horarios} handleHorario={openModalWithData} removeHorario={removeHorario}/>
 
@@ -161,14 +168,19 @@ const HorarioTabela = () => {
                 </HeaderModal>
                 <FormModal>
                     <TextField
-                        style={inputStyle}
+                        style={inputStyle.codigo}
                         type="number"
+                        label="Código Horário"
+                        InputProps={{ inputProps: { min: 1} }}
+                        InputLabelProps={{ shrink: true }}
                         onChange={e => setCodigoHorarioAtualizado(e.target.value)}
                         value={codigoHorarioAtualizado}
                     />
                 
-                    <TextField
-                    style={inputStyle}
+                    <TextField  
+                        label="Descrição do Horário"
+                        style={inputStyle.descHorario}
+                        InputLabelProps={{ shrink: true }}
                         onChange={e => setDescHorarioAtualizado(e.target.value)}
                         value={descHorarioAtualizado}
                     />
@@ -197,11 +209,18 @@ const HorarioTabela = () => {
                 <FormModal>         
                     <TextField
                         type="number"
+                        label="Código Horário"
+                        style={inputStyle.codigo}
+                        InputProps={{ inputProps: { min: 1} }}
+                        InputLabelProps={{ shrink: true }}
                         onChange={e => setCodigoHorario(e.target.value)}
                         value={codigoHorario}
                     />
                 
                     <TextField
+                        label="Descrição do Horário"
+                        style={inputStyle.descHorario}
+                        InputLabelProps={{ shrink: true }}
                         onChange={e => setDescHorario(e.target.value)}
                         value={descHorario}
                     />

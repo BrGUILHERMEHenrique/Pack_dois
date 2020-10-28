@@ -218,92 +218,92 @@ const Empresas = () => {
             </Row>
             
             <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            style={modalStyleAdicionar}
-            contentLabel="Modal"
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                style={modalStyleAdicionar}
+                contentLabel="Modal"
             >
                 <HeaderModal>
                     <h2>Cadastro</h2>
                     {/* <AiOutlineClose onClick={closeModal} /> */}
                 </HeaderModal>
                 {/* <hr /> */}
-            <FormModal>
-                <Input 
-                    placeholder="Razão Social"
-                    fullWidth={true}
-                    value={razaoSocial}
-                    style={inputStyle.razaoSocial}
-                    onChange={e => setRazaoSocial(e.target.value)}
-                />
-                <ContainerInputs>
+                <FormModal>
                     <Input 
-                        placeholder="Código da Empresa"
+                        placeholder="Razão Social"
                         fullWidth={true}
-                        value={codEmpresa}
-                        style={inputStyle.matricula}
-                        onChange={e => setCodEmpresa(e.target.value)}
+                        value={razaoSocial}
+                        style={inputStyle.razaoSocial}
+                        onChange={e => setRazaoSocial(e.target.value)}
                     />
-                    <InputMask 
-                    style={inputStyle.cnpj}
-                    mask="99.999.999/9999-99" 
-                        id="cnpj"
-                        placeholder="CNPJ"
-                        value={cnpj} 
-                        onChange={e => {
-                        setCnpj(e.target.value);
-                        console.log(e.target.value);
-                        }}>
-                        {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
-                    </InputMask>
-                </ContainerInputs>
-                <FooterModal>
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        onClick={e => handleAddEmpresa(e)}
-                    >Adicionar</Button>
-                    <Button
-                        color="secundary"
-                        variant="outlined"
-                        onClick={closeModal}
-                    >Cancelar</Button>
+                    <ContainerInputs>
+                        <Input 
+                            placeholder="Código da Empresa"
+                            fullWidth={true}
+                            value={codEmpresa}
+                            style={inputStyle.matricula}
+                            onChange={e => setCodEmpresa(e.target.value)}
+                        />
+                        <InputMask 
+                        style={inputStyle.cnpj}
+                        mask="99.999.999/9999-99" 
+                            id="cnpj"
+                            placeholder="CNPJ"
+                            value={cnpj} 
+                            onChange={e => {
+                            setCnpj(e.target.value);
+                            console.log(e.target.value);
+                            }}>
+                            {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
+                        </InputMask>
+                    </ContainerInputs>
+                    <FooterModal>
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            onClick={e => handleAddEmpresa(e)}
+                        >Adicionar</Button>
+                        <Button
+                            color="secundary"
+                            variant="outlined"
+                            onClick={closeModal}
+                        >Cancelar</Button>
 
-                    </FooterModal>
-            </FormModal>
+                        </FooterModal>
+                </FormModal>
             </Modal>
 
 
                     {/* segundo modal para atualização ! */}
             <Modal
-            isOpen={modalPutIsOpen}
-            onRequestClose={closeModalUpdate}
-            contentLabel="Modal"
-            style={modalStyleAtualizar}
+                isOpen={modalPutIsOpen}
+                onRequestClose={closeModalUpdate}
+                contentLabel="Modal"
+                style={modalStyleAtualizar}
             >
-            <HeaderModal>
-            <h2>Atualizar</h2>
-            {/* <AiOutlineClose onClick={closeModalUpdate} /> */}
-            </HeaderModal>
-            <FormModal>
-            <ContainerInputs>
-                <Input 
-                    style={inputStyle.razaoSocialUp}
-                    placeholder="Razão Social"
-                    value={razaoSocialAtualizada}
-                    onChange={e => setRazaoSocialAtualizada(e.target.value)}
-                />
-                </ContainerInputs>
-                <FooterModal>
-                <Button
-                onClick={e => handleUpdateEmpresa(e)}
-                >Atualizar</Button>
+                <HeaderModal>
+                <h2>Atualizar</h2>
+                {/* <AiOutlineClose onClick={closeModalUpdate} /> */}
+                </HeaderModal>
+                <FormModal>
+                    <ContainerInputs>
+                        <Input 
+                            style={inputStyle.razaoSocialUp}
+                            placeholder="Razão Social"
+                            value={razaoSocialAtualizada}
+                            onChange={e => setRazaoSocialAtualizada(e.target.value)}
+                        />
+                    </ContainerInputs>
+                    <FooterModal>
+                    <Button
+                    onClick={e => handleUpdateEmpresa(e)}
+                    >Atualizar</Button>
 
-                <Button
-                onClick={closeModalUpdate}
-                >Cancelar</Button>
-                </FooterModal>
-            </FormModal>
+                    <Button
+                    onClick={closeModalUpdate}
+                    >Cancelar</Button>
+                    </FooterModal>
+                </FormModal>
             </Modal>
 
             <TableE empresas = {empresas} handleEmpresa = {openModalWithData} removeEmpresa = {removeEmpresa}/> 

@@ -342,14 +342,14 @@ const HorarioDetalhes = ({ location }) => {
                             }}
                         />
                         <TextField
-                        select
-                        style={inputStyle.horarioUp}
-                        labelId="Folga"
-                        id="Folga"
-                        value={folgaAtualizado}
-                        label="Folga"
-                        InputLabelProps={{ shrink: true }}
-                        onChange={e => setFolgaAtualizado(e.target.value)}
+                            select
+                            style={inputStyle.horarioUp}
+                            labelId="Folga"
+                            id="Folga"
+                            value={folgaAtualizado}
+                            label="Folga"
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => setFolgaAtualizado(e.target.value)}
                         >
                             <MenuItem value={true}>Verdadeiro</MenuItem>
                             <MenuItem value={false}>Falso</MenuItem>
@@ -378,14 +378,14 @@ const HorarioDetalhes = ({ location }) => {
                 <FormModal>
                     <InputContainer>
                         <TextField
-                        select
-                        label="Horário Entrada"
-                        labelId={entrada1}
-                        id={entrada1}
-                        value={entrada1}
-                        style={inputStyle.horario}
-                        InputLabelProps={{ shrink: true }}
-                        onChange={e => setEntrada1(e.target.value)}
+                            select
+                            label="Horário Entrada"
+                            labelId={entrada1}
+                            id={entrada1}
+                            value={entrada1}
+                            style={inputStyle.horario}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => setEntrada1(e.target.value)}
                         >
                             {
                                 listHorarios.map(horario => (
@@ -395,14 +395,14 @@ const HorarioDetalhes = ({ location }) => {
                         
                         </TextField>
                         <TextField
-                        select
-                        labelId={saida1}
-                        id={saida1}
-                        value={saida1}
-                        style={inputStyle.horario}
-                        label="Horário Almoço"
-                        InputLabelProps={{ shrink: true }}
-                        onChange={e => setSaida1(e.target.value)}
+                            select
+                            labelId={saida1}
+                            id={saida1}
+                            value={saida1}
+                            style={inputStyle.horario}
+                            label="Horário Almoço"
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => setSaida1(e.target.value)}
                         >
                             {
                                 listHorarios.map(horario => (
@@ -412,14 +412,14 @@ const HorarioDetalhes = ({ location }) => {
                         
                         </TextField>
                         <TextField
-                        select
-                        style={inputStyle.horario}
-                        label="Horário Retorno"
-                        InputLabelProps={{ shrink: true }}
-                        labelId={entrada2}
-                        id={entrada2}
-                        value={entrada2}
-                        onChange={e => setEntrada2(e.target.value)}
+                            select
+                            style={inputStyle.horario}
+                            label="Horário Retorno"
+                            InputLabelProps={{ shrink: true }}
+                            labelId={entrada2}
+                            id={entrada2}
+                            value={entrada2}
+                            onChange={e => setEntrada2(e.target.value)}
                         >
                             {
                                 listHorarios.map(horario => (
@@ -429,14 +429,14 @@ const HorarioDetalhes = ({ location }) => {
                         
                         </TextField>
                             <TextField
-                            select
-                            style={inputStyle.horario}
-                            label="Horário Saída"
-                            InputLabelProps={{ shrink: true }}
-                            labelId={saida2}
-                            id={saida2}
-                            value={saida2}
-                            onChange={e => setSaida2(e.target.value)}
+                                select
+                                style={inputStyle.horario}
+                                label="Horário Saída"
+                                InputLabelProps={{ shrink: true }}
+                                labelId={saida2}
+                                id={saida2}
+                                value={saida2}
+                                onChange={e => setSaida2(e.target.value)}
                             >
                                 {
                                     listHorarios.map(horario => (
@@ -448,14 +448,14 @@ const HorarioDetalhes = ({ location }) => {
                     </InputContainer>
                     <InputContainer>
                             <TextField
-                            select
-                            style={inputStyle.horario}
-                            label="Horário"
-                            labelId="Horarios"
-                            id={horario.id}
-                            value={horario}
-                            InputLabelProps={{ shrink: true }}
-                            onChange={e => setHorario(e.target.value)}
+                                select
+                                style={inputStyle.horario}
+                                label="Horário"
+                                labelId="Horarios"
+                                id={horario.id}
+                                value={horario}
+                                InputLabelProps={{ shrink: true }}
+                                onChange={e => setHorario(e.target.value)}
                             >
                                 {
                                     horarios.map(horario => (
@@ -465,14 +465,14 @@ const HorarioDetalhes = ({ location }) => {
                             
                             </TextField>
                             <TextField
-                            select
-                            style={inputStyle.horario}
-                            label="Folga"
-                            labelId="Folga"
-                            id="Folga"
-                            value={folga}
-                            InputLabelProps={{ shrink: true }}
-                            onChange={e => setFolga(e.target.value)}
+                                select
+                                style={inputStyle.horario}
+                                label="Folga"
+                                labelId="Folga"
+                                id="Folga"
+                                value={folga}
+                                InputLabelProps={{ shrink: true }}
+                                onChange={e => setFolga(e.target.value)}
                             >
                                 <MenuItem value={true}>Verdadeiro</MenuItem>
                                 <MenuItem value={false}>Falso</MenuItem>

@@ -197,35 +197,43 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     const classes = useStyles();
     const history = useHistory();
 
+    const buttonStyle = {
+      marginRight: 40
+    }
+
     return(
         <TableContainer component={Paper} className={classes.table}>
           <Table aria-label="Tabela Horários">
-            <Tabela align="center"><TextoTh>Id</TextoTh></Tabela>
+            {/* <Tabela align="center"><TextoTh>Id</TextoTh></Tabela> */}
             <Tabela align="center"><TextoTh>Codigo do Horário</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Descrição do Horário</TextoTh></Tabela>
             <TableBody>
               {horarios.map(horario => (
                 <TabelaRow key={horario.id}>
-                  <Tabela component="th" scope="Detlhes de horário" align="center">
+                  {/* <Tabela component="th" scope="Detlhes de horário" align="center">
                     <TextoTr>{horario.id}</TextoTr>
-                  </Tabela>
+                  </Tabela> */}
                   <Tabela align="center"><TextoTr>{horario.codigoHorario}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horario.descHorario}</TextoTr></Tabela>
-                  <Tabela align="center"><ButtonU
-                    onClick={() => {
-                      handleHorario(horario.id);
-                    }}
-                  >Atualizar</ButtonU></Tabela>
-                  <Tabela align="center"><ButtonU
-                    onClick={() => {
-                      history.push('/horarioDetalhes', {id: horario.id});
-                    }}
-                  >Detalhes</ButtonU></Tabela>
-                  <Tabela align="center"><ButtonD 
-                                          onClick={() => {
-                                              OpenAlert(horario.id, removeHorario)
-                                            }}
-                                            >Excluir</ButtonD>
+                  <Tabela align="center">
+                    <ButtonU
+                      style={buttonStyle}
+                      onClick={() => {
+                        history.push('/horarioDetalhes', {id: horario.id});
+                      }}
+                    >Detalhes</ButtonU>
+
+                    <ButtonU
+                      style={buttonStyle}
+                      onClick={() => {
+                        handleHorario(horario.id);
+                      }}
+                    >Atualizar</ButtonU>
+                    <ButtonD
+                      onClick={() => {
+                        OpenAlert(horario.id, removeHorario)
+                      }}
+                      >Excluir</ButtonD>
                   </Tabela>
                 </TabelaRow>
               ))}

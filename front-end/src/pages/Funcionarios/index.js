@@ -397,10 +397,10 @@ const Funcionarios = () => {
 
                     {/* segundo modal para atualização ! */}
             <Modal
-            isOpen={modalPutIsOpen}
-            onRequestClose={closeModalUpdate}
-            style={modalStyleAtualizar}
-            contentLabel="Modal"
+                isOpen={modalPutIsOpen}
+                onRequestClose={closeModalUpdate}
+                style={modalStyleAtualizar}
+                contentLabel="Modal"
             >
                 <HeaderModal>
                 <h2>Atualizar</h2>
