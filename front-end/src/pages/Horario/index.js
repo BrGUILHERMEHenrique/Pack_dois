@@ -9,6 +9,7 @@ import { Container, ContainerButtons, Clock, ContainerLogin } from './styles';
 
 const Horario = () => {
     const [timeNow, setTimeNow] = useState ('');
+    const [textButton, setTextButton] = useState('Logar');
     const [entrada1, setEntrada1] = useState('');
     const [entrada2, setEntrada2] = useState('');
     const [saida1, setSaida1] = useState('');
@@ -22,12 +23,18 @@ const Horario = () => {
     const [codMatricula, setCodMatricula] = useState(''); 
     const dateNow = new Date();
 
-
-    const getTimeNow = () => {
+    const handleAllClicks = () => {
         if(!funcionario.id){
-            alert("Antes de fazer qualquer coisa, informe sua Matricula");
-            return;
-        } 
+            loadFuncionario();
+            setTextButton('Primeira Entrada');
+        } else if(!entrada1 && !saida1 || !entrada2 && !!saida1){
+            getTimeNow();
+        } else if(!saida1 || !saida2 && !!entrada1 || !!entrada2){
+            timeStop();
+        }
+    }
+
+    const addZero = () => {
         let hour = dateNow.getHours();
         let minute = dateNow.getMinutes();
         let second = dateNow.getSeconds(); 
@@ -40,13 +47,23 @@ const Horario = () => {
         if(dateNow.getSeconds() < 10){
             second = `0${dateNow.getSeconds()}`;
         }
-        const dateTotal = `${hour}:${minute}:${second}`
+        return `${hour}:${minute}:${second}`;
+    }
+
+    const getTimeNow = () => {
+        if(!funcionario.id){
+            alert("Antes de fazer qualquer coisa, informe sua Matricula");
+            return;
+        } 
+        const dateTotal = addZero();
         setTimeNow(dateTotal);
         if(!entrada1 && !saida1){
             setEntrada1(dateTotal);
+            setTextButton('Saida Almoço');
             console.log(dateTotal);
         } else if(!entrada2 && !!entrada1 && !!saida1){
             setEntrada2(dateTotal);
+            setTextButton('Encerrar');
         }
         console.log(entrada1);
     }
@@ -84,21 +101,11 @@ const Horario = () => {
             alert("Antes de fazer qualquer coisa, informe sua Matricula");
             return;
         }
-        let hour = dateNow.getHours();
-        let minute = dateNow.getMinutes();
-        let second = dateNow.getSeconds();
-        if(dateNow.getHours() < 10){
-            hour = `0${dateNow.getHours()}`;
-        }
-        if(dateNow.getMinutes() < 10){
-            minute = `0${dateNow.getMinutes()}`;
-        }
-        if(dateNow.getSeconds() < 10){
-            second = `0${dateNow.getSeconds()}`;
-        }
-        const dateTotal = `${hour}:${minute}:${second}`
+        
+        const dateTotal = addZero();
         if(!saida1 && !!entrada1){
             setSaida1(dateTotal);
+            setTextButton('Volta Almoço')
         } else if(!saida2 && !!entrada2 && !!saida1) {
             setSaida2(dateTotal);
             handleAddHorarioDetalhes(dateTotal);
@@ -176,31 +183,16 @@ const Horario = () => {
                 placeholder="Matricula"
                 value={codMatricula}
                 onChange={e => setCodMatricula(e.target.value)}
+                disabled={!!funcionario.id ? true : false}
                 />
             <Button variant="contained" color="primary"
-                onClick={() => loadFuncionario()}
-                disabled={!!funcionario.id ? true : false}
+                onClick={() => handleAllClicks()}
+                disabled={!!saida2 ? true : false}
             >
-                Logar
+                {textButton}
             </Button>
             </ContainerLogin>
             <Clock>{`${hora}:${minuto}`}</Clock>
-            <ContainerButtons>
-                <Button variant="contained" color="primary" 
-                    onClick={getTimeNow}
-                    disabled={!!entrada1 && !saida1 || !!entrada2 ? true : false}
-                >
-                    Gravar {!entrada1 ? "entrada" : "volta do almoço"}
-                </Button >
-
-                <Button variant="outlined" color="primary" 
-                    onClick={() => timeStop()}
-                    disabled={!!saida1 && !entrada2 || !!saida2 ? true : false}
-                >
-                    {!saida1 ? "Saida almoço" : "Encerrar dia"}
-                    </Button>    
-            </ContainerButtons>
-
         </Container>
     )
 }
