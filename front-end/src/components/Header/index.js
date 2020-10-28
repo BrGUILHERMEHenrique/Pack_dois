@@ -64,7 +64,6 @@ const Header = () => {
             pagina: 'Ponto',
             rota: '/ponto'
         }
-        
 
     ] 
 
@@ -80,7 +79,12 @@ const Header = () => {
 
     return (
         <Container 
-        style={!menuActivity ?  inactiveMenuContainer : activeMenuContainer }
+            style={
+                !menuActivity ?  
+                inactiveMenuContainer 
+                : 
+                activeMenuContainer 
+            }
             container 
             direction="row"
             alignItems="center"
@@ -109,7 +113,7 @@ const Header = () => {
                         {s.pagina}
                     </NavLink>
                 ))}
-                <a 
+                {/* <a 
                     style={
                         menuActivity ? 
                         activeMenuLink 
@@ -118,7 +122,7 @@ const Header = () => {
                     }
                 >
                     Sair
-                </a>
+                </a> */}
             </Menu>
         </Container>
     )

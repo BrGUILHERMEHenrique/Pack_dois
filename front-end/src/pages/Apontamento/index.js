@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button} from './styles';
 
 import api from '../../services/api';
 
@@ -28,9 +29,15 @@ const Apontamento = () => {
     )
 
     return(
-        <>
+        <Container>
+            <Row>
+                <SubTitulo>
+                    Apontamentos
+                </SubTitulo>
+            </Row>
+
         <TableA apontamentos={apontamentos} />
-        </>
+        </Container>
     )
     
 }

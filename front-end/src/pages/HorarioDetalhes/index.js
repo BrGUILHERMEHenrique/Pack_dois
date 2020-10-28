@@ -280,7 +280,7 @@ const HorarioDetalhes = ({ location }) => {
             <Row 
             direction="row"
             container>
-                <SubTitulo> Horário Detalhe </SubTitulo>
+                <SubTitulo> Detalhes do Horário </SubTitulo>
                 <Button variant="contained" color="primary" onClick={openModalAdd}>Adicionar</Button>
             </Row>
 
@@ -295,8 +295,6 @@ const HorarioDetalhes = ({ location }) => {
                 <HeaderModal>
                     <h2>Atualizar</h2>
                 </HeaderModal>
-                
-                {/* <button onClick={closeModalUpdate}>Fechar</button> */}
                 <FormModal>
                     <InputContainer>
                         <TextField
@@ -330,7 +328,7 @@ const HorarioDetalhes = ({ location }) => {
                         />
                     </InputContainer>
                     <InputContainer>
-                        <TextField 
+                        {/* <TextField 
                             type="number"
                             value={codigoDiaAtualizado}
                             style={inputStyle.horarioUp}
@@ -340,7 +338,7 @@ const HorarioDetalhes = ({ location }) => {
                             onChange={e => {
                                 setCodigoDiaAtualizado(e.target.value);
                             }}
-                        />
+                        /> */}
                         <TextField
                             select
                             style={inputStyle.horarioUp}
@@ -447,7 +445,7 @@ const HorarioDetalhes = ({ location }) => {
                             </TextField>
                     </InputContainer>
                     <InputContainer>
-                            <TextField
+                            {/* <TextField
                                 select
                                 style={inputStyle.horario}
                                 label="Horário"
@@ -463,7 +461,7 @@ const HorarioDetalhes = ({ location }) => {
                                     )) 
                                 }
                             
-                            </TextField>
+                            </TextField> */}
                             <TextField
                                 select
                                 style={inputStyle.horario}

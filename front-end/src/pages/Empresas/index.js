@@ -112,6 +112,7 @@ const Empresas = () => {
                 alert('O CNPJ informado é inválido');
                 return;
             }
+
             const params = {
                 razaoSocial: razaoSocial,
                 codEmpresa: codEmpresa,

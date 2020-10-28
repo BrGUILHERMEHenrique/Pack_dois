@@ -114,7 +114,7 @@ const FuncionarioHorario = ({ location }) => {
                 await api.post('funcionario_horario', params);
                 console.log('Deu certo aqui cara');
             } catch (error) {
-                console.log(error);
+                alert(error);
             } finally {
                 closeModal();
                 loadFuncionarioHorarios()
@@ -139,7 +139,7 @@ const FuncionarioHorario = ({ location }) => {
                 await api.put(`funcionario_horario/${funcionarioHorario.id}`, params);
                 console.log("deu certo parceiro")
             } catch (error) {
-                console.log(error);
+                alert(error);
             } finally {
                 loadFuncionarioHorarios();
                 closeModalUpdate();
@@ -153,7 +153,7 @@ const FuncionarioHorario = ({ location }) => {
                 await api.delete(`funcionario_horario/${id}`);
                 console.log("apagado com sucesso");
             } catch (error) {
-                console.log(error)
+                alert(error)
             } finally{
                 loadFuncionarioHorarios();
                 closeModalUpdate();
@@ -202,7 +202,6 @@ const FuncionarioHorario = ({ location }) => {
                     <h2>Cadastro</h2>
                     {/* <AiOutlineClose onClick={closeModal} /> */}
                 </HeaderModal>
-                {/* <hr /> */}
             <FormModal>
                 <ContainerInputs>
                     <TextField
