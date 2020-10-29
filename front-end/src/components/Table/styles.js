@@ -68,23 +68,23 @@ outline: none;
 `
 
 export const ButtonIconD = styled.button`
-width: 32px;
-height: 30px;
-color: #942a37;
-border: 2px solid #942a37;
-border-radius: 10px;
-background-color: transparent;
-outline: none;
+    width: 32px;
+    height: 30px;
+    color: #942a37;
+    border: 2px solid #942a37;
+    border-radius: 10px;
+    background-color: transparent;
+    outline: none;
 
-&:hover{
-    background-color: #942a37;
-    cursor: pointer;
-    color: white;
-}
+    &:hover{
+        background-color: #942a37;
+        cursor: pointer;
+        color: white;
+    }
 
-&+button {
-    margin-left: 8px;
-}
+    &+button {
+        margin-left: 8px;
+    }
 
 `
 

@@ -10,8 +10,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import DateRangeIconRounded from '@material-ui/icons/DateRangeRounded';
 
-
-//styles criado através do material para a tabela
 const useStyles = makeStyles({
     table: {
       minWidth: "400px",
@@ -31,6 +29,7 @@ const useStyles = makeStyles({
       marginTop: "50px"
     }
   });
+
 
   //protoypes que formataram os dados em tela  
   String.prototype.cpf = function(){
@@ -90,18 +89,6 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     const classes = useStyles();
     const history = useHistory();
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
-
-
     return(
         <TableContainer component={Paper} className={classes.table}>
           <Table  aria-label="Tabela Funcionários">
@@ -120,10 +107,9 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   <Tabela align="left"><TextoTr>{funcionario.idEmpresa.razaoSocial}</TextoTr></Tabela>
                   <Tabela align="right"><TextoTr>{funcionario.pis.pis()}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{funcionario.id}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'dd/MM/yyyy')}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
-                   <Tabela align="center">
+                   <Tabela align="center" style={{maxWidth: 150}}>
                      <ButtonIcon
                         onClick = {() => {
                           history.push('/funcionarioHorario', { id: funcionario.id })
@@ -168,13 +154,13 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     return(
         <TableContainer component={Paper} className={classes.table}>
           <Table  aria-label="Tabela Empresas">
-            <Tabela align="center"><TextoTh>Razão Social</TextoTh></Tabela>
+            <Tabela align="left"><TextoTh>Razão Social</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Código da Empresa</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Cnpj</TextoTh></Tabela>
             <TableBody>
               {empresas.map((empresa) => (
                 <TabelaRow key={empresa.id}>
-                  <Tabela component="th" scope="empresa" align="center">
+                  <Tabela component="th" scope="empresa" align="left">
                   <TextoTr>{empresa.razaoSocial}</TextoTr>
                   </Tabela>
                   <Tabela align="center"><TextoTr>{empresa.codEmpresa}</TextoTr></Tabela>
@@ -210,8 +196,6 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     return(
         <TableContainer component={Paper} className={classes.table}>
           <Table aria-label="Tabela Empresas">
-            <Tabela align="center"><TextoTh>Id</TextoTh></Tabela>
-            <Tabela align="center"><TextoTh>Descrição Horário</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Entrada</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Intervalo</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Retorno do Intervalo</TextoTh></Tabela>
@@ -220,17 +204,15 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
             <TableBody>
               {horarioDetalhes.map(horarioDetalhe => (
                 <TabelaRow key={horarioDetalhe.id}>
-                  <Tabela component="th" scope="Detalhes de horário" align="center">
+                  {/* <Tabela component="th" scope="Detalhes de horário" align="center">
                   <TextoTr>{horarioDetalhe.id}</TextoTr>
-                  </Tabela>
-                  <Tabela align="center"><TextoTr>{horarioDetalhe.idHorario.descHorario}</TextoTr></Tabela>
+                  </Tabela> */}
                   <Tabela align="center"><TextoTr>{horarioDetalhe.entrada1}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horarioDetalhe.saida1}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horarioDetalhe.entrada2}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horarioDetalhe.saida2}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horarioDetalhe.folga ? 'VERDADEIRO' : 'FALSO'}</TextoTr></Tabela>
                   <Tabela align="center">
-                    
                     <ButtonU 
                       onClick={() => {
                         handleHorarioDetalhes(horarioDetalhe.id);
@@ -238,7 +220,6 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                     >
                       Atualizar
                     </ButtonU>
-
                     <ButtonD 
                       onClick={() => {
                         OpenAlert(horarioDetalhe.id, removeHorarioDetalhe)
@@ -280,7 +261,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   <Tabela align="center">
                     <ButtonU
                       onClick={() => {
-                        history.push('/horarioDetalhes', {id: horario.id});
+                        history.push('/horarioDetalhes', {id: horario.id, descHorario: horario.descHorario});
                       }}
                     >
                       Detalhes
@@ -329,7 +310,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                 <TextoTr>{funcionarioHorario.idFuncionario.nome}</TextoTr>
                 </Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.codigoInicial}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{funcionarioHorario.idHorario.descHorario}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{funcionarioHorario.horario.descHorario}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.vigenciaInicial}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.vigenciaFinal}</TextoTr></Tabela>
                 <Tabela align="center">

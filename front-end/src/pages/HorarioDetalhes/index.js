@@ -82,6 +82,7 @@ const modalStyleAdicionar = {
   
 const HorarioDetalhes = ({ location }) => {
     const id = location.state.id;
+    const horarioSubtitulo = location.state.descHorario;
     const classes = useStyles();
 
     const [ListHorarioDetalhes, setListHorarioDetalhes] = useState([]);
@@ -147,7 +148,6 @@ const HorarioDetalhes = ({ location }) => {
         setModalAddIsOpen(false);
         
     }
-    
 
     const loadHorarioDetahes = useCallback(
     async () => {
@@ -176,7 +176,7 @@ const HorarioDetalhes = ({ location }) => {
                 }
             }
             const params = { 
-                idHorario: id,
+                horario: id,
                 codigoDia: parseInt(codigoDia),
                 folga,
                 entrada1: entrada1,
@@ -230,7 +230,7 @@ const HorarioDetalhes = ({ location }) => {
         async (horario, e) => {
             e.preventDefault();
             if(parseInt(codigoDia) > 31){
-                alert("Por favor verifique os dados, não há um mês que passe do dia 31");
+                alert("Por favor, verifique os dados, não há um mês que passe do dia 31");
                 closeModalAdd();
                 return;
             }
@@ -280,7 +280,7 @@ const HorarioDetalhes = ({ location }) => {
             <Row 
             direction="row"
             container>
-                <SubTitulo> Detalhes do Horário </SubTitulo>
+                <SubTitulo> {horarioSubtitulo} </SubTitulo>
                 <Button variant="contained" color="primary" onClick={openModalAdd}>Adicionar</Button>
             </Row>
 
@@ -426,23 +426,23 @@ const HorarioDetalhes = ({ location }) => {
                             }
                         
                         </TextField>
-                            <TextField
-                                select
-                                style={inputStyle.horario}
-                                label="Horário Saída"
-                                InputLabelProps={{ shrink: true }}
-                                labelId={saida2}
-                                id={saida2}
-                                value={saida2}
-                                onChange={e => setSaida2(e.target.value)}
-                            >
-                                {
-                                    listHorarios.map(horario => (
-                                        <MenuItem value={horario}>{horario}</MenuItem>
-                                    ))
-                                }
-                            
-                            </TextField>
+                        <TextField
+                            select
+                            style={inputStyle.horario}
+                            label="Horário Saída"
+                            InputLabelProps={{ shrink: true }}
+                            labelId={saida2}
+                            id={saida2}
+                            value={saida2}
+                            onChange={e => setSaida2(e.target.value)}
+                        >
+                            {
+                                listHorarios.map(horario => (
+                                    <MenuItem value={horario}>{horario}</MenuItem>
+                                ))
+                            }
+                        
+                        </TextField>
                     </InputContainer>
                     <InputContainer>
                             {/* <TextField

@@ -10,7 +10,7 @@ import {TableE} from '../../components/Table';
 
 import api from '../../services/api';
 
-import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, SearchRow } from './styles';
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonOutline } from './styles';
 
 const modalStyleAtualizar = {
     content: {
@@ -264,18 +264,18 @@ const Empresas = () => {
                             color="primary"
                             variant="contained"
                             onClick={e => handleAddEmpresa(e)}
-                        >Adicionar</Button>
-                        <Button
-                            color="secundary"
-                            variant="outlined"
+                        >
+                            Adicionar
+                        </Button>
+                        <ButtonOutline
                             onClick={closeModal}
-                        >Cancelar</Button>
+                        >
+                            Cancelar
+                        </ButtonOutline>
 
                         </FooterModal>
             </Modal>
 
-
-                    {/* segundo modal para atualização ! */}
             <Modal
                 isOpen={modalPutIsOpen}
                 onRequestClose={closeModalUpdate}
@@ -284,7 +284,6 @@ const Empresas = () => {
             >
                 <HeaderModal>
                 <h2>Atualizar</h2>
-                {/* <AiOutlineClose onClick={closeModalUpdate} /> */}
                 </HeaderModal>
                 <FormModal>
                     <ContainerInputs>
