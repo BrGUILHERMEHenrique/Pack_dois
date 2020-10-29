@@ -45,6 +45,12 @@ const useStyles = makeStyles({
     return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
   }
 
+  String.prototype.pis = function(){
+    let pis = this.replace(/\D/g, '');
+
+    return pis.replace(/(\d{3})(\d{5})(\d{2})(\d{1})/, "$1.$2.$3-$4");
+  }
+
   String.prototype.numero = function(){
       let numero = this.replace(/\D/g, '');
 
@@ -101,7 +107,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
           <Table  aria-label="Tabela Funcionários">
             <Tabela align="left"><TextoTh>Nome</TextoTh></Tabela>
             <Tabela align="left"><TextoTh>Empresa</TextoTh></Tabela>
-            <Tabela align="center"><TextoTh>Matricula</TextoTh></Tabela>
+            <Tabela align="center"><TextoTh>PIS</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>CPF</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Data de Nascimento</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Telefone</TextoTh></Tabela>
@@ -112,9 +118,10 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   <TextoTr>{funcionario.nome}</TextoTr>
                   </Tabela>
                   <Tabela align="left"><TextoTr>{funcionario.idEmpresa.razaoSocial}</TextoTr></Tabela>
-                  <Tabela align="right"><TextoTr>{funcionario.codMatricula}</TextoTr></Tabela>
+                  <Tabela align="right"><TextoTr>{funcionario.pis.pis()}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{funcionario.id}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'dd/MM/yyyy')}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
                    <Tabela align="center">
                      <ButtonIcon
@@ -373,9 +380,9 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
               {apontamentos.map(apontameto => (
                 <TabelaRow key={apontameto.id}>
                   <Tabela component="th" scope="Funcionário-Horario" align="center">
-                  <TextoTr>{apontameto.idFuncionario.nome}</TextoTr>
+                  <TextoTr>{apontameto.funcionario.nome}</TextoTr>
                   </Tabela>
-                  <Tabela align="center"><TextoTr>{apontameto.idHorario.descHorario}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontameto.horarioDetalhes.horario.descHorario}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontameto.data}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontameto.entrada1}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontameto.saida1}</TextoTr></Tabela>

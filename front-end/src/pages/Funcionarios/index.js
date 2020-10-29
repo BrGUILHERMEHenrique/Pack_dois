@@ -6,8 +6,7 @@ import MaterialInput from '@material-ui/core/Input';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-
-
+import ValidaPIS from '../../components/ValidaPis'
 // import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
@@ -22,7 +21,7 @@ import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTit
 
 const inputStyle = {
     nome: {
-        width: '445px',
+        width: '64%',
         height: '64%',
     },
     matricula: {
@@ -67,15 +66,15 @@ const inputStyle = {
         marginTop: '10px'
     },
     nomeUp: {
-        width: '368px',
+        width: '55%',
         height: '55%',
     }
 };
 
 const modalStyleAtualizar = {
     content: {
-        width               : '520px',
-        height              : '330px',
+        width               : '45%',
+        height              : '50%',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -87,8 +86,8 @@ const modalStyleAtualizar = {
 
 const modalStyleAdicionar = {
     content: {
-        width               : '570px',
-        height              : '400px',
+        width               : '50%',
+        height              : '60%',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -98,14 +97,27 @@ const modalStyleAdicionar = {
     }
 }
 
+  const useStyles = makeStyles((theme) => ({
+    container: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: 200,
+    },
+  }));
+
 const Funcionarios = () => {
-    
+    const classes = useStyles();
+
     const [funcionarios, setFuncionarios] = useState([]);
     const [funcionario, setFuncionario] = useState({});
     const [modalIsOpen,setIsOpen] = useState(false);
     const [modalPutIsOpen, setModalPutIsOpen] = useState(false);
     const [nome, setNome] = useState('');
-    const [codMatricula, setCodMatricula] = useState('');
+    const [pis, setPis] = useState('');
     const [cpf, setCpf] = useState('');
     const [dataNascimento, setDataNascimento] = useState('');
     const [telefone, setTelefone] = useState('');
@@ -162,7 +174,7 @@ const Funcionarios = () => {
         async (e) => {
             e.preventDefault();
 
-            if(!nome || !codMatricula || !cpf.replace(/\D/g, '') || !dataNascimento.replace(/\D/g, '') || !telefone.replace(/\D/g, '') || !empresa){
+            if(!nome || !pis || !cpf.replace(/\D/g, '') || !dataNascimento.replace(/\D/g, '') || !telefone.replace(/\D/g, '') || !empresa){
                 alert("Por favor, preencha todos os campos");
                 return;
             }
@@ -171,10 +183,14 @@ const Funcionarios = () => {
                 alert('O CPF informado é inválido');
                 return;
             }
+            if(!ValidaPIS(pis)){ 
+                alert('O matricula informado é inválido');
+                return;
+            }
             const params = {
                 nome: nome,
                 idEmpresa: empresa.id,
-                codMatricula: codMatricula,
+                pis: pis.replace(/\D/g, ''),
                 cpf: cpf.replace(/\D/g, ''),
                 dataNascimento: dataNascimento,
                 telefone: telefone.replace(/\D/g, '')
@@ -188,7 +204,7 @@ const Funcionarios = () => {
                 alert(error.response.data);
             } finally {
                 setNome('');
-                setCodMatricula('');
+                setPis('');
                 setCpf('');
                 setDataNascimento('');
                 setTelefone('');
@@ -196,7 +212,7 @@ const Funcionarios = () => {
                 closeModal();
                 loadFuncionarios();
             }
-        }, [nome, codMatricula, cpf, dataNascimento, telefone, empresa],
+        }, [nome, pis, cpf, dataNascimento, telefone, empresa],
     )
 
         const getFuncionarioById = useCallback(
@@ -208,7 +224,7 @@ const Funcionarios = () => {
                 } catch(error){
                     console.log(error);
                 } 
-            }, [nome, cpf, dataNascimento, codMatricula, telefone, funcionario, empresa]
+            }, [nome, cpf, dataNascimento, pis, telefone, funcionario, empresa]
         )
 
         const openModalWithData = useCallback(
@@ -289,10 +305,10 @@ const Funcionarios = () => {
                 <Button onClick={openModal}>Adicionar</Button>
             </Row>
             <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            style={modalStyleAdicionar}
-            contentLabel="Modal"
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                style={modalStyleAdicionar}
+                contentLabel="Modal"
             >
                 <HeaderModal>
                     <h2>Cadastro</h2>
@@ -346,14 +362,18 @@ const Funcionarios = () => {
                         </InputMask>
                     </ContainerInputs>
                     <ContainerInputs>
-                        <Input
-                            type="text"
-                            inputProps = {{maxLength:6}}
-                            placeholder="Matricula"
+                        <InputMask
+                            mask="999.99999.99-9"
+                            id="pis"
+                            placeholder="PIS"
                             style={inputStyle.matricula}
-                            value={codMatricula}
-                            onChange={e => setCodMatricula(e.target.value)}
-                        />
+                            value={pis}
+                            onChange={e => 
+                                {setPis(e.target.value)
+                            }}
+                        >
+                        {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
+                        </InputMask>
                         <TextField
                             labelId={empresa}
                             label='Empresa'
@@ -370,7 +390,6 @@ const Funcionarios = () => {
                                 }
                         </TextField>
                     </ContainerInputs>
-                            </FormModal>
                         <FooterModal>
                             <Button
                                 onClick={e => handleAddFuncionario(e)}
@@ -379,6 +398,7 @@ const Funcionarios = () => {
                                 onClick={closeModal}
                             >Cancelar</Button>
                         </FooterModal>
+                </FormModal>
             </Modal>
 
                     {/* segundo modal para atualização ! */}

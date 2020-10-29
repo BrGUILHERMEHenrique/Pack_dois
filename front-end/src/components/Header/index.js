@@ -19,7 +19,6 @@ const inactiveMenuImage = {
 const activeMenuContainer = {
     padding: '0.9%',
     boxShadow: '1px 1px 2px 2px rgba(0, 0, 0, 0.1)'
-
 }
 
 const inactiveMenuContainer = {
@@ -114,16 +113,6 @@ const Header = () => {
                         {s.pagina}
                     </NavLink>
                 ))}
-                {/* <a 
-                    style={
-                        menuActivity ? 
-                        activeMenuLink 
-                        : 
-                        inactiveMenuLink 
-                    }
-                >
-                    Sair
-                </a> */}
             </Menu>
         </Container>
     )

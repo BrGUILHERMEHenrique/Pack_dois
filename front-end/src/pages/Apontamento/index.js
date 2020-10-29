@@ -13,7 +13,7 @@ const Apontamento = () => {
     const loadApontamentos = useCallback (
         async () => {
             try {
-                const response = await api.get('apontamentos');
+                const response = await api.get('apontamento');
                 setApontamentos(response.data);
                 console.log(response.data);
             } catch (error) {

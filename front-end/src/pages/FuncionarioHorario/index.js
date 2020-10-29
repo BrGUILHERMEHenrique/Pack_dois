@@ -51,6 +51,8 @@ const FuncionarioHorario = ({ location }) => {
     const [codigoInicial, setCodigoInicial] = useState('');
     const [idHorario, setIdHorario] = useState(Number);
     const [codigoInicialAtualizado, setCodigoInicialAtualizado] = useState('');
+    const [vigenciaInicial, setVigenciaInicial] = useState('');
+    const [vigenciaFinal, setVigenciaFinal] = useState('');
     const [idHorarioAtualizado, setIdHorarioAtualizado] = useState('');
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalPutIsOpen, setModalPutIsOpen] = useState(false);
@@ -96,8 +98,8 @@ const FuncionarioHorario = ({ location }) => {
                 codigoInicial: parseInt(codigoInicial),
                 idFuncionario : id,
                 idHorario: parseInt(idHorario),
-                vigenciaFinal: "2017-01-13T17:09:42.411",
-                vigenciaInicial: "2018-01-13T17:09:42.411"
+                vigenciaFinal: vigenciaFinal,
+                vigenciaInicial: vigenciaInicial
             }
             console.log(params);
             try {
@@ -122,8 +124,8 @@ const FuncionarioHorario = ({ location }) => {
                 codigoInicial: parseInt(codigoInicialAtualizado),
                 idFuncionario : id,
                 idHorario: parseInt(idHorarioAtualizado),
-                vigenciaFinal: "2017-01-13T17:09:42.411",
-                vigenciaInicial: "2018-01-13T17:09:42.411"
+                vigenciaFinal: vigenciaFinal,
+                vigenciaInicial: vigenciaInicial
             }
             try{
                 await api.put(`funcionario_horario/${funcionarioHorario.id}`, params);
@@ -190,57 +192,68 @@ const FuncionarioHorario = ({ location }) => {
             >
                 <HeaderModal>
                     <h2>Cadastro</h2>
-                    {/* <AiOutlineClose onClick={closeModal} /> */}
                 </HeaderModal>
-            <FormModal>
-                <ContainerInputs>
-                    <TextField
-                        label="Codigo inicial"
-                        fullWidth={true}
-                        value={codigoInicial}
-                        style={inputStyle.codigo}
-                        InputLabelProps={{ shrink: true }}
-                        InputProps={{ inputProps: { min: 1} }}
-                        onChange={e => setCodigoInicial(e.target.value)}
-                        type="number"
-                    />
-                    <TextField
-                        select
-                        label="Horário"
-                        labelId="Horarios"
-                        id={idHorario}
-                        value={idHorario}
-                        style={inputStyle.horario}
-                        InputProps={{ inputProps: { min: 1} }}
-                        InputLabelProps={{ shrink: true }}
-                        onChange={e => setIdHorario(e.target.value)}
-                    >
-                        {
-                            horarios.map(horario => (
-                                <MenuItem value={horario.id}>{horario.codigoHorario}-{horario.descHorario}</MenuItem>
-                            )) 
-                        }
-                    
-                    </TextField>
-                </ContainerInputs>
-                    </FormModal>
+                <FormModal>
+                    <ContainerInputs>
+                        <TextField
+                            label="Codigo inicial"
+                            fullWidth={true}
+                            value={codigoInicial}
+                            style={inputStyle.codigo}
+                            InputLabelProps={{ shrink: true }}
+                            InputProps={{ inputProps: { min: 1} }}
+                            onChange={e => setCodigoInicial(e.target.value)}
+                            type="number"
+                        />
+                        <TextField
+                            select
+                            label="Horário"
+                            labelId="Horarios"
+                            id={idHorario}
+                            value={idHorario}
+                            style={inputStyle.horario}
+                            InputProps={{ inputProps: { min: 1} }}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => setIdHorario(e.target.value)}
+                        >
+                            {
+                                horarios.map(horario => (
+                                    <MenuItem value={horario.id}>{horario.codigoHorario}-{horario.descHorario}</MenuItem>
+                                )) 
+                            }
+                        
+                        </TextField>
+                        <TextField
+                            label="Vigência Inicial"
+                            fullWidth={true}
+                            value={vigenciaInicial}
+                            style={inputStyle.codigo}
+                            InputLabelProps={{ shrink: true }}
+                            InputProps={{ inputProps: { min: 1} }}
+                            onChange={e => setVigenciaInicial(e.target.value)}
+                        />
+                        <TextField
+                            label="Vigência Final"
+                            fullWidth={true}
+                            value={vigenciaFinal}
+                            style={inputStyle.codigo}
+                            InputLabelProps={{ shrink: true }}
+                            InputProps={{ inputProps: { min: 1} }}
+                            onChange={e => setVigenciaFinal(e.target.value)}
+                        />
+                    </ContainerInputs>
+                </FormModal>
                 <FooterModal>
                     <Button
-                        color="primary"
-                        variant="contained"
                         onClick={e => handleAddFunionarioHorario(e)}
                     >Adicionar</Button>
                     <Button
-                        color="secundary"
-                        variant="outlined"
                         onClick={closeModal}
                     >Cancelar</Button>
 
                     </FooterModal>
             </Modal>
 
-
-                    
             <Modal
                 isOpen={modalPutIsOpen}
                 onRequestClose={closeModalUpdate}
