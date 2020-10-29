@@ -2,7 +2,7 @@ import Styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 
 export const Image = Styled.img`
-    width: 40px;
+    width: 200px;
     
 `
 
