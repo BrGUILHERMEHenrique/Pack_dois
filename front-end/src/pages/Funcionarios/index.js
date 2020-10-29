@@ -22,7 +22,7 @@ import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTit
 
 const inputStyle = {
     nome: {
-        width: '64%',
+        width: '445px',
         height: '64%',
     },
     matricula: {
@@ -67,15 +67,15 @@ const inputStyle = {
         marginTop: '10px'
     },
     nomeUp: {
-        width: '55%',
+        width: '368px',
         height: '55%',
     }
 };
 
 const modalStyleAtualizar = {
     content: {
-        width               : '45%',
-        height              : '50%',
+        width               : '520px',
+        height              : '330px',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -87,8 +87,8 @@ const modalStyleAtualizar = {
 
 const modalStyleAdicionar = {
     content: {
-        width               : '50%',
-        height              : '60%',
+        width               : '570px',
+        height              : '400px',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -98,21 +98,8 @@ const modalStyleAdicionar = {
     }
 }
 
-  const useStyles = makeStyles((theme) => ({
-    container: {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 200,
-    },
-  }));
-
 const Funcionarios = () => {
-    const classes = useStyles();
-
+    
     const [funcionarios, setFuncionarios] = useState([]);
     const [funcionario, setFuncionario] = useState({});
     const [modalIsOpen,setIsOpen] = useState(false);
@@ -341,7 +328,6 @@ const Funcionarios = () => {
                                 setDataNascimento(e.target.value)
                                 console.log(e.target.value)
                             }}
-                            // className={classes.textField}
                             InputLabelProps={{
                             shrink: true
                             }}
@@ -384,6 +370,7 @@ const Funcionarios = () => {
                                 }
                         </TextField>
                     </ContainerInputs>
+                            </FormModal>
                         <FooterModal>
                             <Button
                                 onClick={e => handleAddFuncionario(e)}
@@ -392,7 +379,6 @@ const Funcionarios = () => {
                                 onClick={closeModal}
                             >Cancelar</Button>
                         </FooterModal>
-                </FormModal>
             </Modal>
 
                     {/* segundo modal para atualização ! */}

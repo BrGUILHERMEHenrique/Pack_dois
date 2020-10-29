@@ -15,13 +15,21 @@ import DateRangeIconRounded from '@material-ui/icons/DateRangeRounded';
 const useStyles = makeStyles({
     table: {
       minWidth: "400px",
-      width: "80vw",
-      height: "auto",
-
+      width: "90vw",
+      height: "auto", 
       margin: "auto",
       padding: "auto",
       marginTop: "50px"
     },
+
+    tableH: {
+      minWidth: "400px",
+      width: "75vw",
+      height: "auto", 
+      margin: "auto",
+      padding: "auto",
+      marginTop: "50px"
+    }
   });
 
   //protoypes que formataram os dados em tela  
@@ -63,7 +71,10 @@ const OpenAlert = (id, remove) => {
     });
     remove(id)
   } else {
-    swal('Ação cancelada!');
+    swal('Ação cancelada!', {
+      icon: "error",
+    });
+      
   }
 });
 }
@@ -88,8 +99,8 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     return(
         <TableContainer component={Paper} className={classes.table}>
           <Table  aria-label="Tabela Funcionários">
-            <Tabela align="center"><TextoTh>Nome</TextoTh></Tabela>
-            <Tabela align="center"><TextoTh>Empresa</TextoTh></Tabela>
+            <Tabela align="left"><TextoTh>Nome</TextoTh></Tabela>
+            <Tabela align="left"><TextoTh>Empresa</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Matricula</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>CPF</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Data de Nascimento</TextoTh></Tabela>
@@ -97,11 +108,11 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
             <TableBody>
               {funcionarios.map((funcionario) => (
                 <TabelaRow key={funcionario.id}>
-                  <Tabela component="th" scope="funcionario" align="center">
+                  <Tabela component="th" scope="funcionario" align="left">
                   <TextoTr>{funcionario.nome}</TextoTr>
                   </Tabela>
-                  <Tabela align="center"><TextoTr>{funcionario.idEmpresa.razaoSocial}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{funcionario.codMatricula}</TextoTr></Tabela>
+                  <Tabela align="left"><TextoTr>{funcionario.idEmpresa.razaoSocial}</TextoTr></Tabela>
+                  <Tabela align="right"><TextoTr>{funcionario.codMatricula}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'MM/dd/yyyy')}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
@@ -161,16 +172,22 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   </Tabela>
                   <Tabela align="center"><TextoTr>{empresa.codEmpresa}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{empresa.cnpj.cnpj()}</TextoTr></Tabela>
-                  <Tabela align="center"><ButtonU 
-                                          onClick={() => {
-                                            handleEmpresa(empresa.id);
-                                          }}
-                                          >Atualizar</ButtonU></Tabela>
-                  <Tabela align="center"><ButtonD 
-                                          onClick={() => {
-                                              OpenAlert(empresa.id, removeEmpresa)
-                                            }}
-                                            >Excluir</ButtonD>
+                  <Tabela align="center">
+                    <ButtonU 
+                      onClick={() => {
+                        handleEmpresa(empresa.id);
+                      }}
+                    >
+                      Atualizar
+                    </ButtonU>
+
+                    <ButtonD 
+                      onClick={() => {
+                        OpenAlert(empresa.id, removeEmpresa)
+                      }}
+                    >
+                      Excluir
+                    </ButtonD>
                   </Tabela>
                 </TabelaRow>
               ))}
@@ -205,17 +222,23 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   <Tabela align="center"><TextoTr>{horarioDetalhe.entrada2}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horarioDetalhe.saida2}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horarioDetalhe.folga ? 'VERDADEIRO' : 'FALSO'}</TextoTr></Tabela>
-                  <Tabela align="center"><ButtonU 
-                                          onClick={() => {
-                                            handleHorarioDetalhes(horarioDetalhe.id);
-                                          }}
-                                          >Atualizar</ButtonU>
-                  </Tabela>
-                  <Tabela align="center"><ButtonD 
-                                          onClick={() => {
-                                              OpenAlert(horarioDetalhe.id, removeHorarioDetalhe)
-                                            }}
-                                            >Excluir</ButtonD>
+                  <Tabela align="center">
+                    
+                    <ButtonU 
+                      onClick={() => {
+                        handleHorarioDetalhes(horarioDetalhe.id);
+                      }}
+                    >
+                      Atualizar
+                    </ButtonU>
+
+                    <ButtonD 
+                      onClick={() => {
+                        OpenAlert(horarioDetalhe.id, removeHorarioDetalhe)
+                      }}
+                    >
+                      Excluir
+                    </ButtonD>
                   </Tabela>
                 </TabelaRow>
               ))}
@@ -230,11 +253,11 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     const history = useHistory();
 
     const buttonStyle = {
-      marginRight: 40
+      marginRight: 15
     }
 
     return(
-        <TableContainer component={Paper} className={classes.table}>
+        <TableContainer component={Paper} className={classes.tableH}>
           <Table aria-label="Tabela Horários">
             {/* <Tabela align="center"><TextoTh>Id</TextoTh></Tabela> */}
             <Tabela align="center"><TextoTh>Codigo do Horário</TextoTh></Tabela>
@@ -249,23 +272,28 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   <Tabela align="center"><TextoTr>{horario.descHorario}</TextoTr></Tabela>
                   <Tabela align="center">
                     <ButtonU
-                      style={buttonStyle}
                       onClick={() => {
                         history.push('/horarioDetalhes', {id: horario.id});
                       }}
-                    >Detalhes</ButtonU>
+                    >
+                      Detalhes
+                    </ButtonU>
 
                     <ButtonU
-                      style={buttonStyle}
                       onClick={() => {
                         handleHorario(horario.id);
                       }}
-                    >Atualizar</ButtonU>
+                    >
+                      Atualizar
+                    </ButtonU>
+
                     <ButtonD
                       onClick={() => {
                         OpenAlert(horario.id, removeHorario)
                       }}
-                      >Excluir</ButtonD>
+                    >
+                      Excluir
+                    </ButtonD>
                   </Tabela>
                 </TabelaRow>
               ))}
@@ -297,16 +325,21 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                 <Tabela align="center"><TextoTr>{funcionarioHorario.idHorario.descHorario}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.vigenciaInicial}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.vigenciaFinal}</TextoTr></Tabela>
-                <Tabela align="center"><ButtonU
-                  onClick={() => {
-                    handleFuncionarioHorario(funcionarioHorario.id);
-                  }}
-                >Atualizar</ButtonU></Tabela>
-                <Tabela align="center"><ButtonD 
-                                          onClick={() => {
-                                              OpenAlert(funcionarioHorario.id, removeFuncionarioHorario)
-                                            }}
-                                            >Excluir</ButtonD>
+                <Tabela align="center">
+                  <ButtonU
+                    onClick={() => {
+                      handleFuncionarioHorario(funcionarioHorario.id);
+                    }}
+                  >
+                    Atualizar
+                  </ButtonU>
+                  <ButtonD 
+                    onClick={() => {
+                      OpenAlert(funcionarioHorario.id, removeFuncionarioHorario)
+                    }}
+                  >
+                    Excluir
+                  </ButtonD>
                 </Tabela>
               </TabelaRow>
             ))}

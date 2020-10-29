@@ -14,8 +14,8 @@ import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTit
 
 const modalStyleAtualizar = {
     content: {
-        width               : '40%',
-        height              : '40%',
+        width               : '480px',
+        height              : '270px',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -27,8 +27,8 @@ const modalStyleAtualizar = {
 
 const modalStyleAdicionar = {
     content: {
-        width               : '50%',
-        height              : '50%',
+        width               : '520px',
+        height              : '300px',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -40,20 +40,20 @@ const modalStyleAdicionar = {
 
 const inputStyle = {
     razaoSocial: {
-        width: '61%',
+        width: '356px',
         height: '60%',
     },
     matricula: {
-        width: '30%',
+        width: '173px',
         height: '60%',
     },
     cnpj: {
-        width: '30%',
+        width: '173px',
         height: '60%',
-        marginLeft: '1%',
+        marginLeft: '10px',
     }, 
     razaoSocialUp: {
-        width: '60%',
+        width: '317px',
         height: '60%',
 
     }
@@ -258,6 +258,7 @@ const Empresas = () => {
                             {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
                         </InputMask>
                     </ContainerInputs>
+                        </FormModal>
                     <FooterModal>
                         <Button
                             color="primary"
@@ -271,7 +272,6 @@ const Empresas = () => {
                         >Cancelar</Button>
 
                         </FooterModal>
-                </FormModal>
             </Modal>
 
 
@@ -295,6 +295,7 @@ const Empresas = () => {
                             onChange={e => setRazaoSocialAtualizada(e.target.value)}
                         />
                     </ContainerInputs>
+                </FormModal>
                     <FooterModal>
                     <Button
                     onClick={e => handleUpdateEmpresa(e)}
@@ -304,7 +305,6 @@ const Empresas = () => {
                     onClick={closeModalUpdate}
                     >Cancelar</Button>
                     </FooterModal>
-                </FormModal>
             </Modal>
 
             <TableE empresas = {empresas} handleEmpresa = {openModalWithData} removeEmpresa = {removeEmpresa}/> 

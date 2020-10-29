@@ -48,16 +48,17 @@ export const TableOptions = styled(Paper)`
 export const ButtonIcon = styled.button`
 width: 32px;
 height: 30px;
-color: #A2A9AD;
-border: 2px solid #A2A9AD;
+color: rgba(103, 102, 106, 0.7);
+border: 2px solid rgba(103, 102, 106, 0.6);
 border-radius: 10px;
 background-color: transparent;
 outline: none;
 
 &:hover{
-    background-color: #A2A9AD;
+    background-color: rgba(103, 102, 106, 0.8);
     cursor: pointer;
     color: white;
+    border: 2px solid rgba(103, 102, 106, 0.1)
 }
 
 &+button {
@@ -69,14 +70,14 @@ outline: none;
 export const ButtonIconD = styled.button`
 width: 32px;
 height: 30px;
-color: rgba(206,14,45,0.7);
-border: 2px solid rgba(206,14,45,0.7);
+color: #942a37;
+border: 2px solid #942a37;
 border-radius: 10px;
 background-color: transparent;
 outline: none;
 
 &:hover{
-    background-color: rgba(206,14,45,0.9);
+    background-color: #942a37;
     cursor: pointer;
     color: white;
 }
@@ -100,17 +101,22 @@ export const MenuList = styled.div`
 export const ButtonU = styled.button`
     width: 75px;
     height: 35px;
-    color: #A2A9AD;
-    border: 2px solid #A2A9AD;
+    color: rgba(103, 102, 106, 0.7);
+    border: 2px solid rgba(103, 102, 106, 0.6);
     border-radius: 5px;
     background-color: transparent;
     font-family: 'Oxanium', cursive;
     outline: none;
 
     &:hover{
-        background-color: #A2A9AD;
+        background-color: rgba(103, 102, 106, 0.6);
         cursor: pointer;
         color: white;
+        border: 2px solid rgba(103, 102, 106, 0.1)
+    }
+    
+    &+button {
+        margin-left: 20px;
     }
 
 `;
@@ -120,17 +126,21 @@ export const ButtonU = styled.button`
 export const ButtonD = styled.button`
     width: 70px;
     height: 35px;
-    color: rgba(206,14,45,0.8);
-    border: 2px solid rgba(206,14,45,0.7) ;
+    color: #942a37;
+    border: 2px solid #942a37;
     border-radius: 5px;
     background-color: transparent;
     font-family: 'Oxanium', cursive;
     outline: none;
 
     &:hover{
-        background-color: rgba(206,14,45,0.9) ;
+        background-color: #942a37;
         cursor: pointer;
         color: white;
+    }
+
+    &+button {
+        margin-left: 8px;
     }
 
 `;

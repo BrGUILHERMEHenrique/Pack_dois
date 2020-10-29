@@ -7,10 +7,11 @@ export const HeaderModal = styled.div`
     text-align: center;
     margin-top: 5%;
     font-family: 'Oxanium', cursive;
+    
     h2{
         font-size: 2em;
         font-weight: normal;
-
+        color: #67666a;
     }
 `;
 
@@ -41,10 +42,10 @@ export const FormModal = styled.form`
 `;
 
 export const SubTitulo = styled.p`
-    margin: 10px 40px 10px 9%;
+    margin: 10px 40px 10px 3%;
     font-family: 'Oxanium', cursive;
     font-size: 2.4rem;
-    color: rgb(206,14,45)
+    color: #942a37
 `
 
 export const Row = styled(Grid)`
@@ -61,11 +62,11 @@ export const InputContainer = styled(Grid)`
 `
 export const Button = styled.button`
     width: 85px;
-   height: 35px;
-   color: #fff;
+    height: 35px;
+    color: #fff;
     border: 0;
     border-radius: 5px;
-    background-color: rgba(162, 169, 173,0.9); 
+    background-color: rgba(103, 102, 106, 0.7); 
     font-family: 'Oxanium', cursive;
     outline: none;
 

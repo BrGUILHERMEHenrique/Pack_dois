@@ -9,8 +9,8 @@ import { TableH } from '../../components/Table';
 
 const customStyles = {
     content : {
-        width               : '40%',
-        height              : '40%',
+        width               : '520px',
+        height              : '300px',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -23,12 +23,12 @@ const customStyles = {
   const inputStyle = {
 
     codigo: { 
-        width: '7vw',
+        width: '70px',
         height: '100%',
         marginRight: '10px'
     }, 
     descHorario: { 
-        width: '15vw',
+        width: '300px',
         height: '100%',
         marginRight: '10px'
     }
@@ -97,7 +97,7 @@ const HorarioTabela = () => {
                 console.log(error)
             } finally {
                 loadHorarios();
-                closeModalUpdate();
+                closeModalAdd();
             }
         }, [
             codigoHorario,
@@ -170,7 +170,7 @@ const HorarioTabela = () => {
                     <TextField
                         style={inputStyle.codigo}
                         type="number"
-                        label="Código Horário"
+                        label="Código"
                         InputProps={{ inputProps: { min: 1} }}
                         InputLabelProps={{ shrink: true }}
                         onChange={e => setCodigoHorarioAtualizado(e.target.value)}
@@ -178,7 +178,7 @@ const HorarioTabela = () => {
                     />
                 
                     <TextField  
-                        label="Descrição do Horário"
+                        label="Descrição"
                         style={inputStyle.descHorario}
                         InputLabelProps={{ shrink: true }}
                         onChange={e => setDescHorarioAtualizado(e.target.value)}
@@ -204,12 +204,12 @@ const HorarioTabela = () => {
                 contentLabel="Modal"
             >
                 <HeaderModal>
-                <h2>Cadastrar</h2>
+                <h2>Cadastrar Horário</h2>
                 </HeaderModal>
                 <FormModal>         
                     <TextField
                         type="number"
-                        label="Código Horário"
+                        label="Código"
                         style={inputStyle.codigo}
                         InputProps={{ inputProps: { min: 1} }}
                         InputLabelProps={{ shrink: true }}
@@ -218,7 +218,7 @@ const HorarioTabela = () => {
                     />
                 
                     <TextField
-                        label="Descrição do Horário"
+                        label="Descrição"
                         style={inputStyle.descHorario}
                         InputLabelProps={{ shrink: true }}
                         onChange={e => setDescHorario(e.target.value)}
@@ -228,7 +228,7 @@ const HorarioTabela = () => {
                 <FooterModal>
                     <Button
                         onClick={e => handleAddHorario(e)}
-                    >Cadastrar</Button>
+                    >Salvar</Button>
                      <Button
                     onClick={closeModalAdd}
                      >Cancelar</Button>

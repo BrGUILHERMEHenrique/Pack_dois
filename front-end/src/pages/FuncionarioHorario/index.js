@@ -16,8 +16,8 @@ import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTit
 
 const modalStyle = {
     content : {
-        width               : '40%',
-        height              : '40%',
+        width               : '550px',
+        height              : '300px',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -30,7 +30,7 @@ const modalStyle = {
   const inputStyle = {
 
     codigo: { 
-        width: '7vw',
+        width: '98px',
         height: '100%',
         marginRight: '10px'
     }, 
@@ -42,19 +42,9 @@ const modalStyle = {
 };
 
 
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    }
-  }));
 const FuncionarioHorario = ({ location }) => {
     const id = location.state.id;
-    const classes = useStyles();
-
+    
     const [funcionarioHorarios, setFuncionarioHorarios] = useState([]);
     const [funcionarioHorario, setFuncionarioHorario] = useState({});
     const [horarios, setHorarios] = useState([]);
@@ -233,6 +223,7 @@ const FuncionarioHorario = ({ location }) => {
                     
                     </TextField>
                 </ContainerInputs>
+                    </FormModal>
                 <FooterModal>
                     <Button
                         color="primary"
@@ -246,7 +237,6 @@ const FuncionarioHorario = ({ location }) => {
                     >Cancelar</Button>
 
                     </FooterModal>
-            </FormModal>
             </Modal>
 
 
@@ -293,6 +283,7 @@ const FuncionarioHorario = ({ location }) => {
                             }
                         </TextField>
                     </ContainerInputs>
+                        </FormModal>
                     <FooterModal>
                         <Button
                             color="primary"
@@ -305,7 +296,6 @@ const FuncionarioHorario = ({ location }) => {
                             onClick={closeModalUpdate}
                         >Cancelar</Button>
                     </FooterModal>
-                </FormModal>
             </Modal>
 
    
