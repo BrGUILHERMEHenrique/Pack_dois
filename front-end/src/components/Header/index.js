@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Image, Container, Menu } from './styles'
-import Logo from '../../assets/pack.svg'
+import Logo from '../../assets/ponto.svg'
 import Empresas from '../../pages/Empresas';
 import Grid from '@material-ui/core/Grid';
 
 const ativo = {
-    color:'#CE0E2D'
+    color:'#942a37'
     }
 const activeMenuImage = {
     width: '10%'
