@@ -24,7 +24,7 @@ import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTit
 
 const inputStyle = {
     nome: {
-        width: '64%',
+        width: '450px',
         height: '64%',
     },
     matricula: {
@@ -58,26 +58,26 @@ const inputStyle = {
         marginTop: '3px'
     },
     dataUp: {
-        width: '50%',
+        width: '149px',
         height: '50%',
         marginRight: '10px',
         marginTop: '10px'
     },
     telUp: {
-        width: '50%',
+        width: '135px',
         height: '50%',
         marginTop: '10px'
     },
     nomeUp: {
-        width: '55%',
+        width: '364px',
         height: '55%',
     }
 };
 
 const modalStyleAtualizar = {
     content: {
-        width               : '45%',
-        height              : '50%',
+        width               : '480px',
+        height              : '320px',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -89,8 +89,8 @@ const modalStyleAtualizar = {
 
 const modalStyleAdicionar = {
     content: {
-        width               : '50%',
-        height              : '60%',
+        width               : '580px',
+        height              : '390px',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -376,7 +376,7 @@ const Funcionarios = () => {
                             mask="(99) 99999-9999"
                             style={inputStyle.tel}
                             id="tel" 
-                            placeholder="Numero"
+                            placeholder="Telefone"
                             value={telefone} 
                             onChange={e => {
                             setTelefone(e.target.value);
@@ -414,6 +414,7 @@ const Funcionarios = () => {
                                 }
                         </TextField>
                     </ContainerInputs>
+                            </FormModal>
                         <FooterModal>
                             <Button
                                 onClick={e => handleAddFuncionario(e)}
@@ -422,7 +423,6 @@ const Funcionarios = () => {
                                 onClick={closeModal}
                             >Cancelar</ButtonCancel>
                         </FooterModal>
-                </FormModal>
             </Modal>
 
                     {/* segundo modal para atualização ! */}
@@ -457,7 +457,7 @@ const Funcionarios = () => {
                             style={inputStyle.telUp}
                             mask="(99) 99999-9999"
                             id="tel" 
-                            label="Telefone"
+                            placeholder="Telefone"
                             value={telefoneAtualizado} 
                             onChange={e => {
                             setTelefoneAtualizado(e.target.value);

@@ -89,7 +89,7 @@ export const ContainerInputs = styled.div`
 
 export const HeaderModal = styled.div`
     flex-direction: row;
-    text-align: center;
+    margin-left: 10%;
     margin-top: 5%;
     font-family: 'Oxanium', cursive;
     
@@ -103,7 +103,7 @@ export const HeaderModal = styled.div`
 export const FooterModal = styled.div`
     display: flex;
     justify-content: flex-end;
-    margin-right: 61px;
+    margin-right: 10%;
     align-items: flex-end;
     margin-bottom: 1%;
 

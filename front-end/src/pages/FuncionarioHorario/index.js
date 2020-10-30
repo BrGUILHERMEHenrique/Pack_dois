@@ -16,7 +16,7 @@ import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTit
 const modalStyle = {
     content : {
         width               : '550px',
-        height              : '300px',
+        height              : '350px',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -34,7 +34,7 @@ const modalStyle = {
         marginRight: '10px'
     }, 
     horario: { 
-        width: '15vw',
+        width: '280px',
         height: '100%',
         marginRight: '10px'
     }
@@ -227,6 +227,8 @@ const FuncionarioHorario = ({ location }) => {
                             }
                         
                         </TextField>
+                        </ContainerInputs>
+                        <ContainerInputs>
                         <Input
                             id="date"
                             label="Vigência Inicial"
@@ -245,7 +247,7 @@ const FuncionarioHorario = ({ location }) => {
                             InputLabelProps={{ shrink: true }}
                             onChange={e => setVigenciaFinal(e.target.value)}
                         />
-                    </ContainerInputs>
+                        </ContainerInputs>
                 </FormModal>
                 <FooterModal>
                     <Button

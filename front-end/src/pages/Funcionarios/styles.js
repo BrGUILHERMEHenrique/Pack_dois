@@ -60,7 +60,7 @@ export const FormModal = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 30px;
     font-family: 'Oxanium', cursive;
 
     input{
@@ -81,7 +81,7 @@ export const ContainerInputs = styled.div`
 
 export const HeaderModal = styled.div`
     flex-direction: row;
-    margin-left: 40px;
+    margin-left: 8.5%;
     margin-top: 5%;
     font-family: 'Oxanium', cursive;
     
@@ -96,8 +96,8 @@ export const HeaderModal = styled.div`
 export const FooterModal = styled.div`
     display: flex;
     justify-content: flex-end;
-    margin-top: 10%;
-    margin-right: 44px;
+    margin-top: 12%;
+    margin-right: 8.5%;
 
     Button+Button{
         margin-left: 10px;
