@@ -310,7 +310,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                 <TextoTr>{funcionarioHorario.idFuncionario.nome}</TextoTr>
                 </Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.codigoInicial}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{funcionarioHorario.horario.descHorario}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{funcionarioHorario.idHorario.descHorario}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.vigenciaInicial}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.vigenciaFinal}</TextoTr></Tabela>
                 <Tabela align="center">
@@ -338,7 +338,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     )
 }
 
-    const TableA = ({ apontamentos, handleapontamento, removeapontamento }) => {
+    const TableA = ({ apontamentos, handleApontamento, removeApontamento }) => {
 
       const classes = useStyles();
   
@@ -372,6 +372,14 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   <Tabela align="center"><TextoTr>{apontameto.totalTrabalhado}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontameto.saldoHe}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontameto.saldoAtraso}</TextoTr></Tabela>
+                  <Tabela align="center">
+                    <ButtonU
+                      onClick={() =>{
+                        handleApontamento(apontamento.id);  
+                      }}>
+                        Editar
+                      </ButtonU>
+                  </Tabela>
 
                   {/* <Tabela align="center">
                     <ButtonU
