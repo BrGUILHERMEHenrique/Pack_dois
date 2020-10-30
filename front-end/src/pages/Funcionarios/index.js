@@ -7,17 +7,20 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import ValidaPIS from '../../components/ValidaPis'
+import autoTable from 'jspdf-autotable'
 // import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 import { AiOutlineClose } from 'react-icons/ai';
+import { jsPDF } from "jspdf";
+
 
 //imports de dentro do diretório do projeto
 import { TableF } from '../../components/Table';
 
 import api from '../../services/api';
 
-import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button} from './styles';
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel } from './styles';
 
 const inputStyle = {
     nome: {
@@ -294,6 +297,26 @@ const Funcionarios = () => {
             loadEmpresas();
         }, [loadEmpresas],
     )
+    
+    // var img = new Image()
+        // img.src = '../../assets/images.png';
+        // doc.addImage(img, 'png', 2, 2, 10, 10)
+
+    function criadorPDF() {
+        const doc = new jsPDF();
+        const colunas = ["CNPJ","Razão Social"];
+        const linhas = [];
+
+        listaEmpresas.forEach(emp => {      
+            var valores = [emp.cnpj, emp.razaoSocial];
+            linhas.push(valores);
+        });   
+
+        doc.autoTable(colunas, linhas, { startY: 10, headStyles: {fillColor: '#942a37'} }
+        );
+        doc.save('Test.pdf');
+    }
+
 
     return(
 
@@ -303,6 +326,7 @@ const Funcionarios = () => {
             container>
                 <SubTitulo> Funcionário </SubTitulo>
                 <Button onClick={openModal}>Adicionar</Button>
+                <Button onClick={criadorPDF}>imprimir</Button>
             </Row>
             <Modal
                 isOpen={modalIsOpen}
@@ -393,10 +417,10 @@ const Funcionarios = () => {
                         <FooterModal>
                             <Button
                                 onClick={e => handleAddFuncionario(e)}
-                            >Adicionar</Button>
-                            <Button
+                            >Salvar</Button>
+                            <ButtonCancel
                                 onClick={closeModal}
-                            >Cancelar</Button>
+                            >Cancelar</ButtonCancel>
                         </FooterModal>
                 </FormModal>
             </Modal>
@@ -446,10 +470,14 @@ const Funcionarios = () => {
                 <FooterModal>
                     <Button
                         onClick={e => handleUpdateFuncionario(e)}
-                        >Atualizar</Button>
-                    <Button
+                    >
+                        Adicionar
+                    </Button>
+                    <ButtonCancel
                         onClick={closeModalUpdate}
-                        >Cancelar</Button>
+                    >
+                        Cancelar
+                    </ButtonCancel>
                 </FooterModal>
             </Modal>
 
