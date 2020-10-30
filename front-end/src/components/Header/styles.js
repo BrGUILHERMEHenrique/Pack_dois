@@ -23,4 +23,9 @@ export const Menu = Styled(Grid)`
     font-family: 'Oxanium', cursive;
     color: #67666a;
     margin-right: 3%;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+
 `

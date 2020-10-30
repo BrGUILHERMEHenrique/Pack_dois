@@ -164,7 +164,7 @@ const HorarioDetalhes = ({ location }) => {
     const handleAddHorarioDetalhe = useCallback(
         async (e) => {
             e.preventDefault();
-            if(parseInt(codigoDia) > 31){
+            if(parseInt(codigoDia) > 31) {
                 alert("Por favor verifique os dados, não há um mês que passe do dia 31");
                 closeModalAdd();
                 return;
@@ -175,6 +175,20 @@ const HorarioDetalhes = ({ location }) => {
                 return;
                 }
             }
+
+            if(
+                entrada1.getTime() >= saida1.getTime() ||
+                entrada1.getTime() >= entrada2.getTime() ||
+                entrada1.getTime() >= saida2.getTime() ||
+                saida1.getTime() >= entrada2.getTime() ||
+                saida1.getTime() >= saida2.getTime() ||
+                entrada2.getTime() >= saida2.getTime()
+            ) {
+                alert("Verifique a ordem dos horários");
+                return;
+            }
+
+
             const params = { 
                 horario: id,
                 codigoDia: parseInt(codigoDia),
@@ -234,12 +248,25 @@ const HorarioDetalhes = ({ location }) => {
                 closeModalAdd();
                 return;
             }
-            if(!folgaAtualizado){
+            if(!folgaAtualizado) {
                 if(!entrada1Atualizado || !saida1Atualizado || !entrada2Atualizado || !saida2Atualizado || !codigoDiaAtualizado){
                 alert("Por favor, preencha todos os campos");
                 return;
                 }
             }
+
+            if(
+                entrada1Atualizado.getTime() >= saida1Atualizado.getTime() ||
+                entrada1Atualizado.getTime() >= entrada2Atualizado.getTime() ||
+                entrada1Atualizado.getTime() >= saida2Atualizado.getTime() ||
+                saida1Atualizado.getTime() >= entrada2Atualizado.getTime() ||
+                saida1Atualizado.getTime() >= saida2Atualizado.getTime() ||
+                entrada2Atualizado.getTime() >= saida2Atualizado.getTime()
+            ) {
+                alert("Verifique a ordem dos horários");
+                return;
+            }
+
             const params = {
                 codigoDia: parseInt(codigoDiaAtualizado),
                 folga: folgaAtualizado,
@@ -268,7 +295,6 @@ const HorarioDetalhes = ({ location }) => {
         ],
     )
     
-
     useEffect(
         () => {
             loadHorarioDetahes();

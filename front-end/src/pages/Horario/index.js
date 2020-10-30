@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-
+import Relogio from '../../components/Relogio'
 import api from '../../services/api';
 
 import { Container, ContainerButtons, Clock, ContainerLogin } from './styles';
@@ -192,7 +192,8 @@ const Horario = () => {
                 {textButton}
             </Button>
             </ContainerLogin>
-            <Clock>{`${hora}:${minuto}`}</Clock>
+            {/* <Clock>{`${hora}:${minuto}`}</Clock> */}
+            <Relogio/>
         </Container>
     )
 }

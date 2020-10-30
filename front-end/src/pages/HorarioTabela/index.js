@@ -197,8 +197,7 @@ const HorarioTabela = () => {
                         Cancelar
                     </ButtonCancel>
                 </FooterModal>
-                
-                
+
             </Modal>
 
             <Modal

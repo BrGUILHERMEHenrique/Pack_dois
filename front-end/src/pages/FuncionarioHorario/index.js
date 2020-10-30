@@ -2,13 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import Modal from 'react-modal';
 import Input from '@material-ui/core/Input';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { TextField }from '@material-ui/core';
-import InputMask from 'react-input-mask';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import api from '../../services/api';
 import { TableFH } from '../../components/Table';
 import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel } from './styles';
@@ -49,10 +44,12 @@ const FuncionarioHorario = ({ location }) => {
     const [horarios, setHorarios] = useState([]);
     const [codigoInicial, setCodigoInicial] = useState('');
     const [idHorario, setIdHorario] = useState(Number);
-    const [codigoInicialAtualizado, setCodigoInicialAtualizado] = useState('');
     const [vigenciaInicial, setVigenciaInicial] = useState('');
     const [vigenciaFinal, setVigenciaFinal] = useState('');
+    const [codigoInicialAtualizado, setCodigoInicialAtualizado] = useState('');
     const [idHorarioAtualizado, setIdHorarioAtualizado] = useState('');
+    const [vigenciaInicialAtualizada, setVigenciaInicialAtualizada] = useState('');
+    const [vigenciaFinalAtualizada, setVigenciaFinalAtualizada] = useState('');
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalPutIsOpen, setModalPutIsOpen] = useState(false);
     function openModal() {
@@ -99,6 +96,14 @@ const FuncionarioHorario = ({ location }) => {
                 return;
             }
 
+            let dataInicial = new Date(vigenciaInicial);
+            let dataFinal = new Date(vigenciaFinal);
+
+            if(dataInicial.getTime() >= dataFinal.getTime()){
+                alert("A vigência final não pode ser anterior ou igual à vigência inicial");
+                return;
+            }
+
             const params = {
                 codigoInicial: parseInt(codigoInicial),
                 idFuncionario : id,
@@ -116,7 +121,7 @@ const FuncionarioHorario = ({ location }) => {
                 loadFuncionarioHorarios()
             }
         }, [codigoInicial, 
-            idHorario,
+            idHorario, vigenciaFinal, vigenciaInicial,
             loadFuncionarioHorarios
         ]
     );
@@ -124,12 +129,26 @@ const FuncionarioHorario = ({ location }) => {
     const handleUpdateFuncionarioHorario = useCallback(
         async (e) => {
             e.preventDefault();
+
+            if(!parseInt(idHorarioAtualizado) || !vigenciaInicialAtualizada || !vigenciaFinalAtualizada|| !parseInt(codigoInicialAtualizado)) {
+                alert("Por favor, preencha todos os campos");
+                return;
+            }
+
+            let dataInicial = new Date(vigenciaInicial);
+            let dataFinal = new Date(vigenciaFinal);
+
+            if(dataInicial.getTime() >= dataFinal.getTime()){
+                alert("A vigência final não pode ser anterior ou igual à vigência inicial");
+                return;
+            }
+
             const params = {
                 codigoInicial: parseInt(codigoInicialAtualizado),
                 idFuncionario : id,
                 idHorario: parseInt(idHorarioAtualizado),
-                vigenciaFinal: vigenciaFinal,
-                vigenciaInicial: vigenciaInicial
+                vigenciaFinal: vigenciaFinalAtualizada,
+                vigenciaInicial: vigenciaInicialAtualizada
             }
             try{
                 await api.put(`funcionario_horario/${funcionarioHorario.id}`, params);
@@ -140,7 +159,7 @@ const FuncionarioHorario = ({ location }) => {
                 loadFuncionarioHorarios();
                 closeModalUpdate();
             }     
-        }, [codigoInicialAtualizado, idHorarioAtualizado, vigenciaInicial, vigenciaFinal],
+        }, [codigoInicialAtualizado, idHorarioAtualizado, vigenciaInicialAtualizada, vigenciaFinalAtualizada],
     );
 
     const removeFuncionarioHorario = useCallback (
@@ -163,13 +182,15 @@ const FuncionarioHorario = ({ location }) => {
                 const response = await api.get(`funcionario_horario/${id}`);
                 setIdHorarioAtualizado(parseInt(response.data.idHorario.id));
                 setCodigoInicialAtualizado(parseInt(response.data.codigoInicial));
+                setVigenciaInicialAtualizada(parseInt(response.data.vigenciaInicial));
+                setVigenciaFinalAtualizada(parseInt(response.data.vigenciaFinal));
                 setFuncionarioHorario(response.data)
             } catch(error) {
                 console.log(error);
             } finally {
                 openModalUpdate();
             }
-        }, [codigoInicialAtualizado, idHorarioAtualizado],
+        }, [codigoInicialAtualizado, idHorarioAtualizado, vigenciaFinalAtualizada, vigenciaInicialAtualizada],
     );
 
 
@@ -179,6 +200,7 @@ const FuncionarioHorario = ({ location }) => {
             loadHorarios();
         }, [loadFuncionarioHorarios, loadHorarios],
     )
+    
     return(     
         <Container>
             <Row 
@@ -285,27 +307,45 @@ const FuncionarioHorario = ({ location }) => {
                         onChange={e => setCodigoInicialAtualizado(e.target.value)}
                         type="number"
                     />
-                    
-                        {/* <InputLabel id={idHorarioAtualizado}>Horário</InputLabel> */}
-                        <TextField
-                            select
-                            labelId="Horarios"
-                            label="Horário"
-                            style={inputStyle.horario}
-                            id={idHorarioAtualizado}
-                            value={idHorarioAtualizado}
-                            InputProps={{ inputProps: { min: 1} }}
-                            InputLabelProps={{ shrink: true }}
-                            onChange={e => setIdHorarioAtualizado(e.target.value)}
-                        >
-                            {
-                                horarios.map(horario => (
-                                    <MenuItem value={horario.id}>{horario.codigoHorario}-{horario.descHorario}</MenuItem>
-                                )) 
-                            }
-                        </TextField>
-                    </ContainerInputs>
-                        </FormModal>
+                    <TextField
+                        select
+                        labelId="Horarios"
+                        label="Horário"
+                        style={inputStyle.horario}
+                        id={idHorarioAtualizado}
+                        value={idHorarioAtualizado}
+                        InputProps={{ inputProps: { min: 1} }}
+                        InputLabelProps={{ shrink: true }}
+                        onChange={e => setIdHorarioAtualizado(e.target.value)}
+                    >
+                        {
+                            horarios.map(horario => (
+                                <MenuItem value={horario.id}>{horario.codigoHorario}-{horario.descHorario}</MenuItem>
+                            )) 
+                        }
+                    </TextField>
+                </ContainerInputs>
+                <ContainerInputs>
+                    <Input
+                        id="date"
+                        label="Vigência Inicial"
+                        value={vigenciaInicialAtualizada}
+                        style={inputStyle.codigo}
+                        type="date"
+                        InputLabelProps={{ shrink: true }}
+                        onChange={e => setVigenciaInicial(e.target.value)}
+                    />
+                    <Input
+                        id="date"
+                        type="date"
+                        label="Vigência Final"
+                        value={vigenciaFinalAtualizada}
+                        style={inputStyle.codigo}
+                        InputLabelProps={{ shrink: true }}
+                        onChange={e => setVigenciaFinal(e.target.value)}
+                    />
+                </ContainerInputs>
+                </FormModal>
                     <FooterModal>
                         <Button
                             onClick={e => handleUpdateFuncionarioHorario(e)}

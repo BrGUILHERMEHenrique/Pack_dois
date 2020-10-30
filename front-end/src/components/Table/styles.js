@@ -32,8 +32,11 @@ export const TextoTh = styled.p`
 export const TextoTr = styled.p`
     font-size: 0.9rem;
     font-family: 'Oxanium', cursive;
+    color: ${props => props.color};
 
 `;
+
+
 
 export const TableOptions = styled(Paper)`
     position: absolute;
