@@ -45,8 +45,8 @@ const inputStyle = {
 
 const modalStyleAtualizar = {
     content: {
-        width               : '45%',
-        height              : '55%',
+        width               : '580px',
+        height              : '380px',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -58,8 +58,8 @@ const modalStyleAtualizar = {
 
 const modalStyleAdicionar = {
     content: {
-        width               : '50%',
-        height              : '55%',
+        width               : '580px',
+        height              : '380px',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -325,14 +325,14 @@ const HorarioDetalhes = ({ location }) => {
                     <InputContainer>
                         <TextField
                             style={inputStyle.horarioUp}
-                            label="Horário Entrada"
+                            label="Entrada"
                             InputLabelProps={{ shrink: true }}
                             onChange={e => setEntrada1Atualizado(e.target.value)}
                             value={entrada1Atualizado}
                         />
                         <TextField 
                             style={inputStyle.horarioUp}
-                            label="Horário Almoço"
+                            label="Almoço"
                             InputLabelProps={{ shrink: true }}
                             onChange={e => setSaida1Atualizado(e.target.value)}
                             value={saida1Atualizado}
@@ -340,14 +340,14 @@ const HorarioDetalhes = ({ location }) => {
                     
                         <TextField 
                             style={inputStyle.horarioUp}
-                            label="Horário Retorno"
+                            label="Retorno"
                             InputLabelProps={{ shrink: true }}
                             onChange={e => setEntrada2Atualizado(e.target.value)}
                             value={entrada2Atualizado}
                         />
                         <TextField
                             style={inputStyle.horarioUp}
-                            label="Horário Saída"
+                            label="Saída"
                             InputLabelProps={{ shrink: true }}
                             onChange={e => setSaida2Atualizado(e.target.value)} 
                             value={saida2Atualizado}
@@ -379,6 +379,7 @@ const HorarioDetalhes = ({ location }) => {
                             <MenuItem value={false}>Falso</MenuItem>
                         </TextField>
                     </InputContainer>
+                        </FormModal>
                     <FooterModal>
                         <Button
                             onClick={e => handleHorarioDetalhe(horarioDetalhe.id, e)}
@@ -389,7 +390,6 @@ const HorarioDetalhes = ({ location }) => {
                             Cancelar
                         </ButtonCancel>
                     </FooterModal>
-                </FormModal>
             </Modal>
             <Modal
             isOpen={modalAddIsOpen}
@@ -405,7 +405,7 @@ const HorarioDetalhes = ({ location }) => {
                     <InputContainer>
                         <TextField
                             select
-                            label="Horário Entrada"
+                            label="Entrada"
                             labelId={entrada1}
                             id={entrada1}
                             value={entrada1}
@@ -426,7 +426,7 @@ const HorarioDetalhes = ({ location }) => {
                             id={saida1}
                             value={saida1}
                             style={inputStyle.horario}
-                            label="Horário Almoço"
+                            label="Almoço"
                             InputLabelProps={{ shrink: true }}
                             onChange={e => setSaida1(e.target.value)}
                         >
@@ -440,7 +440,7 @@ const HorarioDetalhes = ({ location }) => {
                         <TextField
                             select
                             style={inputStyle.horario}
-                            label="Horário Retorno"
+                            label="Retorno"
                             InputLabelProps={{ shrink: true }}
                             labelId={entrada2}
                             id={entrada2}
@@ -457,7 +457,7 @@ const HorarioDetalhes = ({ location }) => {
                         <TextField
                             select
                             style={inputStyle.horario}
-                            label="Horário Saída"
+                            label="Saída"
                             InputLabelProps={{ shrink: true }}
                             labelId={saida2}
                             id={saida2}
@@ -515,6 +515,7 @@ const HorarioDetalhes = ({ location }) => {
                             }}
                         />
                     </InputContainer>
+                        </FormModal>
                     <FooterModal>
                         <Button
                             onClick={e => handleAddHorarioDetalhe(e)}
@@ -527,7 +528,6 @@ const HorarioDetalhes = ({ location }) => {
                             Cancelar
                         </ButtonCancel>
                     </FooterModal>
-                </FormModal>
             </Modal>
         </Container>
     )

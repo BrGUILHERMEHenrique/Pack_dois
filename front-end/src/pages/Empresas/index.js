@@ -28,7 +28,7 @@ const modalStyleAtualizar = {
 const modalStyleAdicionar = {
     content: {
         width               : '520px',
-        height              : '300px',
+        height              : '320px',
         top                 : '50%',
         left                : '50%',
         right               : 'auto',
@@ -40,20 +40,20 @@ const modalStyleAdicionar = {
 
 const inputStyle = {
     razaoSocial: {
-        width: '356px',
+        width: '386px',
         height: '60%',
     },
     matricula: {
-        width: '173px',
+        width: '186px',
         height: '60%',
     },
     cnpj: {
-        width: '173px',
+        width: '186px',
         height: '60%',
-        marginLeft: '10px',
+        marginLeft: '12px',
     }, 
     razaoSocialUp: {
-        width: '317px',
+        width: '354px',
         height: '60%',
 
     }

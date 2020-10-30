@@ -4,11 +4,11 @@ import Grid from '@material-ui/core/Grid';
 
 export const HeaderModal = styled.div`
     flex-direction: row;
-    text-align: center;
     margin-top: 5%;
+    margin-left: 5.5%;
     font-family: 'Oxanium', cursive;
     
-    h2{
+    h2 {
         font-size: 2em;
         font-weight: normal;
         color: #67666a;
@@ -17,8 +17,8 @@ export const HeaderModal = styled.div`
 
 export const FooterModal = styled.div`
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    justify-content: flex-end;
+    margin-right: 7.6%;
     margin-top: 10%;
 
     Button+Button{
@@ -34,7 +34,7 @@ export const FormModal = styled.form`
     margin-top: 40px;
     font-family: 'Oxanium', cursive;
 
-    input{
+    input {
         border: 0;
         outline: none;
         color: #3a3a3a;
@@ -70,7 +70,7 @@ export const Button = styled.button`
     font-family: 'Oxanium', cursive;
     outline: none;
 
-    &:hover{
+    &:hover {
         background-color: rgba(131,151,176,0.2);
         cursor: pointer;
         color: black;
@@ -88,7 +88,7 @@ export const ButtonCancel = styled.button`
     font-family: 'Oxanium', cursive;
     outline: none;
 
-    &:hover{
+    &:hover {
         background-color: rgba(103, 102, 106, 0.4);
         color: white;
     }

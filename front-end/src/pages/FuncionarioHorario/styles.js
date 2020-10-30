@@ -79,13 +79,14 @@ export const ContainerInputs = styled.div`
     flex-direction: row;
     font-family: 'Oxanium', cursive;
     justify-content: center;
+    
 `;
 
 export const HeaderModal = styled.div`
     flex-direction: row;
-    text-align: center;
     margin-top: 5%;
     font-family: 'Oxanium', cursive;
+    margin-left: 10%;
     
     
     h2{
@@ -99,8 +100,7 @@ export const HeaderModal = styled.div`
 export const FooterModal = styled.div`
     display: flex;
     justify-content: flex-end;
-    margin-right: 104px;
-    align-items: center;
+    margin-right: 13%;
     margin-top: 10%;
 
     Button+Button{

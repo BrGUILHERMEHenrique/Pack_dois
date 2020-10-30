@@ -70,24 +70,17 @@ const OpenAlert = (id, remove) => {
     dangerMode: true,
 })
 .then((willDelete) => {
-  try {
-    if (willDelete) {
-      swal('Removido com sucesso!', {
-        icon: "success",
-      });
-      remove(id)
-    } } catch(error) {
-    alert(error.response.data)
+  if (willDelete) {
+    swal('Removido com sucesso!', {
+      icon: "success",
+    });
+    remove(id)
+  } else {
+    swal('Ação cancelada!', {
+      icon: "error",
+    });
+      
   }
-    
-    
-    // else {
-    //   swal('Ação cancelada!', {
-    //     icon: "error",
-    //   });
-    // }
-  
-
 });
 }
 
@@ -112,10 +105,10 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   <TextoTr>{funcionario.nome}</TextoTr>
                   </Tabela>
                   <Tabela align="left"><TextoTr>{funcionario.idEmpresa.razaoSocial}</TextoTr></Tabela>
-                  <Tabela align="right"><TextoTr>{funcionario.pis.pis()}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
+                  <Tabela align="right" style={{minWidth: 150}}><TextoTr>{funcionario.pis.pis()}</TextoTr></Tabela>
+                  <Tabela align="center" style={{minWidth: 150}}><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'dd/MM/yyyy')}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
+                  <Tabela align="center" style={{minWidth: 150}}><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
                    <Tabela align="center" style={{minWidth: 150}}>
                      <ButtonIcon
                         onClick = {() => {
@@ -202,8 +195,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
 
     return(
         <TableContainer component={Paper} className={classes.table}>
-          <Table aria-label="Tabela Detalhes do Horário">
-            <Tabela align="center"><TextoTh>Código do Dia</TextoTh></Tabela>
+          <Table aria-label="Tabela Empresas">
             <Tabela align="center"><TextoTh>Entrada</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Intervalo</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Retorno do Intervalo</TextoTh></Tabela>
@@ -212,7 +204,9 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
             <TableBody>
               {horarioDetalhes.map(horarioDetalhe => (
                 <TabelaRow key={horarioDetalhe.id}>
-                  <Tabela align="center"><TextoTr>{horarioDetalhe.codigoDia}</TextoTr></Tabela>
+                  {/* <Tabela component="th" scope="Detalhes de horário" align="center">
+                  <TextoTr>{horarioDetalhe.id}</TextoTr>
+                  </Tabela> */}
                   <Tabela align="center"><TextoTr>{horarioDetalhe.entrada1}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horarioDetalhe.saida1}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horarioDetalhe.entrada2}</TextoTr></Tabela>
