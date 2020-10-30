@@ -38,7 +38,7 @@ export const Button = styled.button`
 
 `;
 
-export const ButtonOutline = styled.button`
+export const ButtonCancel = styled.button`
     width: 85px;
     height: 35px;
     color: rgba(103, 102, 106, 0.7);

@@ -78,6 +78,27 @@ export const Button = styled.button`
 
 `;
 
+export const ButtonCancel = styled.button`
+    width: 85px;
+    height: 35px;
+    color: rgba(103, 102, 106, 0.7);
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    font-family: 'Oxanium', cursive;
+    outline: none;
+
+    &:hover{
+        background-color: rgba(103, 102, 106, 0.4);
+        color: white;
+    }
+
+    &+button {
+        margin-left: 8px;
+    }
+
+`;
+
 export const Container = styled(Grid)`
     padding: 20px;
 `;  

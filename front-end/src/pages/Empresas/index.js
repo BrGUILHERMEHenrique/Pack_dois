@@ -10,7 +10,7 @@ import {TableE} from '../../components/Table';
 
 import api from '../../services/api';
 
-import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonOutline } from './styles';
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel } from './styles';
 
 const modalStyleAtualizar = {
     content: {
@@ -267,11 +267,11 @@ const Empresas = () => {
                         >
                             Adicionar
                         </Button>
-                        <ButtonOutline
+                        <ButtonCancel
                             onClick={closeModal}
                         >
                             Cancelar
-                        </ButtonOutline>
+                        </ButtonCancel>
 
                         </FooterModal>
             </Modal>
@@ -298,11 +298,15 @@ const Empresas = () => {
                     <FooterModal>
                     <Button
                     onClick={e => handleUpdateEmpresa(e)}
-                    >Atualizar</Button>
+                    >
+                        Atualizar
+                    </Button>
 
-                    <Button
+                    <ButtonCancel
                     onClick={closeModalUpdate}
-                    >Cancelar</Button>
+                    >
+                        Cancelar
+                    </ButtonCancel>
                     </FooterModal>
             </Modal>
 

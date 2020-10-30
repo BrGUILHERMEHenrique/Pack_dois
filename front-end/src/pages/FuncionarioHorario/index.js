@@ -6,13 +6,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { TextField }from '@material-ui/core';
+import InputMask from 'react-input-mask';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
 import api from '../../services/api';
-
 import { TableFH } from '../../components/Table';
-import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button } from './styles';
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel } from './styles';
 
 const modalStyle = {
     content : {
@@ -94,6 +93,12 @@ const FuncionarioHorario = ({ location }) => {
     const handleAddFunionarioHorario = useCallback (
         async (e) => {
             e.preventDefault();
+
+            if(!parseInt(idHorario) || !vigenciaInicial || !vigenciaFinal|| !parseInt(codigoInicial)){
+                alert("Por favor, preencha todos os campos");
+                return;
+            }
+
             const params = {
                 codigoInicial: parseInt(codigoInicial),
                 idFuncionario : id,
@@ -104,7 +109,6 @@ const FuncionarioHorario = ({ location }) => {
             console.log(params);
             try {
                 await api.post('funcionario_horario', params);
-                console.log('Deu certo aqui cara');
             } catch (error) {
                 alert(error);
             } finally {
@@ -136,7 +140,7 @@ const FuncionarioHorario = ({ location }) => {
                 loadFuncionarioHorarios();
                 closeModalUpdate();
             }     
-        }, [codigoInicialAtualizado, idHorarioAtualizado],
+        }, [codigoInicialAtualizado, idHorarioAtualizado, vigenciaInicial, vigenciaFinal],
     );
 
     const removeFuncionarioHorario = useCallback (
@@ -223,22 +227,22 @@ const FuncionarioHorario = ({ location }) => {
                             }
                         
                         </TextField>
-                        <TextField
+                        <Input
+                            id="date"
                             label="Vigência Inicial"
-                            fullWidth={true}
                             value={vigenciaInicial}
                             style={inputStyle.codigo}
+                            type="date"
                             InputLabelProps={{ shrink: true }}
-                            InputProps={{ inputProps: { min: 1} }}
                             onChange={e => setVigenciaInicial(e.target.value)}
                         />
-                        <TextField
+                        <Input
+                            id="date"
+                            type="date"
                             label="Vigência Final"
-                            fullWidth={true}
                             value={vigenciaFinal}
                             style={inputStyle.codigo}
                             InputLabelProps={{ shrink: true }}
-                            InputProps={{ inputProps: { min: 1} }}
                             onChange={e => setVigenciaFinal(e.target.value)}
                         />
                     </ContainerInputs>
@@ -246,10 +250,14 @@ const FuncionarioHorario = ({ location }) => {
                 <FooterModal>
                     <Button
                         onClick={e => handleAddFunionarioHorario(e)}
-                    >Adicionar</Button>
-                    <Button
+                    >
+                        Salvar
+                    </Button>
+                    <ButtonCancel
                         onClick={closeModal}
-                    >Cancelar</Button>
+                    >
+                        Cancelar
+                    </ButtonCancel>
 
                     </FooterModal>
             </Modal>
@@ -261,8 +269,7 @@ const FuncionarioHorario = ({ location }) => {
                 style={modalStyle}
             >
                 <HeaderModal>
-                <h2>Atualizar</h2>
-                
+                    <h2>Atualizar</h2>
                 </HeaderModal>
                 <FormModal>
                 <ContainerInputs>
@@ -299,15 +306,15 @@ const FuncionarioHorario = ({ location }) => {
                         </FormModal>
                     <FooterModal>
                         <Button
-                            color="primary"
-                            variant="contained"
                             onClick={e => handleUpdateFuncionarioHorario(e)}
-                            >Atualizar</Button>
-                        <Button
-                            color="secundary"
-                            variant="outlined"
+                        >
+                            Salvar
+                        </Button>
+                        <ButtonCancel
                             onClick={closeModalUpdate}
-                        >Cancelar</Button>
+                        >
+                            Cancelar
+                        </ButtonCancel>
                     </FooterModal>
             </Modal>
 

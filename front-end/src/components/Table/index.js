@@ -70,17 +70,24 @@ const OpenAlert = (id, remove) => {
     dangerMode: true,
 })
 .then((willDelete) => {
-  if (willDelete) {
-    swal('Removido com sucesso!', {
-      icon: "success",
-    });
-    remove(id)
-  } else {
-    swal('Ação cancelada!', {
-      icon: "error",
-    });
-      
+  try {
+    if (willDelete) {
+      swal('Removido com sucesso!', {
+        icon: "success",
+      });
+      remove(id)
+    } } catch(error) {
+    alert(error.response.data)
   }
+    
+    
+    // else {
+    //   swal('Ação cancelada!', {
+    //     icon: "error",
+    //   });
+    // }
+  
+
 });
 }
 
@@ -109,7 +116,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   <Tabela align="center"><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'dd/MM/yyyy')}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
-                   <Tabela align="center" style={{maxWidth: 150}}>
+                   <Tabela align="center" style={{minWidth: 150}}>
                      <ButtonIcon
                         onClick = {() => {
                           history.push('/funcionarioHorario', { id: funcionario.id })
@@ -195,7 +202,8 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
 
     return(
         <TableContainer component={Paper} className={classes.table}>
-          <Table aria-label="Tabela Empresas">
+          <Table aria-label="Tabela Detalhes do Horário">
+            <Tabela align="center"><TextoTh>Código do Dia</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Entrada</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Intervalo</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Retorno do Intervalo</TextoTh></Tabela>
@@ -204,9 +212,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
             <TableBody>
               {horarioDetalhes.map(horarioDetalhe => (
                 <TabelaRow key={horarioDetalhe.id}>
-                  {/* <Tabela component="th" scope="Detalhes de horário" align="center">
-                  <TextoTr>{horarioDetalhe.id}</TextoTr>
-                  </Tabela> */}
+                  <Tabela align="center"><TextoTr>{horarioDetalhe.codigoDia}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horarioDetalhe.entrada1}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horarioDetalhe.saida1}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horarioDetalhe.entrada2}</TextoTr></Tabela>
@@ -310,7 +316,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                 <TextoTr>{funcionarioHorario.idFuncionario.nome}</TextoTr>
                 </Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.codigoInicial}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{funcionarioHorario.horario.descHorario}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{funcionarioHorario.idHorario.descHorario}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.vigenciaInicial}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.vigenciaFinal}</TextoTr></Tabela>
                 <Tabela align="center">

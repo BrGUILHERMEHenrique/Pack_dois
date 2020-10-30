@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Input from '@material-ui/core/Input';
 import TextField from '@material-ui/core/TextField';
 import api from '../../services/api';
-import { FormModal, Button, Container, Row, SubTitulo, FooterModal, HeaderModal, InputContainer } from './styles';
+import { FormModal, Button, Container, Row, SubTitulo, FooterModal, HeaderModal, InputContainer, ButtonCancel } from './styles';
 import { TableH } from '../../components/Table';
 
 const customStyles = {
@@ -188,10 +188,14 @@ const HorarioTabela = () => {
                 <FooterModal>
                     <Button
                         onClick={e => handleHorario(horario.id, e)}
-                    >Atualizar</Button>
-                    <Button
+                    >
+                        Atualizar
+                    </Button>
+                    <ButtonCancel
                         onClick={closeModalUpdate}
-                    >Cancelar</Button>
+                    >
+                        Cancelar
+                    </ButtonCancel>
                 </FooterModal>
                 
                 
@@ -204,7 +208,7 @@ const HorarioTabela = () => {
                 contentLabel="Modal"
             >
                 <HeaderModal>
-                <h2>Cadastrar Horário</h2>
+                    <h2>Cadastrar Horário</h2>
                 </HeaderModal>
                 <FormModal>         
                     <TextField
@@ -229,9 +233,11 @@ const HorarioTabela = () => {
                     <Button
                         onClick={e => handleAddHorario(e)}
                     >Salvar</Button>
-                     <Button
+                     <ButtonCancel
                     onClick={closeModalAdd}
-                     >Cancelar</Button>
+                     >
+                         Cancelar
+                     </ButtonCancel>
                 </FooterModal>
             </Modal>
         </Container>

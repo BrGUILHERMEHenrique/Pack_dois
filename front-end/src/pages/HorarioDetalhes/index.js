@@ -9,7 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 
 
-import { FormModal, Button, Container, Row, SubTitulo, HeaderModal, FooterModal, InputContainer } from './styles';
+import { FormModal, Button, Container, Row, SubTitulo, HeaderModal, FooterModal, InputContainer, ButtonCancel} from './styles';
 import { TableHD } from '../../components/Table';
 
 
@@ -357,9 +357,11 @@ const HorarioDetalhes = ({ location }) => {
                         <Button
                             onClick={e => handleHorarioDetalhe(horarioDetalhe.id, e)}
                         >Atualizar</Button>
-                        <Button
+                        <ButtonCancel
                             onClick={closeModalUpdate}
-                        >Cancelar</Button>
+                        >
+                            Cancelar
+                        </ButtonCancel>
                     </FooterModal>
                 </FormModal>
             </Modal>
@@ -490,10 +492,14 @@ const HorarioDetalhes = ({ location }) => {
                     <FooterModal>
                         <Button
                             onClick={e => handleAddHorarioDetalhe(e)}
-                        >Adicionar</Button>
-                        <Button
+                        >
+                            Adicionar
+                        </Button>
+                        <ButtonCancel
                             onClick={closeModalAdd}
-                        >Cancelar</Button>
+                        >
+                            Cancelar
+                        </ButtonCancel>
                     </FooterModal>
                 </FormModal>
             </Modal>
