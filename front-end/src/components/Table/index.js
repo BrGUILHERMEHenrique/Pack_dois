@@ -367,11 +367,11 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   <Tabela align="center"><TextoTr>{apontameto.data}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontameto.entrada1}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontameto.saida1}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{apontameto.entrada2}</TextoTr></Tabela>
+                 <Tabela align="center"><TextoTr>{apontameto.entrada2}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontameto.saida2}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontameto.totalTrabalhado}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{apontameto.saldoHe}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{apontameto.saldoAtraso}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr color={apontameto.saldoHe === "00:00:00" ? '' : '#00BC22'}>{apontameto.saldoHe}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr color={apontameto.saldoAtraso === "00:00:00" ? '' : 'red'}>{apontameto.saldoAtraso}</TextoTr></Tabela>
 
                   {/* <Tabela align="center">
                     <ButtonU
