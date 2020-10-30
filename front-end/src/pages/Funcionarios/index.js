@@ -8,10 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import ValidaPIS from '../../components/ValidaPis'
 import autoTable from 'jspdf-autotable'
-// import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import Select from '@material-ui/core/Select';
-import { AiOutlineClose } from 'react-icons/ai';
 import { jsPDF } from "jspdf";
 
 
@@ -321,9 +318,7 @@ const Funcionarios = () => {
     return(
 
         <Container>
-            <Row 
-            direction="row"
-            container>
+            <Row direction="row" container>
                 <SubTitulo> Funcionário </SubTitulo>
                 <Button onClick={openModal}>Adicionar</Button>
                 <Button onClick={criadorPDF}>imprimir</Button>

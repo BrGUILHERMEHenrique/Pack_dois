@@ -272,7 +272,6 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                     >
                       Detalhes
                     </ButtonU>
-
                     <ButtonU
                       onClick={() => {
                         handleHorario(horario.id);
@@ -280,7 +279,6 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                     >
                       Atualizar
                     </ButtonU>
-
                     <ButtonD
                       onClick={() => {
                         OpenAlert(horario.id, removeHorario)
@@ -317,8 +315,8 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                 </Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.codigoInicial}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.idHorario.descHorario}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{funcionarioHorario.vigenciaInicial}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{funcionarioHorario.vigenciaFinal}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{format(new Date(funcionarioHorario.vigenciaInicial), 'dd/MM/yyyy')}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{format(new Date(funcionarioHorario.vigenciaFinal), 'dd/MM/yyyy')}</TextoTr></Tabela>
                 <Tabela align="center">
                   <ButtonU
                     onClick={() => {
@@ -340,7 +338,6 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
           </TableBody>
         </Table>
       </TableContainer>
-
     )
 }
 
