@@ -108,7 +108,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   <Tabela align="left"><TextoTr>{funcionario.idEmpresa.razaoSocial}</TextoTr></Tabela>
                   <Tabela align="right" style={{minWidth: 150}}><TextoTr>{funcionario.pis.pis()}</TextoTr></Tabela>
                   <Tabela align="center" style={{minWidth: 150}}><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'dd/MM/yyyy')}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento.split("-")), 'dd/MM/yyyy')}</TextoTr></Tabela>
                   <Tabela align="center" style={{minWidth: 150}}><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
                    <Tabela align="center" style={{minWidth: 150}}>
                      <ButtonIcon
@@ -336,7 +336,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     )
 }
 
-    const TableA = ({ apontamentos, handleapontamento, removeapontamento }) => {
+    const TableA = ({ apontamentos, handleApontamento, removeApontamento }) => {
 
       const classes = useStyles();
   
@@ -361,15 +361,24 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   <Tabela component="th" scope="Funcionário-Horario" align="center">
                   <TextoTr>{apontamento.funcionario.nome ? apontamento.funcionario.nome : "Fora da Vigência contratual"}</TextoTr>
                   </Tabela>
-                  <Tabela align="center"><TextoTr color={!apontamento.horarioDetalhes.horario ? 'grey' : ''}>{apontamento.horarioDetalhes.horario ? apontamento.horarioDetalhes.horario.descHorario : "Fora da Vigência"}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontamento.horarioDetalhes.horario.descHorario}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontamento.data}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontamento.entrada1}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontamento.saida1}</TextoTr></Tabela>
-                 <Tabela align="center"><TextoTr>{apontamento.entrada2}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontamento.entrada2}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontamento.saida2}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontamento.totalTrabalhado}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr color={apontamento.saldoHe === "00:00:00" ? '' : '#00BC22'}>{apontamento.saldoHe}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr color={apontamento.saldoAtraso === "00:00:00" ? '' : 'red'}>{apontamento.saldoAtraso}</TextoTr></Tabela>
+                  <Tabela align="center">
+                    <ButtonU
+                      onClick={() =>{
+                        handleApontamento(apontamento.id);  
+                      }}>
+                        Editar
+                      </ButtonU>
+                  </Tabela>
+                  
 
                   {/* <Tabela align="center">
                     <ButtonU
