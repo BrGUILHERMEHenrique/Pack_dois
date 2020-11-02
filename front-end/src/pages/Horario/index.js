@@ -22,11 +22,11 @@ const Horario = () => {
     const [segundo, setSegundo] = useState('');
     const [codMatricula, setCodMatricula] = useState(''); 
     const dateNow = new Date();
-
+    const data = `${dateNow.getFullYear()}-${dateNow.getMonth() + 1}-${dateNow.getDate() < 10 ? '0'+ dateNow.getDate() : dateNow.getDate()}`;
     const handleAllClicks = () => {
+        console.log(data);
         if(!funcionario.id){
             loadFuncionario();
-            setTextButton('Primeira Entrada');
         } else if(!entrada1 && !saida1 || !entrada2 && !!saida1){
             getTimeNow();
         } else if(!saida1 || !saida2 && !!entrada1 || !!entrada2){
@@ -51,10 +51,6 @@ const Horario = () => {
     }
 
     const getTimeNow = () => {
-        if(!funcionario.id){
-            alert("Antes de fazer qualquer coisa, informe sua Matricula");
-            return;
-        } 
         const dateTotal = addZero();
         setTimeNow(dateTotal);
         if(!entrada1 && !saida1){
@@ -72,24 +68,25 @@ const Horario = () => {
         async (saida2) => {
             
             console.log(saida2);
-            const paramsHoraDetalhe = {
-                idFuncionario: funcionario.id,
-                // idHorarioDetalhe: funcionarioHorario.idHorario.id,
+            const params = {
+                funcionario: funcionario.id,
+                data: data,
                 entrada1: entrada1,
                 saida1: saida1,
                 entrada2: entrada2,
                 saida2: saida2
             }
             try {               
-            // const response = await api.post('horario_detalhes', paramsHoraDetalhe);
-                // console.log();
-                console.log(paramsHoraDetalhe);
+            const response = await api.post('apontamento', params);
+                console.log(response.data);
+                console.log(params);
             } catch (error) {
                 console.log(error.response.data);
                 console.log(error);
             }
         }, [horario, 
-            funcionario, 
+            funcionario,
+            data, 
             entrada1, 
             entrada2, 
             saida1, 
@@ -97,11 +94,6 @@ const Horario = () => {
     )
     const timeStop = useCallback(
     () =>{
-        if(!funcionario.id){
-            alert("Antes de fazer qualquer coisa, informe sua Matricula");
-            return;
-        }
-        
         const dateTotal = addZero();
         if(!saida1 && !!entrada1){
             setSaida1(dateTotal);
@@ -125,10 +117,15 @@ const Horario = () => {
     
     const loadFuncionario = useCallback(
         async () => {
+            if(!codMatricula){
+                alert("Antes de fazer qualquer coisa, informe sua Matricula");
+                return;
+            }
             try {
                 const response = await api.get(`funcionario/cod/${codMatricula}`);
                 console.log(response);
                 setFuncionario(response.data);
+                setTextButton('Primeira Entrada');
             } catch (error) {
                 console.log(error);
             }
