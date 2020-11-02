@@ -167,6 +167,7 @@ const Apontamento = () => {
                 const response = await api.get('apontamento');
                 setApontamentos(response.data);
                 console.log(response.data);
+                response.data.map(apontamento => console.log(apontamento))
             } catch (error) {
                 console.log(error);
             }

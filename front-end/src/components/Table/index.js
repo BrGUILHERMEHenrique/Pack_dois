@@ -9,6 +9,7 @@ import 'sweetalert2/src/sweetalert2.scss'
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import DateRangeIconRounded from '@material-ui/icons/DateRangeRounded';
+import { pt } from 'date-fns/locale';
 
 const useStyles = makeStyles({
     table: {
@@ -109,7 +110,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   <Tabela align="left"><TextoTr>{funcionario.idEmpresa.razaoSocial}</TextoTr></Tabela>
                   <Tabela align="right" style={{minWidth: 150}}><TextoTr>{funcionario.pis.pis()}</TextoTr></Tabela>
                   <Tabela align="center" style={{minWidth: 150}}><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento), 'dd/MM/yyyy')}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento.split("-")), 'dd/MM/yyyy')}</TextoTr></Tabela>
                   <Tabela align="center" style={{minWidth: 150}}><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
                    <Tabela align="center" style={{minWidth: 150}}>
                      <ButtonIcon
@@ -319,8 +320,8 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                 </Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.codigoInicial}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.idHorario.descHorario}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{format(new Date(funcionarioHorario.vigenciaInicial), 'dd/MM/yyyy')}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{format(new Date(funcionarioHorario.vigenciaFinal), 'dd/MM/yyyy')}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{format( new Date(funcionarioHorario.vigenciaInicial.split("-")), 'dd/MM/yyyy', { locale: pt })}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{format(new Date(funcionarioHorario.vigenciaFinal.split("-")), 'dd/MM/yyyy')}</TextoTr></Tabela>
                 <Tabela align="center">
                   <ButtonU
                     onClick={() => {
@@ -372,24 +373,23 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
             <Tabela align="center"><TextoTh>Saldo Atraso</TextoTh></Tabela>
             </tr>
             <TableBody>
-              {apontamentos.map(apontameto => (
-                <TabelaRow key={apontameto.id}>
-                  <Tabela align="center">
-                    {apontameto.horarioDetalhes.horario === null ? 
+              {apontamentos.map(apontamento => (
+                <TabelaRow key={apontamento.id} color={!apontamento.horarioDetalhes.horario ? "#C6C6C6" : ''}>
+                    <Tabela align="center">
+                    {apontamento.horarioDetalhes.horario === null ? 
                     <TextoTr>Fora da vigência</TextoTr>
                     :
-                    <TextoTr>{apontameto.horarioDetalhes.horario.descHorario}</TextoTr>
+                    <TextoTr>{apontamento.horarioDetalhes.horario.descHorario}</TextoTr>
                     }
                   </Tabela> 
-                  <Tabela align="center"><TextoTr>{toSlash(apontameto.data)}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{apontameto.entrada1}</TextoTr></Tabela>
-                  {/* <Tabela align="center"><TextoTr>{apontameto.funcionario.nome}</TextoTr></Tabela> */}
-                  <Tabela align="center"><TextoTr>{apontameto.saida1}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{apontameto.entrada2}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{apontameto.saida2}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{apontameto.totalTrabalhado}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr color={apontameto.saldoHe === "00:00:00" ? '' : '#00BC22'}>{apontameto.saldoHe}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr color={apontameto.saldoAtraso === "00:00:00" ? '' : 'red'}>{apontameto.saldoAtraso}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontamento.data}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontamento.entrada1}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontamento.saida1}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontamento.entrada2}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontamento.saida2}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontamento.totalTrabalhado}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr color={apontamento.saldoHe === "00:00:00" ? '' : '#00BC22'}>{apontamento.saldoHe}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr color={apontamento.saldoAtraso === "00:00:00" ? '' : 'red'}>{apontamento.saldoAtraso}</TextoTr></Tabela>
                   <Tabela align="center">
                     <ButtonU
                       onClick={() =>{
@@ -403,7 +403,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   {/* <Tabela align="center">
                     <ButtonU
                       onClick={() => {
-                        handleapontamento(apontameto.id);
+                        handleapontamento(apontamento.id);
                       }}
                     >Atualizar
                     </ButtonU>

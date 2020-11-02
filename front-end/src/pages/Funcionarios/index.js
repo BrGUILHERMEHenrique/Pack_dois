@@ -113,6 +113,7 @@ const Funcionarios = () => {
 
     const [funcionarios, setFuncionarios] = useState([]);
     const [funcionario, setFuncionario] = useState({});
+    const [idEmpresa, setIdEmpresa] = useState(Number);
     const [modalIsOpen,setIsOpen] = useState(false);
     const [modalPutIsOpen, setModalPutIsOpen] = useState(false);
     const [nome, setNome] = useState('');
@@ -143,15 +144,15 @@ const Funcionarios = () => {
       }
 
     const loadFuncionarios = useCallback(
-        async () => {
+        async (idEmpresa) => {
             try{
-                const response = await api.get('funcionario');
+                const response = await api.get(`funcionario/empresa/${idEmpresa}`);
                 console.log(response.data);
                 setFuncionarios(response.data);
             }catch(error){
                 console.log(error);
             }
-        }, [],
+        }, [idEmpresa],
     );
 
     const loadEmpresas = useCallback(
@@ -281,12 +282,6 @@ const Funcionarios = () => {
 
     useEffect(
         () => {
-            loadFuncionarios();
-        }, [loadFuncionarios],
-    )
-
-    useEffect(
-        () => {
             loadEmpresas();
         }, [loadEmpresas],
     )
@@ -314,10 +309,30 @@ const Funcionarios = () => {
     return(
 
         <Container>
+           
             <Row direction="row" container>
                 <SubTitulo> Funcionário </SubTitulo>
                 <Button onClick={openModal}>Adicionar</Button>
                 <Button onClick={criadorPDF}>imprimir</Button>
+                <TextField
+                    labelId={empresa}
+                    label='Empresa'
+                    placeholder="Empresa"
+                    style={inputStyle.empresa}
+                    select
+                    value={idEmpresa}
+                    onChange={e => {
+                        loadFuncionarios(e.target.value)
+                        setIdEmpresa(e.target.value);
+                        }
+                    }
+                    >
+                        {
+                            listaEmpresas.map(emp => (
+                                <MenuItem value={emp.id}>{emp.razaoSocial}</MenuItem>
+                            ))                                
+                        }
+            </TextField>
             </Row>
             <Modal
                 isOpen={modalIsOpen}
