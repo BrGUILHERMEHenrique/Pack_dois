@@ -16,6 +16,7 @@ const Apontamento = () => {
                 const response = await api.get('apontamento');
                 setApontamentos(response.data);
                 console.log(response.data);
+                response.data.map(apontamento => console.log(apontamento))
             } catch (error) {
                 console.log(error);
             }
@@ -36,7 +37,9 @@ const Apontamento = () => {
                 </SubTitulo>
             </Row>
 
-        <TableA apontamentos={apontamentos} />
+        {!apontamentos ? <h1>Nenhum dado necessário foi passado ainda...</h1>
+        :<TableA apontamentos={apontamentos} />
+        }
         </Container>
     )
     

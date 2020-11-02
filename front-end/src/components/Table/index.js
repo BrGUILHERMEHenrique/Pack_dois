@@ -9,6 +9,7 @@ import 'sweetalert2/src/sweetalert2.scss'
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import DateRangeIconRounded from '@material-ui/icons/DateRangeRounded';
+import { pt } from 'date-fns/locale';
 
 const useStyles = makeStyles({
     table: {
@@ -309,8 +310,8 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                 </Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.codigoInicial}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.idHorario.descHorario}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{format(new Date(funcionarioHorario.vigenciaInicial), 'dd/MM/yyyy')}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{format(new Date(funcionarioHorario.vigenciaFinal), 'dd/MM/yyyy')}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{format( new Date(funcionarioHorario.vigenciaInicial.split("-")), 'dd/MM/yyyy', { locale: pt })}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{format(new Date(funcionarioHorario.vigenciaFinal.split("-")), 'dd/MM/yyyy')}</TextoTr></Tabela>
                 <Tabela align="center">
                   <ButtonU
                     onClick={() => {
@@ -355,25 +356,25 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
             <Tabela align="center"><TextoTh>Saldo Hora Extra</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Saldo Atraso</TextoTh></Tabela>
             <TableBody>
-              {apontamentos.map(apontameto => (
-                <TabelaRow key={apontameto.id}>
+              {apontamentos.map(apontamento => (
+                <TabelaRow key={apontamento.id} color={!apontamento.horarioDetalhes.horario ? "grey" : ''}>
                   <Tabela component="th" scope="Funcionário-Horario" align="center">
-                  <TextoTr>{apontameto.funcionario.nome}</TextoTr>
+                  <TextoTr>{apontamento.funcionario.nome ? apontamento.funcionario.nome : "Fora da Vigência contratual"}</TextoTr>
                   </Tabela>
-                  <Tabela align="center"><TextoTr>{apontameto.horarioDetalhes.horario.descHorario}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{apontameto.data}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{apontameto.entrada1}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{apontameto.saida1}</TextoTr></Tabela>
-                 <Tabela align="center"><TextoTr>{apontameto.entrada2}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{apontameto.saida2}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{apontameto.totalTrabalhado}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr color={apontameto.saldoHe === "00:00:00" ? '' : '#00BC22'}>{apontameto.saldoHe}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr color={apontameto.saldoAtraso === "00:00:00" ? '' : 'red'}>{apontameto.saldoAtraso}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr color={!apontamento.horarioDetalhes.horario ? 'grey' : ''}>{apontamento.horarioDetalhes.horario ? apontamento.horarioDetalhes.horario.descHorario : "Fora da Vigência"}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontamento.data}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontamento.entrada1}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontamento.saida1}</TextoTr></Tabela>
+                 <Tabela align="center"><TextoTr>{apontamento.entrada2}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontamento.saida2}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{apontamento.totalTrabalhado}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr color={apontamento.saldoHe === "00:00:00" ? '' : '#00BC22'}>{apontamento.saldoHe}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr color={apontamento.saldoAtraso === "00:00:00" ? '' : 'red'}>{apontamento.saldoAtraso}</TextoTr></Tabela>
 
                   {/* <Tabela align="center">
                     <ButtonU
                       onClick={() => {
-                        handleapontamento(apontameto.id);
+                        handleapontamento(apontamento.id);
                       }}
                     >Atualizar
                     </ButtonU>

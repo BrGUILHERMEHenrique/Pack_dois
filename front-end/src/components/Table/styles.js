@@ -9,13 +9,14 @@ export const Tabela = styled(TableCell)`
 export const TabelaRow = styled(TableRow)`
 
     &:nth-child(even) {
-        background-color: rgba(162, 169, 173, 0.1);
+        background-color: ${props => props.color ? props.color : "rgba(162, 169, 173, 0.1)"};
         &:hover {   
             background-color: rgba(162, 169, 173, 0.3)
         }
     }
 
     &:nth-child(odd) {
+        background-color: ${props => props.color ? props.color : ''};
         &:hover {
             background-color: rgba(166,169,173,0.3);
         }
