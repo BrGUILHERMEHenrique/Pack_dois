@@ -125,7 +125,6 @@ export const ButtonU = styled.button`
 `;
 
 
-
 export const ButtonD = styled.button`
     width: 70px;
     height: 35px;

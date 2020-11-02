@@ -110,7 +110,6 @@ const modalStyleAdicionar = {
   }));
 
 const Funcionarios = () => {
-    const classes = useStyles();
 
     const [funcionarios, setFuncionarios] = useState([]);
     const [funcionario, setFuncionario] = useState({});
@@ -127,8 +126,6 @@ const Funcionarios = () => {
     const [dataNascimentoAtualizado, setDataNascimentoAtualizado] = useState('');
     const [telefoneAtualizado, setTelefoneAtualizado] = useState('');
 
-
-
     function openModal() {
         setIsOpen(true);
       }
@@ -144,7 +141,6 @@ const Funcionarios = () => {
       function closeModalUpdate(){
         setModalPutIsOpen(false);
       }
-
 
     const loadFuncionarios = useCallback(
         async () => {
@@ -300,7 +296,7 @@ const Funcionarios = () => {
         // doc.addImage(img, 'png', 2, 2, 10, 10)
 
     function criadorPDF() {
-        const doc = new jsPDF();
+        const doc = new jsPDF('landscape');
         const colunas = ["CNPJ","Razão Social"];
         const linhas = [];
 
@@ -396,7 +392,6 @@ const Funcionarios = () => {
                         <TextField
                             labelId={empresa}
                             label='Empresa'
-                            placeholder="Matricula"
                             style={inputStyle.empresa}
                             select
                             value={empresa}

@@ -182,6 +182,7 @@ const Empresas = () => {
 
             } finally {
                 closeModalUpdate();
+                setRazaoSocial('');
                 loadEmpresas();
             }
             
