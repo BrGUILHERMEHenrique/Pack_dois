@@ -93,12 +93,14 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     return(
         <TableContainer component={Paper} className={classes.table}>
           <Table  aria-label="Tabela Funcionários">
+          <tr>
             <Tabela align="left"><TextoTh>Nome</TextoTh></Tabela>
             <Tabela align="left"><TextoTh>Empresa</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>PIS</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>CPF</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Data de Nascimento</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Telefone</TextoTh></Tabela>
+            </tr>
             <TableBody>
               {funcionarios.map((funcionario) => (
                 <TabelaRow key={funcionario.id}>
@@ -155,9 +157,11 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     return(
         <TableContainer component={Paper} className={classes.table}>
           <Table  aria-label="Tabela Empresas">
+            <tr>
             <Tabela align="left"><TextoTh>Razão Social</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Código da Empresa</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Cnpj</TextoTh></Tabela>
+            </tr>
             <TableBody>
               {empresas.map((empresa) => (
                 <TabelaRow key={empresa.id}>
@@ -197,11 +201,13 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     return(
         <TableContainer component={Paper} className={classes.table}>
           <Table aria-label="Tabela Empresas">
+            <tr>
             <Tabela align="center"><TextoTh>Entrada</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Intervalo</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Retorno do Intervalo</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Saida</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Folga</TextoTh></Tabela>
+           </tr>
             <TableBody>
               {horarioDetalhes.map(horarioDetalhe => (
                 <TabelaRow key={horarioDetalhe.id}>
@@ -248,9 +254,11 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     return(
         <TableContainer component={Paper} className={classes.tableH}>
           <Table aria-label="Tabela Horários">
+            <tr>
             {/* <Tabela align="center"><TextoTh>Id</TextoTh></Tabela> */}
             <Tabela align="center"><TextoTh>Codigo do Horário</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Descrição do Horário</TextoTh></Tabela>
+            </tr>
             <TableBody>
               {horarios.map(horario => (
                 <TabelaRow key={horario.id}>
@@ -297,11 +305,13 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     return(
       <TableContainer component={Paper} className={classes.table}>
         <Table aria-label="Tabela Horários">
+          <tr>
           <Tabela align="center"><TextoTh>Nome</TextoTh></Tabela>
           <Tabela align="center"><TextoTh>Codigo Inicial</TextoTh></Tabela>
           <Tabela align="center"><TextoTh>Descrição Horário</TextoTh></Tabela>
           <Tabela align="center"><TextoTh>VIgência Inicial</TextoTh></Tabela>
           <Tabela align="center"><TextoTh>Vigência Final</TextoTh></Tabela>
+          </tr>
           <TableBody>
             {funcionarioHorarios.map(funcionarioHorario => (
               <TabelaRow key={funcionarioHorario.id}>
@@ -341,11 +351,17 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
       const classes = useStyles();
   
       const [apontamento, setApontamento] = useState({});
+      const toSlash = (data) => {
+        const dd = data.slice(8,10)
+        const MM = data.slice(5,7)
+        const YYYY = data.slice(0,4)
+        return dd + "/" + MM + "/" + YYYY
+      }
 
       return(
         <TableContainer component={Paper} className={classes.table}>
           <Table aria-label="Tabela Apontamentos">
-            <Tabela align="center"><TextoTh>Funcionário</TextoTh></Tabela>
+            <tr>
             <Tabela align="center"><TextoTh>Horario</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Data</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Primeira Entrada</TextoTh></Tabela>
@@ -355,13 +371,17 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
             <Tabela align="center"><TextoTh>Total Trabalhado</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Saldo Hora Extra</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Saldo Atraso</TextoTh></Tabela>
+            </tr>
             <TableBody>
               {apontamentos.map(apontamento => (
-                <TabelaRow key={apontamento.id} color={!apontamento.horarioDetalhes.horario ? "grey" : ''}>
-                  <Tabela component="th" scope="Funcionário-Horario" align="center">
-                  <TextoTr>{apontamento.funcionario.nome ? apontamento.funcionario.nome : "Fora da Vigência contratual"}</TextoTr>
-                  </Tabela>
-                  <Tabela align="center"><TextoTr>{apontamento.horarioDetalhes.horario.descHorario}</TextoTr></Tabela>
+                <TabelaRow key={apontamento.id} color={!apontamento.horarioDetalhes.horario ? "#C6C6C6" : ''}>
+                    <Tabela align="center">
+                    {apontamento.horarioDetalhes.horario === null ? 
+                    <TextoTr>Fora da vigência</TextoTr>
+                    :
+                    <TextoTr>{apontamento.horarioDetalhes.horario.descHorario}</TextoTr>
+                    }
+                  </Tabela> 
                   <Tabela align="center"><TextoTr>{apontamento.data}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontamento.entrada1}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontamento.saida1}</TextoTr></Tabela>

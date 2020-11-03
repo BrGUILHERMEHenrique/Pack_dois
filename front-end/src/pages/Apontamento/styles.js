@@ -21,6 +21,23 @@ export const Row = styled(Grid)`
 
 `
 
+export const SearchContainer = styled(Grid)`
+ margin-right: 25px
+
+`
+
+
+export const InputMonth= styled.input`
+    margin-top: 25px
+
+`
+
+export const InputRow = styled(Grid)`
+margin-left: 3%;
+margin-top: 2%;
+align-items: center;
+`
+
 export const Button = styled.button`
     width: 85px;
     height: 35px;

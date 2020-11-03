@@ -8,6 +8,7 @@ import { TextField }from '@material-ui/core';
 import api from '../../services/api';
 import { TableFH } from '../../components/Table';
 import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel } from './styles';
+import { set } from 'date-fns';
 
 const modalStyle = {
     content : {
@@ -118,6 +119,10 @@ const FuncionarioHorario = ({ location }) => {
             } catch (error) {
                 alert(error);
             } finally {
+                setCodigoInicial('');
+                setIdHorario('');
+                setVigenciaFinal('');
+                setVigenciaInicial('');
                 closeModal();
                 loadFuncionarioHorarios()
             }
@@ -157,6 +162,10 @@ const FuncionarioHorario = ({ location }) => {
             } catch (error) {
                 alert(error);
             } finally {
+                setCodigoInicialAtualizado('');
+                setIdHorarioAtualizado('');
+                setVigenciaFinalAtualizada('');
+                setVigenciaInicialAtualizada('');
                 loadFuncionarioHorarios();
                 closeModalUpdate();
             }     

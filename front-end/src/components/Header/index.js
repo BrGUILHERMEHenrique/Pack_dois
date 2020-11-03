@@ -100,7 +100,7 @@ const Header = () => {
             />
             <Menu>
                 { menu.map(s => (
-                    <NavLink 
+                    <NavLink key={s.rota}
                         style={
                             menuActivity ? 
                             activeMenuLink 
