@@ -20,7 +20,7 @@ const Horario = () => {
     const [hora, setHora] = useState('');
     const [minuto, setMinuto] = useState('');
     const [segundo, setSegundo] = useState('');
-    const [codMatricula, setCodMatricula] = useState(''); 
+    const [pis, setPis] = useState(''); 
     const dateNow = new Date();
     const data = `${dateNow.getFullYear()}-${dateNow.getMonth() + 1}-${dateNow.getDate() < 10 ? '0'+ dateNow.getDate() : dateNow.getDate()}`;
     const handleAllClicks = () => {
@@ -64,7 +64,7 @@ const Horario = () => {
         console.log(entrada1);
     }
 
-    const handleAddHorarioDetalhes = useCallback(
+    const handleAddApontamento = useCallback(
         async (saida2) => {
             
             console.log(saida2);
@@ -81,7 +81,7 @@ const Horario = () => {
                 console.log(response.data);
                 console.log(params);
             } catch (error) {
-                console.log(error.response.data);
+                console.log(error.response.data.replaceAll("_", " "));
                 console.log(error);
             }
         }, [horario, 
@@ -100,7 +100,7 @@ const Horario = () => {
             setTextButton('Volta Almoço')
         } else if(!saida2 && !!entrada2 && !!saida1) {
             setSaida2(dateTotal);
-            handleAddHorarioDetalhes(dateTotal);
+            handleAddApontamento(dateTotal);
         }
         
         console.log(dateTotal);
@@ -110,26 +110,26 @@ const Horario = () => {
         entrada2,
         saida1,
         saida2,
-        handleAddHorarioDetalhes
+        handleAddApontamento
     ], 
     );
 
     
     const loadFuncionario = useCallback(
         async () => {
-            if(!codMatricula){
+            if(!pis){
                 alert("Antes de fazer qualquer coisa, informe sua Matricula");
                 return;
             }
             try {
-                const response = await api.get(`funcionario/cod/${codMatricula}`);
+                const response = await api.get(`funcionario/cod/${pis}`);
                 console.log(response);
                 setFuncionario(response.data);
                 setTextButton('Primeira Entrada');
             } catch (error) {
                 console.log(error);
             }
-        }, [codMatricula],
+        }, [pis],
     )
 
     const  loadHorarios = useCallback(
@@ -177,9 +177,9 @@ const Horario = () => {
         <Container>
             <ContainerLogin>
             <Input 
-                placeholder="Matricula"
-                value={codMatricula}
-                onChange={e => setCodMatricula(e.target.value)}
+                placeholder="PIS(apenas números)"
+                value={pis}
+                onChange={e => setPis(e.target.value)}
                 disabled={!!funcionario.id ? true : false}
                 />
             <Button variant="contained" color="primary"

@@ -82,7 +82,7 @@ const OpenAlert = (id, remove) => {
     });
       
   }
-});
+})
 }
 
 

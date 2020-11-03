@@ -61,10 +61,11 @@ const Apontamento = () => {
         async (id) => {
             try {
                 const response = await api.get(`apontamento/${id}`);
-                setEntrada1Atualizada(response.data.entrada1);
-                setSaida1Atualizada(response.data.saida1);
-                setEntrada2Atualizada(response.data.entrada2);
-                setSaida2Atualizada(response.data.saida2);
+                const apontamento = response.data;
+                setEntrada1Atualizada(apontamento.entrada1);
+                setSaida1Atualizada(apontamento.saida1);
+                setEntrada2Atualizada(apontamento.entrada2);
+                setSaida2Atualizada(apontamento.saida2);
             } catch(error) {
                 console.log(error);
             } finally {
@@ -93,7 +94,7 @@ const Apontamento = () => {
                 await api.put(`apontamento/${apontamentos.id}`, paramsUpdated);
                 console.log(paramsUpdated);
             } catch(error){
-                console.log(error);
+                console.log(error.response.data);
 
             } finally {
                 closeModalUpdate();

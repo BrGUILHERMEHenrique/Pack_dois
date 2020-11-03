@@ -202,7 +202,7 @@ const Funcionarios = () => {
                 const response = await api.post('funcionario', params);
                 console.log(response.data);
             } catch (error) {
-                alert(error.response.data);
+                alert(error.response.data.replaceAll("_", " "));
             } finally {
                 setNome('');
                 setPis('');
@@ -278,7 +278,7 @@ const Funcionarios = () => {
                 const response = await api.delete(`funcionario/${id}`);
                 console.log(response.data);
             } catch (error) {
-                console.log(error);
+                console.log(error.response.data.replaceAll("_", " "));
             } finally {
                 loadFuncionarios();
             }
