@@ -5,6 +5,9 @@ import InputMask from 'react-input-mask';
 import MaterialInput from '@material-ui/core/Input';
 import Input from '@material-ui/core/Input';
 
+import swal from 'sweetalert';
+import 'sweetalert2/src/sweetalert2.scss';
+
 //imports de dentro do diretório do projeto
 import {TableE} from '../../components/Table';
 
@@ -193,7 +196,9 @@ const Empresas = () => {
             try {
                 const response = await api.delete(`empresa/${id}`);
                 console.log(response.data);
+                swal("Empresa apagada com sucesso", "A empresa foi apagada correctamente", "success");
             } catch (error) {
+                swal("Empresa não apaga", error.response.data.replaceAll("_", " "), "error");
                 console.log(error);
             } finally {
                 loadEmpresas();

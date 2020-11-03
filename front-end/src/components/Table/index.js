@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {TableBody, Table, TableContainer, Paper, Menu, MenuItem} from '@material-ui/core';
 import { Tabela, TabelaRow, THead, Button, TextoTh, TextoTr, ButtonU, ButtonD, TableOptions, MenuList, ButtonIcon, ButtonIconD } from './styles';
 import swal from 'sweetalert';
-import 'sweetalert2/src/sweetalert2.scss'
+import 'sweetalert2/src/sweetalert2.scss';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import DateRangeIconRounded from '@material-ui/icons/DateRangeRounded';
@@ -61,28 +61,31 @@ const useStyles = makeStyles({
       }
 
 }
-const OpenAlert = (id, remove) => {
+const OpenAlert = async (id, remove) => {
 
-  swal({
+  try{
+  const response = await swal({
     title: 'Deseja REALMENTE excluir??',
     text: 'Esses dados serão removidos permanentemente.', 
     icon: "warning",
     buttons: true,
     dangerMode: true,
 })
-.then((willDelete) => {
-  if (willDelete) {
-    swal('Removido com sucesso!', {
-      icon: "success",
-    });
-    remove(id)
-  } else {
-    swal('Ação cancelada!', {
-      icon: "error",
-    });
-      
+
+  console.log(response);
+
+  if(response) {
+    await remove(id); 
+    console.log("Passei aqui em");
+
   }
-})
+
+  } catch(error) {
+    console.log("Carro do erro passando na sua rua: " + error);
+    console.log(error);
+    
+  }
+
 }
 
 
@@ -401,6 +404,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                     {
                       !!apontamento.horarioDetalhes.horario &&
                       <ButtonU
+                      disabled={!apontamento.id ? true : false}
                       onClick={() =>{
                         handleApontamento(apontamento.id); 
                       }}>

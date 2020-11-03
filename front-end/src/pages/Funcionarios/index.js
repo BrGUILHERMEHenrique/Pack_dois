@@ -13,6 +13,8 @@ import autoTable from 'jspdf-autotable'
 import Input from '@material-ui/core/Input';
 import { jsPDF } from "jspdf";
 
+import swal from 'sweetalert';
+import 'sweetalert2/src/sweetalert2.scss';
 
 //imports de dentro do diretório do projeto
 import { TableF } from '../../components/Table';
@@ -235,7 +237,7 @@ const Funcionarios = () => {
                     const response = await api.get(`funcionario/${id}`);
                     await getFuncionarioById(id);
                     setNomeAtualizado(response.data.nome);
-                    setDataNascimentoAtualizado(response.data.dataNascimento.join('-'));
+                    setDataNascimentoAtualizado(response.data.dataNascimento);
                     setTelefoneAtualizado(response.data.telefone);
                 } catch(error) {
                     console.log(error);
@@ -277,9 +279,11 @@ const Funcionarios = () => {
         const removeFuncionario = async (id) => {
             try {
                 const response = await api.delete(`funcionario/${id}`);
+                swal("Funcionário apagado com sucesso", response.data , "success");
                 console.log(response.data);
             } catch (error) {
                 console.log(error.response.data.replaceAll("_", " "));
+                swal("Não Foi Possível apagar o funcionário", error.response.data.replaceAll("_", " ") , "error");
             } finally {
                 loadFuncionarios();
             }

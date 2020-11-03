@@ -7,6 +7,9 @@ import api from '../../services/api';
 import { FormModal, Button, Container, Row, SubTitulo, FooterModal, HeaderModal, InputContainer, ButtonCancel } from './styles';
 import { TableH } from '../../components/Table';
 
+import swal from 'sweetalert';
+import 'sweetalert2/src/sweetalert2.scss';
+
 const customStyles = {
     content : {
         width               : '520px',
@@ -133,8 +136,10 @@ const HorarioTabela = () => {
         try {
             const response = await api.delete(`horario/${id}`);
             console.log(response.data);
+            swal("Horário removido com sucesso!", "Horário correspondente foi removido com sucesso", "succes");
         } catch (error) {
             console.log(error);
+            swal("O horário não pode ser removido", error.response.data.replaceAll("_", " "), "error");
         } finally {
             loadHorarios();
         }
