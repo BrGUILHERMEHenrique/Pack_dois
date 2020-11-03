@@ -59,13 +59,13 @@ const inputStyle = {
         marginTop: '3px'
     },
     dataUp: {
-        width: '149px',
+        width: '177px',
         height: '50%',
         marginRight: '10px',
         marginTop: '10px'
     },
     telUp: {
-        width: '135px',
+        width: '177px',
         height: '50%',
         marginTop: '10px'
     },
@@ -214,7 +214,7 @@ const Funcionarios = () => {
                 setTelefone('');
                 setEmpresa('');
                 closeModal();
-                loadFuncionarios();
+                loadFuncionarios(idEmpresa);
             }
         }, [nome, pis, cpf, dataNascimento, telefone, empresa],
     )
@@ -270,7 +270,7 @@ const Funcionarios = () => {
 
             } finally {
                 closeModalUpdate();
-                loadFuncionarios();
+                loadFuncionarios(idEmpresa);
             }
             
         }, [nomeAtualizado, dataNascimentoAtualizado, telefoneAtualizado],
@@ -279,11 +279,11 @@ const Funcionarios = () => {
         const removeFuncionario = async (id) => {
             try {
                 const response = await api.delete(`funcionario/${id}`);
-                swal("Funcionário apagado com sucesso", response.data , "success");
+                swal("Funcionário apagado com sucesso!", response.data , "success");
                 console.log(response.data);
             } catch (error) {
                 console.log(error.response.data.replaceAll("_", " "));
-                swal("Não Foi Possível apagar o funcionário", error.response.data.replaceAll("_", " ") , "error");
+                swal("Ação não permitida!", error.response.data.replaceAll("_", " ") , "error");
             } finally {
                 loadFuncionarios();
             }
@@ -474,7 +474,7 @@ const Funcionarios = () => {
                     <Button
                         onClick={e => handleUpdateFuncionario(e)}
                     >
-                        Adicionar
+                        Salvar
                     </Button>
                     <ButtonCancel
                         onClick={closeModalUpdate}

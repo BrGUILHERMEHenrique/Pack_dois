@@ -196,9 +196,9 @@ const Empresas = () => {
             try {
                 const response = await api.delete(`empresa/${id}`);
                 console.log(response.data);
-                swal("Empresa apagada com sucesso", "A empresa foi apagada correctamente", "success");
+                swal("Ação realizada com sucesso!", "Empresa removida.", "success");
             } catch (error) {
-                swal("Empresa não apaga", error.response.data.replaceAll("_", " "), "error");
+                swal("Ação não permitida!", error.response.data.replaceAll("_", " "), "error");
                 console.log(error);
             } finally {
                 loadEmpresas();
@@ -271,7 +271,7 @@ const Empresas = () => {
                             variant="contained"
                             onClick={e => handleAddEmpresa(e)}
                         >
-                            Adicionar
+                            Salvar
                         </Button>
                         <ButtonCancel
                             onClick={closeModal}
@@ -305,7 +305,7 @@ const Empresas = () => {
                     <Button
                     onClick={e => handleUpdateEmpresa(e)}
                     >
-                        Atualizar
+                        Salvar
                     </Button>
 
                     <ButtonCancel

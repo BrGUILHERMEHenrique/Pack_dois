@@ -181,7 +181,7 @@ const Horario = () => {
         <Container>
             <ContainerLogin>
             <Input 
-                placeholder="PIS(apenas números)"
+                placeholder="PIS (apenas números)"
                 value={pis}
                 onChange={e => setPis(e.target.value)}
                 disabled={!!funcionario.id ? true : false}

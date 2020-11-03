@@ -136,10 +136,10 @@ const HorarioTabela = () => {
         try {
             const response = await api.delete(`horario/${id}`);
             console.log(response.data);
-            swal("Horário removido com sucesso!", "Horário correspondente foi removido com sucesso", "succes");
+            swal("Ação realizada com sucesso!", "Horário removido.", "succes");
         } catch (error) {
             console.log(error);
-            swal("O horário não pode ser removido", error.response.data.replaceAll("_", " "), "error");
+            swal("Ação não permitida!", error.response.data.replaceAll("_", " "), "error");
         } finally {
             loadHorarios();
         }
@@ -194,7 +194,7 @@ const HorarioTabela = () => {
                     <Button
                         onClick={e => handleHorario(horario.id, e)}
                     >
-                        Atualizar
+                        Salvar
                     </Button>
                     <ButtonCancel
                         onClick={closeModalUpdate}

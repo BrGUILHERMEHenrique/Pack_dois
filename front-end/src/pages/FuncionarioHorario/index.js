@@ -199,8 +199,8 @@ const FuncionarioHorario = ({ location }) => {
                 const response = await api.get(`funcionario_horario/${id}`);
                 setIdHorarioAtualizado(parseInt(response.data.idHorario.id));
                 setCodigoInicialAtualizado(parseInt(response.data.codigoInicial));
-                setVigenciaInicialAtualizada(parseInt(response.data.vigenciaInicial));
-                setVigenciaFinalAtualizada(parseInt(response.data.vigenciaFinal));
+                setVigenciaInicialAtualizada(response.data.vigenciaInicial);
+                setVigenciaFinalAtualizada(response.data.vigenciaFinal);
                 setFuncionarioHorario(response.data)
             } catch(error) {
                 console.log(error);

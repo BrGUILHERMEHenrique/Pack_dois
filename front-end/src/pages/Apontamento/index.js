@@ -71,11 +71,14 @@ const Apontamento = () => {
     const [ entrada2Atualizada, setEntrada2Atualizada ] = useState('');
     const [ saida2Atualizada, setSaida2Atualizada ] = useState('');
     const [ idFuncionario, setIdFuncionario] = useState('');
-    const [modalPutIsOpen, setModalPutIsOpen] = useState(false);
-    const [apontamentos, setApontamentos] = useState([]);
-    const [apontamentosFiltrados, setApontamentosFiltrados] = useState([]);
-    const [listaFuncionarios, setListaFuncionarios] = useState([]);
-    const [listaEmpresas, setListaEmpresas] = useState([]);
+    const [ modalPutIsOpen, setModalPutIsOpen] = useState(false);
+    const [ apontamentos, setApontamentos] = useState([]);
+    const [ apontamentosFiltrados, setApontamentosFiltrados] = useState([]);
+    const [ listaFuncionarios, setListaFuncionarios] = useState([]);
+    const [ listaEmpresas, setListaEmpresas] = useState([]);
+    const [ apontamento, setApontamento ] = useState({});
+    const [ dataInicio, setDataInicio ] = useState('');
+    const [ dataFim, setDataFim ] = useState('');
 
     function openModalUpdate() {
         setModalPutIsOpen(true);
@@ -90,6 +93,7 @@ const Apontamento = () => {
             try {
                 const response = await api.get(`apontamento/${id}`);
                 const apontamento = response.data;
+                setApontamento(apontamento)
                 setEntrada1Atualizada(apontamento.entrada1);
                 setSaida1Atualizada(apontamento.saida1);
                 setEntrada2Atualizada(apontamento.entrada2);
@@ -109,9 +113,11 @@ const Apontamento = () => {
             setApontamentosFiltrados([]);
 
             const dataInicial = new Date(data1.getFullYear(), data1.getMonth(), 1);
+            setDataInicio(dataInicial)
             console.log(dataInicial)
 
             const dataFinal = new Date(data2.getFullYear(), data2.getMonth() + 1, 0);
+            setDataFim(dataFinal)
             console.log(dataFinal)
 
             const params = {
@@ -152,17 +158,18 @@ const Apontamento = () => {
             const paramsUpdated = {
                 entrada1: entrada1Atualizada,
                 saida1: saida1Atualizada,
-                entrada2: entrada1Atualizada,
+                entrada2: entrada2Atualizada,
                 saida2: saida2Atualizada
             }
             try{
-                await api.put(`apontamento/${apontamentos.id}`, paramsUpdated);
+                await api.put(`apontamento/${apontamento.id}`, paramsUpdated);
                 console.log(paramsUpdated);
             } catch(error){
                 console.log(error.response.data);
 
                 console.log(error);
             } finally {
+                getByFuncionarioAndMes(dataInicio, dataFim);
                 closeModalUpdate();
             }   
         }, [entrada1Atualizada, saida1Atualizada, entrada2Atualizada, saida2Atualizada],
