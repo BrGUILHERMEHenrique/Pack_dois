@@ -77,8 +77,8 @@ const Apontamento = () => {
     const [ listaFuncionarios, setListaFuncionarios] = useState([]);
     const [ listaEmpresas, setListaEmpresas] = useState([]);
     const [ apontamento, setApontamento ] = useState({});
-    const [ dataInicio, setDataInicio ] = useState('');
-    const [ dataFim, setDataFim ] = useState('');
+    const [ dataInicio, setDataInicio ] = useState(new Date());
+    const [ dataFim, setDataFim ] = useState(new Date());
 
     function openModalUpdate() {
         setModalPutIsOpen(true);
@@ -231,11 +231,11 @@ const Apontamento = () => {
             linhas.push(valores);
         });   
 
-        // doc.text(10, 10, nome);
+        doc.text(10, 10, nome);
 
         doc.autoTable(colunas, linhas, { startY: 5, headStyles: {fillColor: '#942a37'} }
         );
-        doc.save('Test.pdf');
+        doc.save(apontamentosFiltrados[0].funcionario.nome + "(" + apontamentosFiltrados[0].funcionario.pis + ") - " + dataInicio.getMonth() + "/" + dataInicio.getFullYear());
     }
 
 
