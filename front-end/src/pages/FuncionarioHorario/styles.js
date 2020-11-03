@@ -7,7 +7,7 @@ export const Container = styled(Grid)`
 `;  
 
 export const SubTitulo = styled.p`
-    margin: 10px 40px 10px 3%;
+    margin: 10px 40px 10px 50px;
     font-family: 'Oxanium', cursive;
     font-size: 2.4rem;
     color: #942a37
@@ -106,5 +106,11 @@ export const FooterModal = styled.div`
     Button+Button{
         margin-left: 10px;
     }
+`;
+
+export const DivNome = styled.div`
+    margin-left: 50px;
+    color: rgba(103, 102, 106, 0.9);
+
 `;
 

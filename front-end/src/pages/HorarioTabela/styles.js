@@ -19,7 +19,7 @@ export const FormModal = styled.form`
 `;
 
 export const SubTitulo = styled.p`
-    margin: 10px 40px 10px 155px;
+    margin: 10px 40px 10px 140px;
     font-family: 'Oxanium', cursive;
     font-size: 2.4rem;
     color: #942a37

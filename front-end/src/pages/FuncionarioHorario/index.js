@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { TextField }from '@material-ui/core';
 import api from '../../services/api';
 import { TableFH } from '../../components/Table';
-import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel } from './styles';
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel, DivNome } from './styles';
 import { set } from 'date-fns';
 
 const modalStyle = {
@@ -23,7 +23,7 @@ const modalStyle = {
     }
   };
 
-  const inputStyle = {
+const inputStyle = {
 
     codigo: { 
         width: '98px',
@@ -34,12 +34,19 @@ const modalStyle = {
         width: '280px',
         height: '100%',
         marginRight: '10px'
+    },
+
+    datasModal: {
+        width: '189px',
+        marginRight: '10px',
+        marginTop: '2%'
     }
 };
 
 
 const FuncionarioHorario = ({ location }) => {
     const id = location.state.id;
+    const nomeFuncionario = location.state.nome;
 
     const [funcionarioHorarios, setFuncionarioHorarios] = useState([]);
     const [funcionarioHorario, setFuncionarioHorario] = useState({});
@@ -219,6 +226,9 @@ const FuncionarioHorario = ({ location }) => {
                 <SubTitulo> Horários do Funcionário</SubTitulo>
                 <Button onClick={openModal}>Adicionar</Button>
             </Row>
+            <DivNome>
+                {nomeFuncionario}
+            </DivNome>
             <TableFH funcionarioHorarios={funcionarioHorarios} handleFuncionarioHorario={openModalWithData} removeFuncionarioHorario={removeFuncionarioHorario} />
             <Modal
                 isOpen={modalIsOpen}
@@ -265,7 +275,7 @@ const FuncionarioHorario = ({ location }) => {
                             id="date"
                             label="Vigência Inicial"
                             value={vigenciaInicial}
-                            style={inputStyle.codigo}
+                            style={inputStyle.datasModal}
                             type="date"
                             InputLabelProps={{ shrink: true }}
                             onChange={e => setVigenciaInicial(e.target.value)}
@@ -275,7 +285,7 @@ const FuncionarioHorario = ({ location }) => {
                             type="date"
                             label="Vigência Final"
                             value={vigenciaFinal}
-                            style={inputStyle.codigo}
+                            style={inputStyle.datasModal}
                             InputLabelProps={{ shrink: true }}
                             onChange={e => setVigenciaFinal(e.target.value)}
                         />
@@ -340,7 +350,7 @@ const FuncionarioHorario = ({ location }) => {
                         id="date"
                         label="Vigência Inicial"
                         value={vigenciaInicialAtualizada}
-                        style={inputStyle.codigo}
+                        style={inputStyle.datasModal}
                         type="date"
                         InputLabelProps={{ shrink: true }}
                         onChange={e => setVigenciaInicial(e.target.value)}
@@ -350,7 +360,7 @@ const FuncionarioHorario = ({ location }) => {
                         type="date"
                         label="Vigência Final"
                         value={vigenciaFinalAtualizada}
-                        style={inputStyle.codigo}
+                        style={inputStyle.datasModal}
                         InputLabelProps={{ shrink: true }}
                         onChange={e => setVigenciaFinal(e.target.value)}
                     />

@@ -117,7 +117,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                    <Tabela align="center" style={{minWidth: 150}}>
                      <ButtonIcon
                         onClick = {() => {
-                          history.push('/funcionarioHorario', { id: funcionario.id })
+                          history.push('/funcionarioHorario', { id: funcionario.id, nome: funcionario.nome })
                         }}
                       >
                         <DateRangeIconRounded 
@@ -313,7 +313,6 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
         <Table aria-label="Tabela Horários">
           <thead>
           <tr>
-          <Tabela align="left"><TextoTh>Nome</TextoTh></Tabela>
           <Tabela align="left"><TextoTh>Descrição Horário</TextoTh></Tabela>
           <Tabela align="center"><TextoTh>Codigo Inicial</TextoTh></Tabela>
           <Tabela align="center"><TextoTh>VIgência Inicial</TextoTh></Tabela>
@@ -323,7 +322,6 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
           <TableBody>
             {funcionarioHorarios.map(funcionarioHorario => (
               <TabelaRow key={funcionarioHorario.id}>
-                <Tabela align="left"><TextoTr>{funcionarioHorario.idFuncionario.nome}</TextoTr></Tabela>
                 <Tabela align="left"><TextoTr>{funcionarioHorario.idHorario.descHorario}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.codigoInicial}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{format( new Date(funcionarioHorario.vigenciaInicial.split("-")), 'dd/MM/yyyy', { locale: pt })}</TextoTr></Tabela>

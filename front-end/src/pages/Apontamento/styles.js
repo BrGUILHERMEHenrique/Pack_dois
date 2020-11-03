@@ -8,7 +8,7 @@ export const Container = styled(Grid)`
 `;  
 
 export const SubTitulo = styled.p`
-    margin: 10px 40px 10px 3%;
+    margin: 10px 40px 10px 53px;
     font-family: 'Oxanium', cursive;
     font-size: 2.4rem;
     color: #942a37
@@ -39,7 +39,7 @@ margin-top: 7px;
 `
 
 export const InputRow = styled(Grid)`
-margin-left: 3%;
+margin-left: 53px;
 margin-top: 2%;
 align-items: center;
 `
