@@ -1,11 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import Relogio from '../../components/Relogio'
 import api from '../../services/api';
 
-import { Container, ContainerButtons, Clock, ContainerLogin } from './styles';
+import { Container, Button, ContainerLogin, ButtonInativo } from './styles';
+
+const inativo = {
+    backgroundColor: 'grey'
+}
 
 const Horario = () => {
     const [timeNow, setTimeNow] = useState ('');
@@ -19,7 +23,7 @@ const Horario = () => {
     const [horarios, setHorarios] = useState([]);
     const [hora, setHora] = useState('');
     const [minuto, setMinuto] = useState('');
-    const [segundo, setSegundo] = useState('');
+    const [estilo, setEstilo] = useState('');
     const [pis, setPis] = useState(''); 
     const dateNow = new Date();
     const data = `${dateNow.getFullYear()}-${dateNow.getMonth() + 1}-${dateNow.getDate() < 10 ? '0'+ dateNow.getDate() : dateNow.getDate()}`;
@@ -55,7 +59,7 @@ const Horario = () => {
         setTimeNow(dateTotal);
         if(!entrada1 && !saida1){
             setEntrada1(dateTotal);
-            setTextButton('Saida Almoço');
+            setTextButton('Almoço');
             console.log(dateTotal);
         } else if(!entrada2 && !!entrada1 && !!saida1){
             setEntrada2(dateTotal);
@@ -97,7 +101,7 @@ const Horario = () => {
         const dateTotal = addZero();
         if(!saida1 && !!entrada1){
             setSaida1(dateTotal);
-            setTextButton('Volta Almoço')
+            setTextButton('Retorno')
         } else if(!saida2 && !!entrada2 && !!saida1) {
             setSaida2(dateTotal);
             handleAddApontamento(dateTotal);
@@ -125,7 +129,7 @@ const Horario = () => {
                 const response = await api.get(`funcionario/cod/${pis}`);
                 console.log(response);
                 setFuncionario(response.data);
-                setTextButton('Primeira Entrada');
+                setTextButton('Entrada');
             } catch (error) {
                 console.log(error);
             }
@@ -146,30 +150,30 @@ const Horario = () => {
 
     
 
-    const defineHour = useCallback(
-        () => {
-            setHora(dateNow.getHours());
-            setMinuto(dateNow.getMinutes());
-            setSegundo(dateNow.getSeconds());
-            if(parseInt(dateNow.getMinutes()) >= 59){
-                setHora(dateNow.getHours());
-            }
-            console.log(dateNow.getHours() +":"+ dateNow.getMinutes());
-            }, [],
-    )
+    // const defineHour = useCallback(
+    //     () => {
+    //         setHora(dateNow.getHours());
+    //         setMinuto(dateNow.getMinutes());
+    //         setSegundo(dateNow.getSeconds());
+    //         if(parseInt(dateNow.getMinutes()) >= 59){
+    //             setHora(dateNow.getHours());
+    //         }
+    //         console.log(dateNow.getHours() +":"+ dateNow.getMinutes());
+    //         }, [],
+    // )
 
-    useEffect (
-        () => {
-            defineHour();
-        }, [defineHour]
-    )
-    useEffect(
-        () => {
-            setInterval(() => {
-                defineHour();
-            }, 300000);
-        }, [defineHour]
-    ); 
+    // useEffect (
+    //     () => {
+    //         defineHour();
+    //     }, [defineHour]
+    // )
+    // useEffect(
+    //     () => {
+    //         setInterval(() => {
+    //             defineHour();
+    //         }, 300000);
+    //     }, [defineHour]
+    // ); 
 
 
  
@@ -182,14 +186,24 @@ const Horario = () => {
                 onChange={e => setPis(e.target.value)}
                 disabled={!!funcionario.id ? true : false}
                 />
-            <Button variant="contained" color="primary"
+            
+            {
+                !saida2 ?
+                <Button
                 onClick={() => handleAllClicks()}
                 disabled={!!saida2 ? true : false}
             >
                 {textButton}
             </Button>
+            :
+            <ButtonInativo
+                disabled={true}
+            >
+                Bom descanso!
+            </ButtonInativo>
+            }
+
             </ContainerLogin>
-            {/* <Clock>{`${hora}:${minuto}`}</Clock> */}
             <Relogio/>
         </Container>
     )

@@ -15,7 +15,6 @@ export const Container = Styled(Grid)`
     position: fixed;
     flex-wrap: wrap;
 
-
 `
 
 export const Menu = Styled(Grid)`

@@ -22,13 +22,19 @@ export const Row = styled(Grid)`
 `
 
 export const SearchContainer = styled(Grid)`
- margin-right: 25px
+    margin-right: 25px;
 
 `
 
 
 export const InputMonth= styled.input`
-    margin-top: 25px
+margin-top: 7px;
+    font-family: 'Oxanium', cursive;
+    width: 190px;
+    outline: none;
+    border: none;
+    border-bottom: solid 0.5px grey;
+    font-size: 1em;
 
 `
 

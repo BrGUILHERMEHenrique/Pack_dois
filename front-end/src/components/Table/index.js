@@ -93,6 +93,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     return(
         <TableContainer component={Paper} className={classes.table}>
           <Table  aria-label="Tabela Funcionários">
+          <thead>
           <tr>
             <Tabela align="left"><TextoTh>Nome</TextoTh></Tabela>
             <Tabela align="left"><TextoTh>Empresa</TextoTh></Tabela>
@@ -101,6 +102,7 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
             <Tabela align="center"><TextoTh>Data de Nascimento</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Telefone</TextoTh></Tabela>
             </tr>
+            </thead>
             <TableBody>
               {funcionarios.map((funcionario) => (
                 <TabelaRow key={funcionario.id}>
@@ -157,11 +159,13 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     return(
         <TableContainer component={Paper} className={classes.table}>
           <Table  aria-label="Tabela Empresas">
+            <thead>
             <tr>
             <Tabela align="left"><TextoTh>Razão Social</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Código da Empresa</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Cnpj</TextoTh></Tabela>
             </tr>
+            </thead>
             <TableBody>
               {empresas.map((empresa) => (
                 <TabelaRow key={empresa.id}>
@@ -201,19 +205,23 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     return(
         <TableContainer component={Paper} className={classes.table}>
           <Table aria-label="Tabela Empresas">
+            <thead>
             <tr>
+            <Tabela align="center"><TextoTh>Código</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Entrada</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Intervalo</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Retorno do Intervalo</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Saida</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Folga</TextoTh></Tabela>
-           </tr>
+            </tr>
+           </thead>
             <TableBody>
               {horarioDetalhes.map(horarioDetalhe => (
                 <TabelaRow key={horarioDetalhe.id}>
                   {/* <Tabela component="th" scope="Detalhes de horário" align="center">
                   <TextoTr>{horarioDetalhe.id}</TextoTr>
                   </Tabela> */}
+                  <Tabela align="center"><TextoTr>{horarioDetalhe.codigoDia}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horarioDetalhe.entrada1}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horarioDetalhe.saida1}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{horarioDetalhe.entrada2}</TextoTr></Tabela>
@@ -254,19 +262,17 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     return(
         <TableContainer component={Paper} className={classes.tableH}>
           <Table aria-label="Tabela Horários">
+            <thead>
             <tr>
-            {/* <Tabela align="center"><TextoTh>Id</TextoTh></Tabela> */}
             <Tabela align="center"><TextoTh>Codigo do Horário</TextoTh></Tabela>
-            <Tabela align="center"><TextoTh>Descrição do Horário</TextoTh></Tabela>
+            <Tabela align="left"><TextoTh>Descrição do Horário</TextoTh></Tabela>
             </tr>
+            </thead>
             <TableBody>
               {horarios.map(horario => (
                 <TabelaRow key={horario.id}>
-                  {/* <Tabela component="th" scope="Detlhes de horário" align="center">
-                    <TextoTr>{horario.id}</TextoTr>
-                  </Tabela> */}
                   <Tabela align="center"><TextoTr>{horario.codigoHorario}</TextoTr></Tabela>
-                  <Tabela align="center"><TextoTr>{horario.descHorario}</TextoTr></Tabela>
+                  <Tabela align="left"><TextoTr>{horario.descHorario}</TextoTr></Tabela>
                   <Tabela align="center">
                     <ButtonU
                       onClick={() => {
@@ -305,21 +311,21 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
     return(
       <TableContainer component={Paper} className={classes.table}>
         <Table aria-label="Tabela Horários">
+          <thead>
           <tr>
-          <Tabela align="center"><TextoTh>Nome</TextoTh></Tabela>
+          <Tabela align="left"><TextoTh>Nome</TextoTh></Tabela>
+          <Tabela align="left"><TextoTh>Descrição Horário</TextoTh></Tabela>
           <Tabela align="center"><TextoTh>Codigo Inicial</TextoTh></Tabela>
-          <Tabela align="center"><TextoTh>Descrição Horário</TextoTh></Tabela>
           <Tabela align="center"><TextoTh>VIgência Inicial</TextoTh></Tabela>
           <Tabela align="center"><TextoTh>Vigência Final</TextoTh></Tabela>
           </tr>
+          </thead>
           <TableBody>
             {funcionarioHorarios.map(funcionarioHorario => (
               <TabelaRow key={funcionarioHorario.id}>
-                <Tabela component="th" scope="Funcionário-Horario" align="center">
-                <TextoTr>{funcionarioHorario.idFuncionario.nome}</TextoTr>
-                </Tabela>
+                <Tabela align="left"><TextoTr>{funcionarioHorario.idFuncionario.nome}</TextoTr></Tabela>
+                <Tabela align="left"><TextoTr>{funcionarioHorario.idHorario.descHorario}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{funcionarioHorario.codigoInicial}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{funcionarioHorario.idHorario.descHorario}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{format( new Date(funcionarioHorario.vigenciaInicial.split("-")), 'dd/MM/yyyy', { locale: pt })}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{format(new Date(funcionarioHorario.vigenciaFinal.split("-")), 'dd/MM/yyyy')}</TextoTr></Tabela>
                 <Tabela align="center">
@@ -361,8 +367,9 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
       return(
         <TableContainer component={Paper} className={classes.table}>
           <Table aria-label="Tabela Apontamentos">
+            <thead>
             <tr>
-            <Tabela align="center"><TextoTh>Horario</TextoTh></Tabela>
+            <Tabela align="left"><TextoTh>Horario</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Data</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Primeira Entrada</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Saida Almoço</TextoTh></Tabela>
@@ -372,17 +379,18 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
             <Tabela align="center"><TextoTh>Saldo Hora Extra</TextoTh></Tabela>
             <Tabela align="center"><TextoTh>Saldo Atraso</TextoTh></Tabela>
             </tr>
+            </thead>
             <TableBody>
               {apontamentos.map(apontamento => (
-                <TabelaRow key={apontamento.id} color={!apontamento.horarioDetalhes.horario ? "#C6C6C6" : ''}>
-                    <Tabela align="center">
+                <TabelaRow key={apontamento.id} color={!apontamento.horarioDetalhes.horario ? "#E4E4E4" : ''}>
+                    <Tabela align="left">
                     {apontamento.horarioDetalhes.horario === null ? 
                     <TextoTr>Fora da vigência</TextoTr>
                     :
                     <TextoTr>{apontamento.horarioDetalhes.horario.descHorario}</TextoTr>
                     }
                   </Tabela> 
-                  <Tabela align="center"><TextoTr>{apontamento.data}</TextoTr></Tabela>
+                  <Tabela align="center"><TextoTr>{format( new Date(apontamento.data.split("-")), 'dd/MM/yyyy', { locale: pt })}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontamento.entrada1}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontamento.saida1}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr>{apontamento.entrada2}</TextoTr></Tabela>
@@ -391,12 +399,15 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) =>{
                   <Tabela align="center"><TextoTr color={apontamento.saldoHe === "00:00:00" ? '' : '#00BC22'}>{apontamento.saldoHe}</TextoTr></Tabela>
                   <Tabela align="center"><TextoTr color={apontamento.saldoAtraso === "00:00:00" ? '' : 'red'}>{apontamento.saldoAtraso}</TextoTr></Tabela>
                   <Tabela align="center">
-                    <ButtonU
+
+                    {
+                      !!apontamento.horarioDetalhes.horario &&
+                      <ButtonU
                       onClick={() =>{
-                        handleApontamento(apontamento.id);  
+                        handleApontamento(apontamento.id); 
                       }}>
                         Editar
-                      </ButtonU>
+                      </ButtonU>}
                   </Tabela>
                   
 

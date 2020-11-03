@@ -5,8 +5,10 @@ import InputMask from 'react-input-mask';
 import MaterialInput from '@material-ui/core/Input';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import ValidaPIS from '../../components/ValidaPis'
+import Select from '@material-ui/core/Select';
 import autoTable from 'jspdf-autotable'
 import Input from '@material-ui/core/Input';
 import { jsPDF } from "jspdf";
@@ -17,7 +19,7 @@ import { TableF } from '../../components/Table';
 
 import api from '../../services/api';
 
-import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel } from './styles';
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel, SearchContainer } from './styles';
 
 const inputStyle = {
     nome: {
@@ -68,6 +70,9 @@ const inputStyle = {
     nomeUp: {
         width: '364px',
         height: '55%',
+    },
+    label: {
+        fontFamily: 'Oxanium, cursive'
     }
 };
 
@@ -285,27 +290,16 @@ const Funcionarios = () => {
             loadEmpresas();
         }, [loadEmpresas],
     )
-    
-    // var img = new Image()
-        // img.src = '../../assets/images.png';
-        // doc.addImage(img, 'png', 2, 2, 10, 10)
 
-    function criadorPDF() {
-        const doc = new jsPDF('landscape');
-        const colunas = ["CNPJ","Razão Social"];
-        const linhas = [];
-
-        listaEmpresas.forEach(emp => {      
-            var valores = [emp.cnpj, emp.razaoSocial];
-            linhas.push(valores);
-        });   
-
-        doc.autoTable(colunas, linhas, { startY: 10, headStyles: {fillColor: '#942a37'} }
-        );
-        doc.save('Test.pdf');
+    const inputStyles = {
+        empresa: {
+            width: '350px',
+            maxWidth: '350px',
+            height: '100%',
+            fontFamily: 'Oxanium, cursive'
+        }
     }
-
-
+    
     return(
 
         <Container>
@@ -313,26 +307,26 @@ const Funcionarios = () => {
             <Row direction="row" container>
                 <SubTitulo> Funcionário </SubTitulo>
                 <Button onClick={openModal}>Adicionar</Button>
-                <Button onClick={criadorPDF}>imprimir</Button>
-                <TextField
-                    labelId={empresa}
-                    label='Empresa'
-                    placeholder="Empresa"
-                    style={inputStyle.empresa}
-                    select
-                    value={idEmpresa}
-                    onChange={e => {
-                        loadFuncionarios(e.target.value)
-                        setIdEmpresa(e.target.value);
+                <SearchContainer>
+                <InputLabel style={inputStyle.label} id="Empresa" shrink>Empresa</InputLabel>
+                    <Select
+                        style={inputStyles.empresa}
+                        labelId='Empresa'
+                        value={idEmpresa}
+                        MenuProps={{ style: {maxWidth: '400px', maxHeight: '400px'}  }}
+                        onChange={e => {
+                            loadFuncionarios(e.target.value)
+                            setIdEmpresa(e.target.value);
+                            }
                         }
-                    }
-                    >
-                        {
-                            listaEmpresas.map(emp => (
-                                <MenuItem value={emp.id}>{emp.razaoSocial}</MenuItem>
-                            ))                                
-                        }
-            </TextField>
+                        >
+                            {
+                                listaEmpresas.map(emp => (
+                                    <MenuItem style={inputStyle.label} value={emp.id}>{emp.razaoSocial}</MenuItem>
+                                ))                                
+                            }
+                    </Select>
+                </SearchContainer>
             </Row>
             <Modal
                 isOpen={modalIsOpen}

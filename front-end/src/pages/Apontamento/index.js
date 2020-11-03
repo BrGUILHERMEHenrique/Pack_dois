@@ -29,18 +29,23 @@ const inputStyle = {
     empresa: {
         width: '240px',
         maxWidth: '240px',
-        height: '100%'
+        height: '100%',
+        fontFamily: 'Oxanium, cursive'
     },
     funcionario: {
         width: '240px',
         maxWidth: '240px',
-        height: '100%'
+        height: '100%',
+        fontFamily: 'Oxanium, cursive'
     },
     data: {
         width: '240px',
         maxWidth: '240px',
         marginTop: '100px',
         height: '100%'
+    },
+    label: {
+        fontFamily: 'Oxanium, cursive'
     }
     
 };
@@ -99,7 +104,9 @@ const Apontamento = () => {
 
 
     const getByFuncionarioAndMes =
-        async (data1, data2) => {        
+        async (data1, data2) => {  
+            
+            setApontamentosFiltrados([]);
 
             const dataInicial = new Date(data1.getFullYear(), data1.getMonth(), 1);
             console.log(dataInicial)
@@ -118,7 +125,7 @@ const Apontamento = () => {
                 console.log(response.data)
                 console.log(params)
             } catch(error) {
-                console.log(error);
+                alert(error);
             } finally {
                 
             }
@@ -132,8 +139,6 @@ const Apontamento = () => {
                 setListaFuncionarios(response.data);
             } catch(error) {
                 console.log(error);
-            } finally {
-                
             }
         }
     
@@ -196,6 +201,12 @@ const Apontamento = () => {
         }, [loadEmpresas]
     )
 
+    useEffect(
+        () => {
+            loadApontamentos();
+        }, [loadApontamentos]
+    )
+
 
 
     function criadorPDF() {
@@ -213,9 +224,9 @@ const Apontamento = () => {
             linhas.push(valores);
         });   
 
-        doc.text(10, 10, nome);
+        // doc.text(10, 10, nome);
 
-        doc.autoTable(colunas, linhas, { startY: 30, headStyles: {fillColor: '#942a37'} }
+        doc.autoTable(colunas, linhas, { startY: 5, headStyles: {fillColor: '#942a37'} }
         );
         doc.save('Test.pdf');
     }
@@ -227,21 +238,15 @@ const Apontamento = () => {
                 <SubTitulo>
                     Apontamentos
                 </SubTitulo>
-
                 <Button 
-                disabled={
-                    !(apontamentosFiltrados.length != 0) ? 
-                    true 
-                    : 
-                    false}
-                onClick={criadorPDF}> 
-                Gerar PDF
-                </Button> 
-
-                
+                    disabled={ !(apontamentosFiltrados.length != 0) ? true : false }
+                    onClick={criadorPDF}
+                > 
+                    Gerar PDF
+                </Button>  
             <InputRow container direction='row'>
                 <SearchContainer>
-                    <InputLabel id="Empresa" shrink>Empresa</InputLabel>
+                    <InputLabel style={inputStyle.label} id="Empresa" shrink>Empresa</InputLabel>
                     <Select
                         style={inputStyle.empresa}
                         labelId="Empresa"
@@ -250,13 +255,18 @@ const Apontamento = () => {
                     >
                         {
                             listaEmpresas.map(empresa => (
-                                <MenuItem value={empresa.id}>{empresa.razaoSocial}</MenuItem>
+                                <MenuItem
+                                    style={{fontFamily: 'Oxanium, cursive'}}
+                                    value={empresa.id}
+                                >
+                                    {empresa.razaoSocial}
+                                </MenuItem>
                             ))                                
                         }
                     </Select>
                 </SearchContainer>
                 <SearchContainer>
-                    <InputLabel id="Funcionario"shrink>Funcionário</InputLabel>
+                    <InputLabel style={inputStyle.label} id="Funcionario"shrink>Funcionário</InputLabel>
                     <Select
                         style={inputStyle.funcionario}
                         labelId="Funcionario"
@@ -266,29 +276,30 @@ const Apontamento = () => {
                     >
                         {
                             listaFuncionarios.map(funcionario => (
-                                <MenuItem  value={funcionario.id}>{funcionario.nome}</MenuItem>
+                                <MenuItem  
+                                    style={{fontFamily: 'Oxanium, cursive'}}
+                                    value={funcionario.id}
+                                >
+                                    {funcionario.nome}
+                                </MenuItem>
                             ))                                
                         }
                     </Select>
                </SearchContainer>
-
+                
                { 
                !!idFuncionario &&
-                    <InputMonth
-                        style={
-                            {
-                            width: '180px', 
-                            outline: 'none', 
-                            border: "none",
-                            borderBottom: "solid 0.5px grey" 
-                            }
-                        }
-                        type="month" 
-                        onChange={e => 
-                            getByFuncionarioAndMes(new Date(e.target.value.split("-")),  
-                            new Date(e.target.value.split("-")))
-                        }  
-                    />
+                    <SearchContainer>
+                        <InputLabel style={inputStyle.label} id="data" shrink>Vigência</InputLabel>
+                        <InputMonth
+                            labelId="data"
+                            type="month" 
+                            onChange={e => 
+                                getByFuncionarioAndMes(new Date(e.target.value.split("-")),  
+                                new Date(e.target.value.split("-")))
+                            }  
+                        />
+                    </SearchContainer>
                 }
                 </InputRow>
             </Row>
@@ -304,7 +315,7 @@ const Apontamento = () => {
                 </HeaderModal>
                 <FormModal>
                     <ContainerInputs>
-                        <InputMask
+                        <TextField
                             placeholder="Entrada"
                             mask="00:00:00"
                             label="Entrada"
@@ -312,12 +323,13 @@ const Apontamento = () => {
                             value={entrada1Atualizada}
                             style={inputStyle.horario}
                             InputLabelProps={{ shrink: true }}
+                            inputProps={{maxLength: 8, minLength: 8}}
                             onChange={e => setEntrada1Atualizada(e.target.value)}
                         >
                             {(inputProps) => <MaterialInput {...inputProps} type="tel" />}
-                        </InputMask>
+                        </TextField>
                         
-                        <InputMask
+                        <TextField
                             placeholder="Almoço"
                             mask="00:00:00"
                             id={saida1Atualizada}
@@ -325,12 +337,13 @@ const Apontamento = () => {
                             style={inputStyle.horario}
                             label="Almoço"
                             InputLabelProps={{ shrink: true }}
+                            inputProps={{maxLength: 8, minLength: 8}}
                             onChange={e => setSaida1Atualizada(e.target.value)}
                         >
                             {(inputProps) => <MaterialInput {...inputProps} type="tel" />}
-                        </InputMask>
+                        </TextField>
                         
-                        <InputMask
+                        <TextField
                             placeholder="Retorno"
                             mask="00:00:00"
                             style={inputStyle.horario}
@@ -338,14 +351,15 @@ const Apontamento = () => {
                             InputLabelProps={{ shrink: true }}
                             id={entrada2Atualizada}
                             value={entrada2Atualizada}
+                            inputProps={{maxLength: 8, minLength: 8}}
                             onChange={e => setEntrada2Atualizada(e.target.value)}                       
                         >
                             {(inputProps) => <MaterialInput {...inputProps} type="tel" />}
-                        </InputMask>
+                        </TextField>
 
-                        <InputMask
+                        <TextField
                             placeholder="Saida"
-                            mask="00:00:00"
+                            inputProps={{maxLength: 8, minLength: 8}}
                             style={inputStyle.horario}
                             label="Saída"
                             InputLabelProps={{ shrink: true }}
@@ -354,7 +368,7 @@ const Apontamento = () => {
                             onChange={e => setSaida2Atualizada(e.target.value)}
                         >
                             {(inputProps) => <MaterialInput {...inputProps} type="tel" />}
-                        </InputMask>   
+                        </TextField>   
                     </ContainerInputs>
                 </FormModal>
                 <FooterModal>

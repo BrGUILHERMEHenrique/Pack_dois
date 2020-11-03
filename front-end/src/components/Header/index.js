@@ -18,7 +18,8 @@ const inactiveMenuImage = {
 
 const activeMenuContainer = {
     padding: '0.9%',
-    boxShadow: '1px 1px 2px 2px rgba(0, 0, 0, 0.1)'
+    boxShadow: '1px 1px 2px 2px rgba(0, 0, 0, 0.1)',
+    zIndex: '1'
 }
 
 const inactiveMenuContainer = {

@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+// import Button from '@material-ui/core/Button';
+
 
 export const Container = styled.div`
     display: flex;
@@ -22,6 +24,38 @@ export const ContainerButtons = styled.div`
     }
 `;
 
+
+export const Button = styled.button`
+    width: 90px;
+    height: 42px;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    background-color: rgb(148, 42, 55);
+    font-family: 'Oxanium', cursive;
+    font-size: 13px;
+    outline: none;
+    padding: 4px;
+
+    &:hover{
+        background-color: rgba(148, 42, 55, 0.8);
+        cursor: pointer;
+    }
+`;
+
+export const ButtonInativo = styled.button`
+    width: 90px;
+    height: 42px;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    background-color: rgba(148, 42, 55, 0.7);;
+    font-family: 'Oxanium', cursive;
+    font-size: 0.6em;
+    outline: none;
+    padding: 4px;
+`;
+
 export const Clock = styled.h1`
     font-size: 150px;
     font-weight: bold;
@@ -35,9 +69,7 @@ export const ContainerLogin = styled.div`
     flex-direction: row;
     height: 40px;
     margin-top: 200px;
-     
-
     button {
-        margin-left: 40px;
+        margin-left: 20px;
     }
 `;

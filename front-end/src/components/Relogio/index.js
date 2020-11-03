@@ -2,7 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 const relogioStyles = {
     marginTop: '50px',
-    fontSize: '5em'
+    fontSize: '5em',
+    color: 'rgb(103, 102, 106)'
 }
 
 const Relogio = () => {

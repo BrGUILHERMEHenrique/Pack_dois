@@ -35,6 +35,13 @@ export const Button = styled.button`
 
 `;
 
+
+export const SearchContainer = styled(Grid)`
+    margin-left: 49%;
+
+`
+
+
 export const ButtonCancel = styled.button`
     width: 85px;
     height: 35px;

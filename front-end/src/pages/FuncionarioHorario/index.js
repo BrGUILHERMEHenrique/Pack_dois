@@ -40,7 +40,7 @@ const modalStyle = {
 
 const FuncionarioHorario = ({ location }) => {
     const id = location.state.id;
-    
+
     const [funcionarioHorarios, setFuncionarioHorarios] = useState([]);
     const [funcionarioHorario, setFuncionarioHorario] = useState({});
     const [horarios, setHorarios] = useState([]);
