@@ -1,13 +1,12 @@
 import { TableCell, TableRow, Paper } from '@material-ui/core';
 import styled from 'styled-components';
-
+import { makeStyles } from '@material-ui/core/styles';
 
 export const Tabela = styled(TableCell)`
     
 `
 
 export const TabelaRow = styled(TableRow)`
-
     &:nth-child(even) {
         background-color: ${props => props.color ? props.color : "rgba(162, 169, 173, 0.1)"};
         &:hover {   
@@ -34,7 +33,6 @@ export const TextoTr = styled.p`
     font-size: 0.9rem;
     font-family: 'Oxanium', cursive;
     color: ${props => props.color};
-
 `;
 
 
@@ -46,30 +44,28 @@ export const TableOptions = styled(Paper)`
     padding: 12px 16px;
     z-index: 1;
     display: inline-block;
-
 `;
 
 export const ButtonIcon = styled.button`
-width: 32px;
-height: 30px;
-color: rgba(103, 102, 106, 0.7);
-border: 2px solid rgba(103, 102, 106, 0.6);
-border-radius: 10px;
-background-color: transparent;
-outline: none;
+    width: 32px;
+    height: 30px;
+    color: rgba(103, 102, 106, 0.7);
+    border: 2px solid rgba(103, 102, 106, 0.6);
+    border-radius: 10px;
+    background-color: transparent;
+    outline: none;
 
-&:hover{
-    background-color: rgba(103, 102, 106, 0.8);
-    cursor: pointer;
-    color: white;
-    border: 2px solid rgba(103, 102, 106, 0.1)
-}
+    &:hover{
+        background-color: rgba(103, 102, 106, 0.8);
+        cursor: pointer;
+        color: white;
+        border: 2px solid rgba(103, 102, 106, 0.1)
+    }
 
-&+button {
-    margin-left: 8px;
-}
-
-`
+    &+button {
+        margin-left: 8px;
+    }
+`;
 
 export const ButtonIconD = styled.button`
     width: 32px;
@@ -89,18 +85,12 @@ export const ButtonIconD = styled.button`
     &+button {
         margin-left: 8px;
     }
-
-`
+`;
 
 export const MenuList = styled.div`
     position: relative;
     display: inline-block;
-
-    &:hover Paper{
-
-    }
-
-`
+`;
 
 export const ButtonU = styled.button`
     width: 75px;
@@ -122,7 +112,6 @@ export const ButtonU = styled.button`
     &+button {
         margin-left: 20px;
     }
-
 `;
 
 
@@ -145,7 +134,6 @@ export const ButtonD = styled.button`
     &+button {
         margin-left: 8px;
     }
-
 `;
 
 export const Button = styled.button`
@@ -163,5 +151,24 @@ export const Button = styled.button`
         cursor: pointer;
         color: black;
     }
-
 `;
+
+export const useStyles = makeStyles({
+    table: {
+      minWidth: "400px",
+      width: "91vw",
+      height: "auto", 
+      margin: "auto",
+      padding: "auto",
+      marginTop: "50px"
+    },
+
+    tableH: {
+      minWidth: "400px",
+      width: "79vw",
+      height: "auto", 
+      margin: "auto",
+      padding: "auto",
+      marginTop: "50px"
+    }
+  });

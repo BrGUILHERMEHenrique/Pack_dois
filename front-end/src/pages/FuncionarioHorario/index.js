@@ -1,47 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { format } from 'date-fns';
-
 import Modal from 'react-modal';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import { TextField }from '@material-ui/core';
 import api from '../../services/api';
 import { TableFH } from '../../components/Table';
-import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel, DivNome } from './styles';
-import { set } from 'date-fns';
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel, DivNome, modalStyle, inputStyle  } from './styles';
 
-const modalStyle = {
-    content : {
-        width               : '550px',
-        height              : '350px',
-        top                 : '50%',
-        left                : '50%',
-        right               : 'auto',
-        bottom              : 'auto',
-        marginRight         : '-50%',
-        transform           : 'translate(-50%, -50%)'
-    }
-  };
-
-const inputStyle = {
-
-    codigo: { 
-        width: '98px',
-        height: '100%',
-        marginRight: '10px'
-    }, 
-    horario: { 
-        width: '280px',
-        height: '100%',
-        marginRight: '10px'
-    },
-
-    datasModal: {
-        width: '189px',
-        marginRight: '10px',
-        marginTop: '2%'
-    }
-};
 
 
 const FuncionarioHorario = ({ location }) => {
@@ -61,33 +26,35 @@ const FuncionarioHorario = ({ location }) => {
     const [vigenciaFinalAtualizada, setVigenciaFinalAtualizada] = useState('');
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalPutIsOpen, setModalPutIsOpen] = useState(false);
+
     function openModal() {
         setIsOpen(true);
       }
       
-      function closeModal(){
-        setIsOpen(false);
-      }
+    function closeModal(){
+    setIsOpen(false);
+    }
 
-      function openModalUpdate() {
-        setModalPutIsOpen(true);
-      }
-      
-      function closeModalUpdate(){
-        setModalPutIsOpen(false);
-      }
+    function openModalUpdate() {
+    setModalPutIsOpen(true);
+    }
+    
+    function closeModalUpdate(){
+    setModalPutIsOpen(false);
+    }
 
-      const loadHorarios = useCallback (
-          async () => {
-              try{
-                const response = await api.get('horario');
-                console.log("horarios: ", response.data);
-                setHorarios(response.data);
-              } catch (error){
-                  console.log(error);
-              }
-          }, []
-      )
+    const loadHorarios = useCallback (
+        async () => {
+            try{
+            const response = await api.get('horario');
+            console.log("horarios: ", response.data);
+            setHorarios(response.data);
+            } catch (error){
+                console.log(error);
+            }
+        }, []
+    )
+    
     const loadFuncionarioHorarios = useCallback(
         async () => {
             const response = await api.get(`funcionario_horario/idFuncionario/${id}`);

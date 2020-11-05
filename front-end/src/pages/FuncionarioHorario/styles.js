@@ -114,3 +114,36 @@ export const DivNome = styled.div`
 
 `;
 
+
+export const modalStyle = {
+    content : {
+        width               : '550px',
+        height              : '350px',
+        top                 : '50%',
+        left                : '50%',
+        right               : 'auto',
+        bottom              : 'auto',
+        marginRight         : '-50%',
+        transform           : 'translate(-50%, -50%)'
+    }
+  };
+
+export const inputStyle = {
+
+    codigo: { 
+        width: '98px',
+        height: '100%',
+        marginRight: '10px'
+    }, 
+    horario: { 
+        width: '280px',
+        height: '100%',
+        marginRight: '10px'
+    },
+
+    datasModal: {
+        width: '189px',
+        marginRight: '10px',
+        marginTop: '2%'
+    }
+};

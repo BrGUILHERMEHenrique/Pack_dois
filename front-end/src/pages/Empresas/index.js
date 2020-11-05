@@ -4,63 +4,11 @@ import { cnpj as cnpjValidator } from 'cpf-cnpj-validator';
 import InputMask from 'react-input-mask';
 import MaterialInput from '@material-ui/core/Input';
 import Input from '@material-ui/core/Input';
-
 import swal from 'sweetalert';
 import 'sweetalert2/src/sweetalert2.scss';
-
-//imports de dentro do diretório do projeto
 import {TableE} from '../../components/Table';
-
 import api from '../../services/api';
-
-import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel } from './styles';
-
-const modalStyleAtualizar = {
-    content: {
-        width               : '480px',
-        height              : '270px',
-        top                 : '50%',
-        left                : '50%',
-        right               : 'auto',
-        bottom              : 'auto',
-        marginRight         : '-50%',
-        transform           : 'translate(-50%, -50%)'
-    }
-};
-
-const modalStyleAdicionar = {
-    content: {
-        width               : '520px',
-        height              : '320px',
-        top                 : '50%',
-        left                : '50%',
-        right               : 'auto',
-        bottom              : 'auto',
-        marginRight         : '-50%',
-        transform           : 'translate(-50%, -50%)'
-    }
-}
-
-const inputStyle = {
-    razaoSocial: {
-        width: '386px',
-        height: '60%',
-    },
-    matricula: {
-        width: '186px',
-        height: '60%',
-    },
-    cnpj: {
-        width: '186px',
-        height: '60%',
-        marginLeft: '12px',
-    }, 
-    razaoSocialUp: {
-        width: '354px',
-        height: '60%',
-
-    }
-}
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel, inputStyle, modalStyleAdicionar, modalStyleAtualizar } from './styles';
 
 const Empresas = () => {
     

@@ -59,8 +59,6 @@ export const ButtonCancel = styled.button`
 
 `;
 
-
-
 export const FormModal = styled.form`
     display: flex;
     flex-direction: column;
@@ -111,4 +109,51 @@ export const FooterModal = styled.div`
         margin-left: 10px;
     }
 `;
+
+export const modalStyleAtualizar = {
+    content: {
+        width               : '480px',
+        height              : '270px',
+        top                 : '50%',
+        left                : '50%',
+        right               : 'auto',
+        bottom              : 'auto',
+        marginRight         : '-50%',
+        transform           : 'translate(-50%, -50%)'
+    }
+};
+
+export const modalStyleAdicionar = {
+    content: {
+        width               : '520px',
+        height              : '320px',
+        top                 : '50%',
+        left                : '50%',
+        right               : 'auto',
+        bottom              : 'auto',
+        marginRight         : '-50%',
+        transform           : 'translate(-50%, -50%)'
+    }
+}
+
+export const inputStyle = {
+    razaoSocial: {
+        width: '386px',
+        height: '60%',
+    },
+    matricula: {
+        width: '186px',
+        height: '60%',
+    },
+    cnpj: {
+        width: '186px',
+        height: '60%',
+        marginLeft: '12px',
+    }, 
+    razaoSocialUp: {
+        width: '354px',
+        height: '60%',
+
+    }
+}
 
