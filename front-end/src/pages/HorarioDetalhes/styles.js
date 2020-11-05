@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 
-
 export const HeaderModal = styled.div`
     flex-direction: row;
     margin-top: 5%;
@@ -46,20 +45,20 @@ export const SubTitulo = styled.p`
     font-family: 'Oxanium', cursive;
     font-size: 2.4rem;
     color: #942a37
-`
+`;
 
 export const Row = styled(Grid)`
     align-items: center;
     margin-top: 15%;
-`
+`;
 
 export const InputContainer = styled(Grid)`
     display: flex;
     flex-direction: row;
     font-family: 'Oxanium', cursive;
     justify-content: center;
+`;
 
-`
 export const Button = styled.button`
     width: 85px;
     height: 35px;
@@ -75,7 +74,6 @@ export const Button = styled.button`
         cursor: pointer;
         color: black;
     }
-
 `;
 
 export const ButtonCancel = styled.button`
@@ -96,9 +94,50 @@ export const ButtonCancel = styled.button`
     &+button {
         margin-left: 8px;
     }
-
 `;
 
 export const Container = styled(Grid)`
     padding: 20px;
 `;  
+
+export const inputStyle = {
+    horario: {
+        width: '8vw',
+        height: '100%',
+        marginRight: '10px',
+        marginTop: '3%', 
+    },
+    horarioUp: {
+        width: '8vw',
+        height: '100%',
+        marginRight: '10px',
+        marginTop: '3%', 
+    },
+    
+};
+
+export const modalStyleAtualizar = {
+    content: {
+        width               : '580px',
+        height              : '380px',
+        top                 : '50%',
+        left                : '50%',
+        right               : 'auto',
+        bottom              : 'auto',
+        marginRight         : '-50%',
+        transform           : 'translate(-50%, -50%)'
+    }
+};
+
+export const modalStyleAdicionar = {
+    content: {
+        width               : '580px',
+        height              : '380px',
+        top                 : '50%',
+        left                : '50%',
+        right               : 'auto',
+        bottom              : 'auto',
+        marginRight         : '-50%',
+        transform           : 'translate(-50%, -50%)'
+    }
+}

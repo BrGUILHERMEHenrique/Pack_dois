@@ -2,13 +2,13 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { format } from 'date-fns'
 import {TableBody, Table, TableContainer, Paper} from '@material-ui/core';
-import { Tabela, TabelaRow, TextoTh, TextoTr, ButtonU, ButtonD, ButtonIcon, ButtonIconD, useStyles } from './styles';
 import swal from 'sweetalert';
 import 'sweetalert2/src/sweetalert2.scss';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import DateRangeIconRounded from '@material-ui/icons/DateRangeRounded';
 import { pt } from 'date-fns/locale';
+import { Tabela, TabelaRow, TextoTh, TextoTr, ButtonU, ButtonD, ButtonIcon, ButtonIconD, useStyles } from './styles';
 
 String.prototype.cpf = function(){
   let cpf = this.replace(/\D/g, '');

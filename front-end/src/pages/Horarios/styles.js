@@ -106,3 +106,31 @@ export const HeaderModal = styled.div`
 
     }
 `;
+
+export const customStyles = {
+    content : {
+        width               : '520px',
+        height              : '300px',
+        top                 : '50%',
+        left                : '50%',
+        right               : 'auto',
+        bottom              : 'auto',
+        marginRight         : '-50%',
+        transform           : 'translate(-50%, -50%)'
+    }
+  };
+
+  export const inputStyle = {
+    codigo: { 
+        width: '70px',
+        height: '100%',
+        marginRight: '10px'
+    }, 
+    descHorario: { 
+        width: '300px',
+        height: '100%',
+        marginRight: '10px'
+    }
+};
+
+

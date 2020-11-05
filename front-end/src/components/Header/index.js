@@ -1,43 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Image, Container, Menu } from './styles'
-import Logo from '../../assets/ponto.svg'
-import Empresas from '../../pages/Empresas';
-import Grid from '@material-ui/core/Grid';
-
-const ativo = {
-    color:'#942a37'
-    }
-const activeMenuImage = {
-    width: '10%'
-}
-
-const inactiveMenuImage = {
-    width: '25%'
-}
-
-const activeMenuContainer = {
-    padding: '0.9%',
-    boxShadow: '1px 1px 2px 2px rgba(0, 0, 0, 0.1)',
-    zIndex: '1'
-}
-
-const inactiveMenuContainer = {
-    padding: '2%'
-}
-
-const activeMenuLink = {
-    color: '#7B7B7B',
-    textDecoration: 'none',
-    fontSize: '0.9em',
-    padding: '15px'
-}
-
-const inactiveMenuLink = {
-    textDecoration: 'none',
-    padding: '15px',
-    color: '#7B7B7B'
-}
+import Logo from '../../assets/ponto.svg';
+import { Image, Container, Menu, ativo, activeMenuImage, inactiveMenuImage, activeMenuContainer, inactiveMenuContainer, activeMenuLink, inactiveMenuLink } from './styles';
 
 const Header = () => {
 

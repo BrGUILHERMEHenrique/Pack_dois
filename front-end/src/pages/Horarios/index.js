@@ -1,46 +1,15 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Modal from 'react-modal';
-import { useHistory } from 'react-router-dom';
-import Input from '@material-ui/core/Input';
 import TextField from '@material-ui/core/TextField';
 import api from '../../services/api';
-import { FormModal, Button, Container, Row, SubTitulo, FooterModal, HeaderModal, InputContainer, ButtonCancel } from './styles';
+import { FormModal, Button, Container, Row, SubTitulo, FooterModal, HeaderModal, ButtonCancel, customStyles, inputStyle } from './styles';
 import { TableH } from '../../components/Table';
-
 import swal from 'sweetalert';
 import 'sweetalert2/src/sweetalert2.scss';
 
-const customStyles = {
-    content : {
-        width               : '520px',
-        height              : '300px',
-        top                 : '50%',
-        left                : '50%',
-        right               : 'auto',
-        bottom              : 'auto',
-        marginRight         : '-50%',
-        transform           : 'translate(-50%, -50%)'
-    }
-  };
-
-  const inputStyle = {
-
-    codigo: { 
-        width: '70px',
-        height: '100%',
-        marginRight: '10px'
-    }, 
-    descHorario: { 
-        width: '300px',
-        height: '100%',
-        marginRight: '10px'
-    }
-};
-
-
 
 const HorarioTabela = () => {
-    const history = useHistory();
+
     const [horarios, setHorarios] = useState([]);
     const [horario, setHorario] = useState({});
     const [codigoHorario, setCodigoHorario] = useState('');
@@ -61,6 +30,7 @@ const HorarioTabela = () => {
     const closeModalAdd = () => {
         setModalAddIsOpen(false);
     }
+    
     const openModalWithData = useCallback (
         async (id) => {
             try{
@@ -70,18 +40,19 @@ const HorarioTabela = () => {
                 setHorario(response.data);
                 setModalaPutIsOpen(true);
             } catch (error) {
-                console.log(error);
+                swal("Atenção", "Horário não encontrado", "error");
             }
         }, [],
-        );
+    );
+
     const loadHorarios = useCallback(
         async () => {
             try{
                 const response = await api.get('horario');
                 console.log(response.data);
-                setHorarios(response.data)
+                setHorarios(response.data);
             } catch (error) {
-                console.log(error);
+                swal("Atenção", "Não foi possível carregar os horários", "error");
             }
         }, []
     );
@@ -95,23 +66,20 @@ const HorarioTabela = () => {
             }
             try {
                 await api.post('horario', params);
-                console.log("sucess, Horario post");
+                
             } catch (error) {
-                console.log(error)
+                swal("Atenção", error.response.data, "error");
             } finally {
                 loadHorarios();
                 closeModalAdd();
             }
-        }, [
-            codigoHorario,
-            descHorario,
-            loadHorarios
-        ]
+        }, [codigoHorario, descHorario, loadHorarios]
     )
 
     const handleHorario = useCallback(
         async (id, e) => {
             e.preventDefault();
+
             const params = {
                 codigoHorario: codigoHorarioAtualizado,
                 descHorario: descHorarioAtualizado
@@ -120,16 +88,12 @@ const HorarioTabela = () => {
                 await api.put(`horario/${id}`, params);
                 console.log('Sucess, Update');
             } catch (error) {
-                
+                swal("Atenção", error.response.data, "error");
             } finally {
                 loadHorarios();
                 closeModalUpdate();
             }
-        }, [
-            codigoHorarioAtualizado,
-            descHorarioAtualizado,
-            loadHorarios
-        ]
+        }, [codigoHorarioAtualizado,descHorarioAtualizado, loadHorarios]
     )
     
     const removeHorario = async (id) => {
@@ -154,20 +118,18 @@ const HorarioTabela = () => {
     return(
         <Container>
             <Row 
-            direction="row"
-            container>
+                direction="row"
+                container
+            >
                 <SubTitulo> Horários </SubTitulo>
                 <Button onClick={openModalAdd}>Adicionar</Button>
             </Row>
-            <TableH horarios={horarios} handleHorario={openModalWithData} removeHorario={removeHorario}/>
-
             <Modal
                 isOpen={modalPutIsOpen}
                 onRequestClose={closeModalUpdate}
                 style={customStyles}
                 contentLabel="Modal"
-            >
-                    
+            >    
                 <HeaderModal>
                 <h2>Atualizar</h2>
                 </HeaderModal>
@@ -202,9 +164,7 @@ const HorarioTabela = () => {
                         Cancelar
                     </ButtonCancel>
                 </FooterModal>
-
             </Modal>
-
             <Modal
                 isOpen={modalAddIsOpen}
                 onRequestClose={closeModalAdd}
@@ -224,7 +184,6 @@ const HorarioTabela = () => {
                         onChange={e => setCodigoHorario(e.target.value)}
                         value={codigoHorario}
                     />
-                
                     <TextField
                         label="Descrição"
                         style={inputStyle.descHorario}
@@ -244,6 +203,7 @@ const HorarioTabela = () => {
                      </ButtonCancel>
                 </FooterModal>
             </Modal>
+            <TableH horarios={horarios} handleHorario={openModalWithData} removeHorario={removeHorario}/>
         </Container>
     );
 

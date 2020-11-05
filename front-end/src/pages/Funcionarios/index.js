@@ -3,118 +3,17 @@ import Modal from 'react-modal';
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import InputMask from 'react-input-mask';
 import MaterialInput from '@material-ui/core/Input';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import ValidaPIS from '../../components/ValidaPis'
 import Select from '@material-ui/core/Select';
-import autoTable from 'jspdf-autotable'
 import Input from '@material-ui/core/Input';
-import { jsPDF } from "jspdf";
-
 import swal from 'sweetalert';
 import 'sweetalert2/src/sweetalert2.scss';
-
-//imports de dentro do diretório do projeto
 import { TableF } from '../../components/Table';
-
 import api from '../../services/api';
-
-import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel, SearchContainer } from './styles';
-
-const inputStyle = {
-    nome: {
-        width: '450px',
-        height: '64%',
-    },
-    matricula: {
-        width: '100%',
-        height: '100%',
-        marginTop: '19px',
-        marginRight: '10px'
-    },
-    cpf: {
-        width: '25%',
-        height: '25%',
-        marginTop: '3%', 
-        marginRight: '10px'
-
-    }, 
-    data: {
-        width: '30%',
-        height: '30%',
-        marginTop: '3%',
-        marginRight: '10px'
-    },
-    tel: {
-        width: '25%',
-        height: '25%',
-        marginTop: '3%'
-        
-    },
-    empresa: {
-        width: '100%',
-        height: '100%',
-        marginTop: '3px'
-    },
-    dataUp: {
-        width: '177px',
-        height: '50%',
-        marginRight: '10px',
-        marginTop: '10px'
-    },
-    telUp: {
-        width: '177px',
-        height: '50%',
-        marginTop: '10px'
-    },
-    nomeUp: {
-        width: '364px',
-        height: '55%',
-    },
-    label: {
-        fontFamily: 'Oxanium, cursive'
-    }
-};
-
-const modalStyleAtualizar = {
-    content: {
-        width               : '480px',
-        height              : '320px',
-        top                 : '50%',
-        left                : '50%',
-        right               : 'auto',
-        bottom              : 'auto',
-        marginRight         : '-50%',
-        transform           : 'translate(-50%, -50%)'
-    }
-};
-
-const modalStyleAdicionar = {
-    content: {
-        width               : '580px',
-        height              : '390px',
-        top                 : '50%',
-        left                : '50%',
-        right               : 'auto',
-        bottom              : 'auto',
-        marginRight         : '-50%',
-        transform           : 'translate(-50%, -50%)'
-    }
-}
-
-  const useStyles = makeStyles((theme) => ({
-    container: {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 200,
-    },
-  }));
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel, SearchContainer, modalStyleAdicionar, modalStyleAtualizar, inputStyle } from './styles';
 
 const Funcionarios = () => {
 
@@ -136,19 +35,19 @@ const Funcionarios = () => {
 
     function openModal() {
         setIsOpen(true);
-      }
-      
-      function closeModal(){
-        setIsOpen(false);
-      }
+    }
+    
+    function closeModal(){
+    setIsOpen(false);
+    }
 
-      function openModalUpdate() {
-        setModalPutIsOpen(true);
-      }
-      
-      function closeModalUpdate(){
-        setModalPutIsOpen(false);
-      }
+    function openModalUpdate() {
+    setModalPutIsOpen(true);
+    }
+    
+    function closeModalUpdate(){
+    setModalPutIsOpen(false);
+    }
 
     const loadFuncionarios = useCallback(
         async (idEmpresa) => {
@@ -157,7 +56,7 @@ const Funcionarios = () => {
                 console.log(response.data);
                 setFuncionarios(response.data);
             }catch(error){
-                console.log(error);
+                swal("Atenção", "Funcionários não encontrados", "error");
             }
         }, [idEmpresa],
     );
@@ -166,10 +65,9 @@ const Funcionarios = () => {
         async () => {
             try{
                 const response = await api.get('empresa');
-                console.log(response.data);
                 setListaEmpresas(response.data);
             }catch(error){
-                console.log(error);
+                swal("Atenção", "Não foi possível carregar as empresas", "error");
             }
         }, [],
     );
@@ -179,18 +77,18 @@ const Funcionarios = () => {
             e.preventDefault();
 
             if(!nome || !pis || !cpf.replace(/\D/g, '') || !dataNascimento.replace(/\D/g, '') || !telefone.replace(/\D/g, '') || !empresa){
-                alert("Por favor, preencha todos os campos");
+                swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
             }
-
             if(!cpfValidator.isValid(cpf)){ 
-                alert('O CPF informado é inválido');
+                swal('Atenção', 'O CPF informado é inválido', 'error');
                 return;
             }
             if(!ValidaPIS(pis)){ 
-                alert('O matricula informado é inválido');
+                swal('Atenção', 'O PIS informado é inválido', 'error');
                 return;
             }
+
             const params = {
                 nome: nome,
                 idEmpresa: empresa.id,
@@ -205,7 +103,7 @@ const Funcionarios = () => {
                 const response = await api.post('funcionario', params);
                 console.log(response.data);
             } catch (error) {
-                alert(error.response.data.replaceAll("_", " "));
+                swal("Atenção", error.response.data.replaceAll("_", " "), "error");
             } finally {
                 setNome('');
                 setPis('');
@@ -219,40 +117,40 @@ const Funcionarios = () => {
         }, [nome, pis, cpf, dataNascimento, telefone, empresa],
     )
 
-        const getFuncionarioById = useCallback(
-            async (id) => {
-                
-                try{
-                    const response = await api.get(`funcionario/${id}`);
-                    setFuncionario(response.data);
-                } catch(error){
-                    console.log(error);
-                } 
-            }, [nome, cpf, dataNascimento, pis, telefone, funcionario, empresa]
-        )
+    const getFuncionarioById = useCallback(
+        async (id) => {
+            
+            try{
+                const response = await api.get(`funcionario/${id}`);
+                setFuncionario(response.data);
+            } catch(error){
+                swal("Atenção", "Funcionário não encontrado", "error");
+            } 
+        }, [nome, cpf, dataNascimento, pis, telefone, funcionario, empresa]
+    )
 
-        const openModalWithData = useCallback(
-            async (id) => {
-                try {
-                    const response = await api.get(`funcionario/${id}`);
-                    await getFuncionarioById(id);
-                    setNomeAtualizado(response.data.nome);
-                    setDataNascimentoAtualizado(response.data.dataNascimento);
-                    setTelefoneAtualizado(response.data.telefone);
-                } catch(error) {
-                    console.log(error);
-                } finally {
-                    openModalUpdate();
-                }
-            }, [funcionario, nomeAtualizado, dataNascimentoAtualizado, telefoneAtualizado],
-        )
+    const openModalWithData = useCallback(
+        async (id) => {
+            try {
+                const response = await api.get(`funcionario/${id}`);
+                await getFuncionarioById(id);
+                setNomeAtualizado(response.data.nome);
+                setDataNascimentoAtualizado(response.data.dataNascimento);
+                setTelefoneAtualizado(response.data.telefone);
+            } catch(error) {
+                swal("Atenção", "Funcionários não encontrados", "error");
+            } finally {
+                openModalUpdate();
+            }
+        }, [funcionario, nomeAtualizado, dataNascimentoAtualizado, telefoneAtualizado],
+    )
 
-        const handleUpdateFuncionario = useCallback(
+    const handleUpdateFuncionario = useCallback(
         async (e) => {
             e.preventDefault();
 
             if(!nomeAtualizado || !dataNascimentoAtualizado.replace(/\D/g, '') || !telefoneAtualizado.replace(/\D/g, '')){
-                alert("Por favor, preencha todos os campos");
+                swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
             }
 
@@ -266,7 +164,7 @@ const Funcionarios = () => {
                 await api.put(`funcionario/${funcionario.id}`, paramsUpdated);
                 console.log(paramsUpdated);
             } catch(error){
-                console.log(error);
+                swal("Atenção", "Funcionário não econtrado", "error");
 
             } finally {
                 closeModalUpdate();
@@ -274,47 +172,41 @@ const Funcionarios = () => {
             }
             
         }, [nomeAtualizado, dataNascimentoAtualizado, telefoneAtualizado],
-        )
+    )
 
-        const removeFuncionario = async (id) => {
-            try {
-                const response = await api.delete(`funcionario/${id}`);
-                swal("Funcionário apagado com sucesso!", response.data , "success");
-                console.log(response.data);
-            } catch (error) {
-                console.log(error.response.data.replaceAll("_", " "));
-                swal("Ação não permitida!", error.response.data.replaceAll("_", " ") , "error");
-            } finally {
-                loadFuncionarios();
-            }
+    const removeFuncionario = async (id) => {
+        try {
+            const response = await api.delete(`funcionario/${id}`);
+            swal("Funcionário apagado com sucesso!", response.data , "success");
+        } catch (error) {
+            swal("Ação não permitida!", error.response.data.replaceAll("_", " ") , "error");
+        } finally {
+            loadFuncionarios();
         }
+    }
 
     useEffect(
         () => {
             loadEmpresas();
         }, [loadEmpresas],
     )
-
-    const inputStyles = {
-        empresa: {
-            width: '350px',
-            maxWidth: '350px',
-            height: '100%',
-            fontFamily: 'Oxanium, cursive'
-        }
-    }
     
     return(
 
         <Container>
-           
             <Row direction="row" container>
                 <SubTitulo> Funcionário </SubTitulo>
                 <Button onClick={openModal}>Adicionar</Button>
                 <SearchContainer>
-                <InputLabel style={inputStyle.label} id="Empresa" shrink>Empresa</InputLabel>
+                    <InputLabel 
+                        style={inputStyle.label} 
+                        id="Empresa" 
+                        shrink
+                    >
+                        Empresa
+                    </InputLabel>
                     <Select
-                        style={inputStyles.empresa}
+                        style={inputStyle.empresaSearch}
                         labelId='Empresa'
                         value={idEmpresa}
                         MenuProps={{ style: {maxWidth: '400px', maxHeight: '400px'}  }}
@@ -417,18 +309,16 @@ const Funcionarios = () => {
                                 }
                         </TextField>
                     </ContainerInputs>
-                            </FormModal>
-                        <FooterModal>
-                            <Button
-                                onClick={e => handleAddFuncionario(e)}
-                            >Salvar</Button>
-                            <ButtonCancel
-                                onClick={closeModal}
-                            >Cancelar</ButtonCancel>
-                        </FooterModal>
+                </FormModal>
+                <FooterModal>
+                    <Button
+                        onClick={e => handleAddFuncionario(e)}
+                    >Salvar</Button>
+                    <ButtonCancel
+                        onClick={closeModal}
+                    >Cancelar</ButtonCancel>
+                </FooterModal>
             </Modal>
-
-                    {/* segundo modal para atualização ! */}
             <Modal
                 isOpen={modalPutIsOpen}
                 onRequestClose={closeModalUpdate}
@@ -483,7 +373,6 @@ const Funcionarios = () => {
                     </ButtonCancel>
                 </FooterModal>
             </Modal>
-
             <TableF funcionarios = {funcionarios} handleFuncionario = {openModalWithData} removeFuncionario = {removeFuncionario}/> 
         </Container>
         

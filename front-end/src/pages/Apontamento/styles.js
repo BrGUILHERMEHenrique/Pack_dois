@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 
-
 export const Container = styled(Grid)`
     padding: 20px;
-
 `;  
 
 export const SubTitulo = styled.p`
@@ -12,20 +10,16 @@ export const SubTitulo = styled.p`
     font-family: 'Oxanium', cursive;
     font-size: 2.4rem;
     color: #942a37
-
-`
+`;
 
 export const Row = styled(Grid)`
     align-items: center;
     margin-top: 15%;
-
-`
+`;
 
 export const SearchContainer = styled(Grid)`
     margin-right: 25px;
-
-`
-
+`;
 
 export const InputMonth= styled.input`
 margin-top: 7px;
@@ -35,14 +29,13 @@ margin-top: 7px;
     border: none;
     border-bottom: solid 0.5px grey;
     font-size: 1em;
-
-`
+`;
 
 export const InputRow = styled(Grid)`
 margin-left: 53px;
 margin-top: 2%;
 align-items: center;
-`
+`;
 
 export const Button = styled.button`
     width: 85px;
@@ -58,7 +51,6 @@ export const Button = styled.button`
         background-color: rgba(103, 102, 106, 0.4);
         color: white;
     }
-
 `;
 
 export const ButtonCancel = styled.button`
@@ -79,7 +71,6 @@ export const ButtonCancel = styled.button`
     &+button {
         margin-left: 8px;
     }
-
 `;
 
 
@@ -96,7 +87,6 @@ export const FormModal = styled.form`
     input{
         margin-top: 5%;
     }
-
 `;
 
 export const ContainerInputs = styled.div`
@@ -107,7 +97,6 @@ export const ContainerInputs = styled.div`
     margin-bottom: 10%;
     width: 100%;
     justify-content: center;
-
 `;
 
 export const HeaderModal = styled.div`
@@ -135,3 +124,52 @@ export const FooterModal = styled.div`
     }
 `;
 
+export const inputStyle = {
+    horario: {
+        width: '8vw',
+        height: '100%',
+        marginRight: '10px',
+        marginTop: '3%', 
+    },
+    horarioUp: {
+        width: '8vw',
+        height: '100%',
+        marginRight: '10px',
+        marginTop: '3%', 
+    },
+    empresa: {
+        width: '240px',
+        maxWidth: '240px',
+        height: '100%',
+        fontFamily: 'Oxanium, cursive'
+    },
+    funcionario: {
+        width: '240px',
+        maxWidth: '240px',
+        height: '100%',
+        fontFamily: 'Oxanium, cursive'
+    },
+    data: {
+        width: '240px',
+        maxWidth: '240px',
+        marginTop: '100px',
+        height: '100%'
+    },
+    label: {
+        fontFamily: 'Oxanium, cursive'
+    }
+    
+};
+
+export const modalStyle = {
+    content: {
+        width               : '550px',
+        height              : '300px',
+        top                 : '50%',
+        left                : '50%',
+        right               : 'auto',
+        bottom              : 'auto',
+        marginRight         : '-50%',
+        transform           : 'translate(-50%, -50%)'
+    }
+};

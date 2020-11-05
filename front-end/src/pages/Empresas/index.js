@@ -23,20 +23,19 @@ const Empresas = () => {
 
     function openModal() {
         setIsOpen(true);
-      }
-      
-      function closeModal(){
-        setIsOpen(false);
-      }
+    }
+    
+    function closeModal(){
+    setIsOpen(false);
+    }
 
-      function openModalUpdate() {
-        setModalPutIsOpen(true);
-      }
-      
-      function closeModalUpdate(){
-        setModalPutIsOpen(false);
-      }
-
+    function openModalUpdate() {
+    setModalPutIsOpen(true);
+    }
+    
+    function closeModalUpdate(){
+    setModalPutIsOpen(false);
+    }
 
     const loadEmpresas = useCallback(
         async () => {
@@ -44,8 +43,8 @@ const Empresas = () => {
                 const response = await api.get('empresa');
                 console.log(response.data);
                 setEmpresas(response.data);
-            }catch(error){
-                console.log(error);
+            }catch(error){                
+                swal("Atenção", "Impossível carregar as empresas", "error");
             }
         }, [],
     );
@@ -55,12 +54,12 @@ const Empresas = () => {
             e.preventDefault();
 
             if(!razaoSocial || !codEmpresa || !cnpj.replace(/\D/g, '')){
-                alert("Por favor, preencha todos os campos");
+                swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
             }
 
             if(!cnpjValidator.isValid(cnpj)){ 
-                alert('O CNPJ informado é inválido');
+                swal("Atenção", "O CNPJ informado é inválido", "warning");
                 return;
             }
 
@@ -74,8 +73,8 @@ const Empresas = () => {
                 console.log(params);
                 const response = await api.post('empresa', params);
                 console.log(response.data);
-            } catch (error) {
-                alert(error.response.data);
+            } catch (error) {                
+                swal("Atenção", "Impossível carregar as empresas", "error");
             } finally {
                 setRazaoSocial('');
                 setCodEmpresa('');
@@ -86,51 +85,47 @@ const Empresas = () => {
         }, [razaoSocial, codEmpresa, cnpj],
     )
 
-        const getEmpresaById = useCallback(
-            async (id) => {
-                
-                try{
-                    const response = await api.get(`empresa/${id}`);
-                    setEmpresa(response.data);
-                } catch(error){
-                    console.log(error);
-                } 
-            }, [razaoSocial, codEmpresa, cnpj],
-        )
+    const getEmpresaById = useCallback(
+        async (id) => {
+            
+            try{
+                const response = await api.get(`empresa/${id}`);
+                setEmpresa(response.data);
+            } catch(error){                    
+            swal("Atenção", "Não foi possível encontrar a empresa", "error");
+            }
+        }, [razaoSocial, codEmpresa, cnpj],
+    )
 
-        const openModalWithData = useCallback(
-            async (id) => {
-                try {
-                    const response = await api.get(`empresa/${id}`);
-                    await getEmpresaById(id);
-                    setRazaoSocialAtualizada(response.data.razaoSocial);
-                } catch(error) {
-                    console.log(error);
-                } finally {
-                    openModalUpdate();
-                }
-            }, [empresa, razaoSocialAtualizada],
-        )
+    const openModalWithData = useCallback(
+        async (id) => {
+            try {
+                const response = await api.get(`empresa/${id}`);
+                await getEmpresaById(id);
+                setRazaoSocialAtualizada(response.data.razaoSocial);
+            } catch(error) {                    
+            swal("Atenção", "Impossível carregar as empresas", "error");
+            } finally {
+                openModalUpdate();
+            }
+        }, [empresa, razaoSocialAtualizada],
+    )
 
-        const handleUpdateEmpresa = useCallback(
+    const handleUpdateEmpresa = useCallback(
         async (e) => {
             e.preventDefault();
 
             if(!razaoSocialAtualizada){
-                alert("Por favor, preencha todos os campos");
+                swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
             }
-
             const paramsUpdated = {
                 razaoSocial: razaoSocialAtualizada
             }
-
             try{
                 await api.put(`empresa/${empresa.id}`, paramsUpdated);
-                console.log(paramsUpdated);
             } catch(error){
-                console.log(error);
-
+                alert(error);
             } finally {
                 closeModalUpdate();
                 setRazaoSocial('');
@@ -138,40 +133,35 @@ const Empresas = () => {
             }
             
         }, [razaoSocialAtualizada],
-        )
+    )
 
-        const removeEmpresa = async (id) => {
-            try {
-                const response = await api.delete(`empresa/${id}`);
-                console.log(response.data);
-                swal("Ação realizada com sucesso!", "Empresa removida.", "success");
-            } catch (error) {
-                swal("Ação não permitida!", error.response.data.replaceAll("_", " "), "error");
-                console.log(error);
-            } finally {
-                loadEmpresas();
-            }
+    const removeEmpresa = async (id) => {
+        try {
+            const response = await api.delete(`empresa/${id}`);
+            swal("Ação realizada com sucesso!", "Empresa removida.", "success");
+        } catch (error) {
+            swal("Ação não permitida!", error.response.data.replaceAll("_", " "), "error");
+        } finally {
+            loadEmpresas();
         }
-
+    }
 
     useEffect(
         () => {
             loadEmpresas();
         }, [loadEmpresas],
     )
+
     return(
 
         <Container>
             <Row 
-            direction="row"
-            container>
-                <SubTitulo> Empresas </SubTitulo>
+                direction="row"
+                container
+            >
+                <SubTitulo>Empresas</SubTitulo>
                 <Button onClick={openModal}>Adicionar</Button>
-              {/* <SearchRow>
-                <input></input>
-              </SearchRow> */}
             </Row>
-            
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
@@ -180,9 +170,7 @@ const Empresas = () => {
             >
                 <HeaderModal>
                     <h2>Cadastro</h2>
-                    {/* <AiOutlineClose onClick={closeModal} /> */}
                 </HeaderModal>
-                {/* <hr /> */}
                 <FormModal>
                     <Input 
                         placeholder="Razão Social"
@@ -200,36 +188,31 @@ const Empresas = () => {
                             onChange={e => setCodEmpresa(e.target.value)}
                         />
                         <InputMask 
-                        style={inputStyle.cnpj}
-                        mask="99.999.999/9999-99" 
-                            id="cnpj"
+                            style={inputStyle.cnpj}
+                            mask="99.999.999/9999-99" 
                             placeholder="CNPJ"
                             value={cnpj} 
                             onChange={e => {
                             setCnpj(e.target.value);
-                            console.log(e.target.value);
                             }}>
                             {(inputProps) => <MaterialInput {...inputProps} type="tel"  />}
                         </InputMask>
                     </ContainerInputs>
-                        </FormModal>
-                    <FooterModal>
-                        <Button
-                            color="primary"
-                            variant="contained"
-                            onClick={e => handleAddEmpresa(e)}
-                        >
-                            Salvar
-                        </Button>
-                        <ButtonCancel
-                            onClick={closeModal}
-                        >
-                            Cancelar
-                        </ButtonCancel>
+                </FormModal>
+                <FooterModal>
+                    <Button
+                        onClick={e => handleAddEmpresa(e)}
+                    >
+                        Salvar
+                    </Button>
+                    <ButtonCancel
+                        onClick={closeModal}
+                    >
+                        Cancelar
+                    </ButtonCancel>
 
-                        </FooterModal>
+                </FooterModal>
             </Modal>
-
             <Modal
                 isOpen={modalPutIsOpen}
                 onRequestClose={closeModalUpdate}
@@ -249,23 +232,20 @@ const Empresas = () => {
                         />
                     </ContainerInputs>
                 </FormModal>
-                    <FooterModal>
+                <FooterModal>
                     <Button
                     onClick={e => handleUpdateEmpresa(e)}
                     >
                         Salvar
                     </Button>
-
                     <ButtonCancel
                     onClick={closeModalUpdate}
                     >
                         Cancelar
                     </ButtonCancel>
-                    </FooterModal>
+                </FooterModal>
             </Modal>
-
             <TableE empresas = {empresas} handleEmpresa = {openModalWithData} removeEmpresa = {removeEmpresa}/> 
-   
         </Container>
         
     );

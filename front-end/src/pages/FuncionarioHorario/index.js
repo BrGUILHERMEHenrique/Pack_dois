@@ -6,10 +6,11 @@ import { TextField }from '@material-ui/core';
 import api from '../../services/api';
 import { TableFH } from '../../components/Table';
 import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel, DivNome, modalStyle, inputStyle  } from './styles';
-
-
+import swal from 'sweetalert';
+import 'sweetalert2/src/sweetalert2.scss';
 
 const FuncionarioHorario = ({ location }) => {
+
     const id = location.state.id;
     const nomeFuncionario = location.state.nome;
 
@@ -29,7 +30,7 @@ const FuncionarioHorario = ({ location }) => {
 
     function openModal() {
         setIsOpen(true);
-      }
+    }
       
     function closeModal(){
     setIsOpen(false);
@@ -50,11 +51,11 @@ const FuncionarioHorario = ({ location }) => {
             console.log("horarios: ", response.data);
             setHorarios(response.data);
             } catch (error){
-                console.log(error);
+                swal("Atenção", "Não foi possível carregar os horários", "error");
             }
         }, []
     )
-    
+
     const loadFuncionarioHorarios = useCallback(
         async () => {
             const response = await api.get(`funcionario_horario/idFuncionario/${id}`);
@@ -67,16 +68,16 @@ const FuncionarioHorario = ({ location }) => {
         async (e) => {
             e.preventDefault();
 
-            if(!parseInt(idHorario) || !vigenciaInicial || !vigenciaFinal|| !parseInt(codigoInicial)){
-                alert("Por favor, preencha todos os campos");
+            if(!parseInt(idHorario) || !vigenciaInicial || !vigenciaFinal|| !parseInt(codigoInicial)) {
+            swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
             }
 
             let dataInicial = new Date(vigenciaInicial);
             let dataFinal = new Date(vigenciaFinal);
 
-            if(dataInicial.getTime() >= dataFinal.getTime()){
-                alert("A vigência final não pode ser anterior ou igual à vigência inicial");
+            if(dataInicial.getTime() >= dataFinal.getTime()) {
+            swal("Atenção", "A vigência final não pode ser anterior ou igual à vigência inicial", "error");
                 return;
             }
 
@@ -100,10 +101,7 @@ const FuncionarioHorario = ({ location }) => {
                 closeModal();
                 loadFuncionarioHorarios()
             }
-        }, [codigoInicial, 
-            idHorario, vigenciaFinal, vigenciaInicial,
-            loadFuncionarioHorarios
-        ]
+        }, [codigoInicial, idHorario, vigenciaFinal, vigenciaInicial, id, loadFuncionarioHorarios]
     );
 
     const handleUpdateFuncionarioHorario = useCallback(
@@ -111,7 +109,7 @@ const FuncionarioHorario = ({ location }) => {
             e.preventDefault();
 
             if(!parseInt(idHorarioAtualizado) || !vigenciaInicialAtualizada || !vigenciaFinalAtualizada|| !parseInt(codigoInicialAtualizado)) {
-                alert("Por favor, preencha todos os campos");
+                swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
             }
 
@@ -119,7 +117,7 @@ const FuncionarioHorario = ({ location }) => {
             let dataFinal = new Date(vigenciaFinal);
 
             if(dataInicial.getTime() >= dataFinal.getTime()){
-                alert("A vigência final não pode ser anterior ou igual à vigência inicial");
+                swal("Atenção", "A vigência final não pode ser anterior ou igual à vigência inicial", "error");
                 return;
             }
 
@@ -130,7 +128,7 @@ const FuncionarioHorario = ({ location }) => {
                 vigenciaFinal: vigenciaFinalAtualizada,
                 vigenciaInicial: vigenciaInicialAtualizada
             }
-            try{
+            try {
                 await api.put(`funcionario_horario/${funcionarioHorario.id}`, params);
                 console.log("deu certo parceiro")
             } catch (error) {
@@ -152,7 +150,7 @@ const FuncionarioHorario = ({ location }) => {
                 await api.delete(`funcionario_horario/${id}`);
                 console.log("apagado com sucesso");
             } catch (error) {
-                alert(error)
+                swal("Atenção", "Relação não encontrado", "error");
             } finally{
                 loadFuncionarioHorarios();
                 closeModalUpdate();
@@ -170,13 +168,12 @@ const FuncionarioHorario = ({ location }) => {
                 setVigenciaFinalAtualizada(response.data.vigenciaFinal);
                 setFuncionarioHorario(response.data)
             } catch(error) {
-                console.log(error);
+                swal("Atenção", "Relação Não encontrada", "error");
             } finally {
                 openModalUpdate();
             }
         }, [codigoInicialAtualizado, idHorarioAtualizado, vigenciaFinalAtualizada, vigenciaInicialAtualizada],
     );
-
 
     useEffect(
         () => {
@@ -188,15 +185,15 @@ const FuncionarioHorario = ({ location }) => {
     return(     
         <Container>
             <Row 
-            direction="row"
-            container>
+                direction="row"
+                container
+            >
                 <SubTitulo> Horários do Funcionário</SubTitulo>
                 <Button onClick={openModal}>Adicionar</Button>
             </Row>
             <DivNome>
                 {nomeFuncionario}
             </DivNome>
-            <TableFH funcionarioHorarios={funcionarioHorarios} handleFuncionarioHorario={openModalWithData} removeFuncionarioHorario={removeFuncionarioHorario} />
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
@@ -231,13 +228,14 @@ const FuncionarioHorario = ({ location }) => {
                         >
                             {
                                 horarios.map(horario => (
-                                    <MenuItem value={horario.id}>{horario.codigoHorario}-{horario.descHorario}</MenuItem>
+                                    <MenuItem value={horario.id}>
+                                        {horario.codigoHorario}-{horario.descHorario}
+                                    </MenuItem>
                                 )) 
                             }
-                        
                         </TextField>
-                        </ContainerInputs>
-                        <ContainerInputs>
+                    </ContainerInputs>
+                    <ContainerInputs>
                         <Input
                             id="date"
                             label="Vigência Inicial"
@@ -256,7 +254,7 @@ const FuncionarioHorario = ({ location }) => {
                             InputLabelProps={{ shrink: true }}
                             onChange={e => setVigenciaFinal(e.target.value)}
                         />
-                        </ContainerInputs>
+                    </ContainerInputs>
                 </FormModal>
                 <FooterModal>
                     <Button
@@ -269,10 +267,8 @@ const FuncionarioHorario = ({ location }) => {
                     >
                         Cancelar
                     </ButtonCancel>
-
-                    </FooterModal>
+                </FooterModal>
             </Modal>
-
             <Modal
                 isOpen={modalPutIsOpen}
                 onRequestClose={closeModalUpdate}
@@ -283,71 +279,72 @@ const FuncionarioHorario = ({ location }) => {
                     <h2>Atualizar</h2>
                 </HeaderModal>
                 <FormModal>
-                <ContainerInputs>
-                    <TextField
-                        label="Codigo inicial"
-                        style={inputStyle.codigo}
-                        fullWidth={true}
-                        value={codigoInicialAtualizado}
-                        InputLabelProps={{ shrink: true }}
-                        InputProps={{ inputProps: { min: 1} }}
-                        onChange={e => setCodigoInicialAtualizado(e.target.value)}
-                        type="number"
-                    />
-                    <TextField
-                        select
-                        labelId="Horarios"
-                        label="Horário"
-                        style={inputStyle.horario}
-                        id={idHorarioAtualizado}
-                        value={idHorarioAtualizado}
-                        InputProps={{ inputProps: { min: 1} }}
-                        InputLabelProps={{ shrink: true }}
-                        onChange={e => setIdHorarioAtualizado(e.target.value)}
-                    >
-                        {
-                            horarios.map(horario => (
-                                <MenuItem value={horario.id}>{horario.codigoHorario}-{horario.descHorario}</MenuItem>
-                            )) 
-                        }
-                    </TextField>
-                </ContainerInputs>
-                <ContainerInputs>
-                    <Input
-                        id="date"
-                        label="Vigência Inicial"
-                        value={vigenciaInicialAtualizada}
-                        style={inputStyle.datasModal}
-                        type="date"
-                        InputLabelProps={{ shrink: true }}
-                        onChange={e => setVigenciaInicial(e.target.value)}
-                    />
-                    <Input
-                        id="date"
-                        type="date"
-                        label="Vigência Final"
-                        value={vigenciaFinalAtualizada}
-                        style={inputStyle.datasModal}
-                        InputLabelProps={{ shrink: true }}
-                        onChange={e => setVigenciaFinal(e.target.value)}
-                    />
-                </ContainerInputs>
+                    <ContainerInputs>
+                        <TextField
+                            label="Codigo inicial"
+                            style={inputStyle.codigo}
+                            fullWidth={true}
+                            value={codigoInicialAtualizado}
+                            InputLabelProps={{ shrink: true }}
+                            InputProps={{ inputProps: { min: 1} }}
+                            onChange={e => setCodigoInicialAtualizado(e.target.value)}
+                            type="number"
+                        />
+                        <TextField
+                            select
+                            labelId="Horarios"
+                            label="Horário"
+                            style={inputStyle.horario}
+                            id={idHorarioAtualizado}
+                            value={idHorarioAtualizado}
+                            InputProps={{ inputProps: { min: 1} }}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => setIdHorarioAtualizado(e.target.value)}
+                        >
+                            {
+                                horarios.map(horario => (
+                                    <MenuItem value={horario.id}>
+                                        {horario.codigoHorario}-{horario.descHorario}
+                                    </MenuItem>
+                                )) 
+                            }
+                        </TextField>
+                    </ContainerInputs>
+                    <ContainerInputs>
+                        <Input
+                            id="date"
+                            label="Vigência Inicial"
+                            value={vigenciaInicialAtualizada}
+                            style={inputStyle.datasModal}
+                            type="date"
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => setVigenciaInicial(e.target.value)}
+                        />
+                        <Input
+                            id="date"
+                            type="date"
+                            label="Vigência Final"
+                            value={vigenciaFinalAtualizada}
+                            style={inputStyle.datasModal}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => setVigenciaFinal(e.target.value)}
+                        />
+                    </ContainerInputs>
                 </FormModal>
-                    <FooterModal>
-                        <Button
-                            onClick={e => handleUpdateFuncionarioHorario(e)}
-                        >
-                            Salvar
-                        </Button>
-                        <ButtonCancel
-                            onClick={closeModalUpdate}
-                        >
-                            Cancelar
-                        </ButtonCancel>
-                    </FooterModal>
+                <FooterModal>
+                    <Button
+                        onClick={e => handleUpdateFuncionarioHorario(e)}
+                    >
+                        Salvar
+                    </Button>
+                    <ButtonCancel
+                        onClick={closeModalUpdate}
+                    >
+                        Cancelar
+                    </ButtonCancel>
+                </FooterModal>
             </Modal>
-
-   
+            <TableFH funcionarioHorarios={funcionarioHorarios} handleFuncionarioHorario={openModalWithData} removeFuncionarioHorario={removeFuncionarioHorario} />
         </Container>
         
     )

@@ -1,68 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel, InputRow, SearchContainer, InputMonth} from './styles';
-import InputMask from 'react-input-mask';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import MaterialInput from '@material-ui/core/Input';
-import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import Modal from 'react-modal';
 import api from '../../services/api';
 import { jsPDF } from "jspdf";
 import { TableA } from '../../components/Table';
-import Input from '@material-ui/core/Input';
-
-const inputStyle = {
-    horario: {
-        width: '8vw',
-        height: '100%',
-        marginRight: '10px',
-        marginTop: '3%', 
-    },
-    horarioUp: {
-        width: '8vw',
-        height: '100%',
-        marginRight: '10px',
-        marginTop: '3%', 
-    },
-    empresa: {
-        width: '240px',
-        maxWidth: '240px',
-        height: '100%',
-        fontFamily: 'Oxanium, cursive'
-    },
-    funcionario: {
-        width: '240px',
-        maxWidth: '240px',
-        height: '100%',
-        fontFamily: 'Oxanium, cursive'
-    },
-    data: {
-        width: '240px',
-        maxWidth: '240px',
-        marginTop: '100px',
-        height: '100%'
-    },
-    label: {
-        fontFamily: 'Oxanium, cursive'
-    }
-    
-};
-
-const modalStyle = {
-    content: {
-        width               : '550px',
-        height              : '300px',
-        top                 : '50%',
-        left                : '50%',
-        right               : 'auto',
-        bottom              : 'auto',
-        marginRight         : '-50%',
-        transform           : 'translate(-50%, -50%)'
-    }
-};
-
+import swal from 'sweetalert';
+import 'sweetalert2/src/sweetalert2.scss';
+import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel, InputRow, SearchContainer, InputMonth, inputStyle, modalStyle} from './styles';
 
 const Apontamento = () => {
 
@@ -72,7 +20,6 @@ const Apontamento = () => {
     const [ saida2Atualizada, setSaida2Atualizada ] = useState('');
     const [ idFuncionario, setIdFuncionario] = useState('');
     const [ modalPutIsOpen, setModalPutIsOpen] = useState(false);
-    const [ apontamentos, setApontamentos] = useState([]);
     const [ apontamentosFiltrados, setApontamentosFiltrados] = useState([]);
     const [ listaFuncionarios, setListaFuncionarios] = useState([]);
     const [ listaEmpresas, setListaEmpresas] = useState([]);
@@ -82,69 +29,72 @@ const Apontamento = () => {
 
     function openModalUpdate() {
         setModalPutIsOpen(true);
-      }
+    }
       
-      function closeModalUpdate(){
-        setModalPutIsOpen(false);
-      }
+    function closeModalUpdate(){
+    setModalPutIsOpen(false);
+    }
+
+    const loadEmpresas = useCallback(
+        async () => {
+            try {
+                const response = await api.get('empresa');
+                setListaEmpresas(response.data);
+            } catch(error) { 
+                swal("Atenção", "Impossível carregar as empresas", "error");
+            }
+        }, [],
+    );
 
     const openModalWithData = useCallback(
         async (id) => {
             try {
                 const response = await api.get(`apontamento/${id}`);
                 const apontamento = response.data;
-                setApontamento(apontamento)
+
+                setApontamento(apontamento);
                 setEntrada1Atualizada(apontamento.entrada1);
                 setSaida1Atualizada(apontamento.saida1);
                 setEntrada2Atualizada(apontamento.entrada2);
                 setSaida2Atualizada(apontamento.saida2);
             } catch(error) {
-                alert(error);
+                swal("Atenção", "Apontamento não encontrado", "error");
             } finally {
                 openModalUpdate();
             }
         }, [entrada1Atualizada, saida1Atualizada, entrada2Atualizada, saida2Atualizada],
     )
 
+    const getByFuncionarioAndMes =  async (data1, data2) => { 
+        setApontamentosFiltrados([]);
+        const dataInicial = new Date(data1.getFullYear(), data1.getMonth(), 1);
+        setDataInicio(dataInicial)
+        const dataFinal = new Date(data2.getFullYear(), data2.getMonth() + 1, 0);
+        setDataFim(dataFinal)
 
-    const getByFuncionarioAndMes =
-        async (data1, data2) => {  
-            
-            setApontamentosFiltrados([]);
-
-            const dataInicial = new Date(data1.getFullYear(), data1.getMonth(), 1);
-            setDataInicio(dataInicial)
-            console.log(dataInicial)
-
-            const dataFinal = new Date(data2.getFullYear(), data2.getMonth() + 1, 0);
-            setDataFim(dataFinal)
-            console.log(dataFinal)
-
-            const params = {
-                idFuncionario: idFuncionario,
-                dataInicial: dataInicial,
-                dataFinal: dataFinal
-            }
-            try {
-                const response = await api.post(`apontamento/totalDays`, params);
-                setApontamentosFiltrados(response.data);
-                console.log(response.data)
-                console.log(params)
-            } catch(error) {
-                alert(error);
-            } finally {
-                
-            }
+        const params = {
+            idFuncionario: idFuncionario,
+            dataInicial: dataInicial,
+            dataFinal: dataFinal
         }
+
+        try {
+            const response = await api.post(`apontamento/totalDays`, params);
+            setApontamentosFiltrados(response.data);
+            console.log(response.data)
+            console.log(params)
+        } catch(error) {
+            swal("Atenção", "Nenhum dado retornado", "error");
+        }
+    }
 
     const loadFuncionarios = 
         async (id) => {
             try {
                 const response = await api.get(`funcionario/empresa/${id}`);
-                console.log("funcionou " + response.data);
                 setListaFuncionarios(response.data);
             } catch(error) {
-                console.log(error);
+                swal("Anteção", "funcionários não encontrados", "error");
             }
         }
     
@@ -152,7 +102,7 @@ const Apontamento = () => {
         async (e) => {
             e.preventDefault();
             if(!entrada1Atualizada || !saida1Atualizada || !entrada2Atualizada || !entrada2Atualizada){
-                alert("Por favor, preencha todos os campos");
+                swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
             }
             const paramsUpdated = {
@@ -163,11 +113,8 @@ const Apontamento = () => {
             }
             try{
                 await api.put(`apontamento/${apontamento.id}`, paramsUpdated);
-                console.log(paramsUpdated);
             } catch(error){
-                console.log(error.response.data);
-
-                console.log(error);
+                swal("Anteção", "Apontamento não encontrado", "error");
             } finally {
                 getByFuncionarioAndMes(dataInicio, dataFim);
                 closeModalUpdate();
@@ -175,53 +122,19 @@ const Apontamento = () => {
         }, [entrada1Atualizada, saida1Atualizada, entrada2Atualizada, saida2Atualizada],
         )
 
-
-    const loadApontamentos = useCallback (
-        async () => {
-            try {
-                const response = await api.get('apontamento');
-                setApontamentos(response.data);
-                console.log(response.data);
-                response.data.map(apontamento => console.log(apontamento))
-            } catch (error) {
-                console.log(error);
-            }
-        }, []
-    )
-
-
-    const loadEmpresas = useCallback(
-        async () => {
-            try{
-                const response = await api.get('empresa');
-                console.log("aqui, tio" + response.data);
-                setListaEmpresas(response.data);
-            }catch(error){
-                console.log(error);
-            }
-        }, [],
-    );
-
     useEffect(
         () => {
             loadEmpresas();
         }, [loadEmpresas]
     )
 
-    useEffect(
-        () => {
-            loadApontamentos();
-        }, [loadApontamentos]
-    )
-
-
 
     function criadorPDF() {
         const doc = new jsPDF('landscape');
-        const colunas = ["Data","Entrada", "Almoço", "Retorno", "Saída", "Total", "Horas Extras", "Atrasos"];
+        const colunas = ["Data", "Entrada", "Almoço", "Retorno", "Saída", "Total", "Horas Extras", "Atrasos"];
         const linhas = [];
         
-        var nome = apontamentosFiltrados[0].funcionario.nome + " (" + apontamentosFiltrados[0].funcionario.pis + ") - " + dataInicio.getMonth() + "/" + dataInicio.getFullYear();
+        var dados = apontamentosFiltrados[0].funcionario.nome + " (" + apontamentosFiltrados[0].funcionario.pis + ") - " + dataInicio.getMonth() + "/" + dataInicio.getFullYear();
         
         apontamentosFiltrados.forEach(apont => { 
             var valores = [apont.data, apont.entrada1, apont.saida1,
@@ -231,17 +144,13 @@ const Apontamento = () => {
         });   
 
         doc.setFontSize(10);
-        doc.text(15, 5, nome, {styles: { 
+        doc.text(15, 5, dados, {styles: { 
             fontSize: 10 
         }});
 
-        doc.autoTable(colunas, linhas, { startY: 7, headStyles: {fillColor: '#942a37'},  styles: { 
-            fontSize: 5 
-         }}
-        );
-        doc.save(nome);
+        doc.autoTable(colunas, linhas, { startY: 7, headStyles: {fillColor: '#942a37'},  styles: { fontSize: 5 }});
+        doc.save(dados);
     }
-
 
     return(
         <Container>
@@ -255,66 +164,82 @@ const Apontamento = () => {
                 > 
                     Gerar PDF
                 </Button>  
-            <InputRow container direction='row'>
-                <SearchContainer>
-                    <InputLabel style={inputStyle.label} id="Empresa" shrink>Empresa</InputLabel>
-                    <Select
-                        style={inputStyle.empresa}
-                        labelId="Empresa"
-                        MenuProps={{ style: {maxWidth: '400px', maxHeight: '400px'}  }}
-                        onChange={e => loadFuncionarios(e.target.value)}
-                    >
-                        {
-                            listaEmpresas.map(empresa => (
-                                <MenuItem
-                                    style={{fontFamily: 'Oxanium, cursive'}}
-                                    value={empresa.id}
-                                >
-                                    {empresa.razaoSocial}
-                                </MenuItem>
-                            ))                                
-                        }
-                    </Select>
-                </SearchContainer>
-                <SearchContainer>
-                    <InputLabel style={inputStyle.label} id="Funcionario"shrink>Funcionário</InputLabel>
-                    <Select
-                        style={inputStyle.funcionario}
-                        labelId="Funcionario"
-                        value={idFuncionario}
-                        MenuProps={{ style: {maxWidth: '400px', maxHeight: '400px'}  }}
-                        onChange={e => setIdFuncionario(e.target.value)}
-                    >
-                        {
-                            listaFuncionarios.map(funcionario => (
-                                <MenuItem  
-                                    style={{fontFamily: 'Oxanium, cursive'}}
-                                    value={funcionario.id}
-                                >
-                                    {funcionario.nome}
-                                </MenuItem>
-                            ))                                
-                        }
-                    </Select>
-               </SearchContainer>
-                
-               { 
-               !!idFuncionario &&
+                <InputRow container direction='row'>
                     <SearchContainer>
-                        <InputLabel style={inputStyle.label} id="data" shrink>Vigência</InputLabel>
-                        <InputMonth
-                            labelId="data"
-                            type="month" 
-                            onChange={e => 
-                                getByFuncionarioAndMes(new Date(e.target.value.split("-")),  
-                                new Date(e.target.value.split("-")))
-                            }  
-                        />
+                        <InputLabel 
+                            style={inputStyle.label} 
+                            id="Empresa" 
+                            shrink
+                        >
+                            Empresa
+                        </InputLabel>
+                        <Select
+                            style={inputStyle.empresa}
+                            labelId="Empresa"
+                            MenuProps={{ style: {maxWidth: '400px', maxHeight: '400px'}  }}
+                            onChange={e => loadFuncionarios(e.target.value)}
+                        >
+                            {
+                                listaEmpresas.map(empresa => (
+                                    <MenuItem
+                                        style={{fontFamily: 'Oxanium, cursive'}}
+                                        value={empresa.id}
+                                    >
+                                        {empresa.razaoSocial}
+                                    </MenuItem>
+                                ))                                
+                            }
+                        </Select>
                     </SearchContainer>
-                }
+                    <SearchContainer>
+                        <InputLabel 
+                            style={inputStyle.label} 
+                            id="Funcionario"
+                            shrink
+                        >
+                            Funcionário
+                        </InputLabel>
+                        <Select
+                            style={inputStyle.funcionario}
+                            labelId="Funcionario"
+                            value={idFuncionario}
+                            MenuProps={{ style: {maxWidth: '400px', maxHeight: '400px'} }}
+                            onChange={e => setIdFuncionario(e.target.value)}
+                        >
+                            {
+                                listaFuncionarios.map(funcionario => (
+                                    <MenuItem  
+                                        style={{fontFamily: 'Oxanium, cursive'}}
+                                        value={funcionario.id}
+                                    >
+                                        {funcionario.nome}
+                                    </MenuItem>
+                                ))                                
+                            }
+                        </Select>
+                    </SearchContainer>
+                    {
+                        !!idFuncionario &&
+                            <SearchContainer>
+                                <InputLabel 
+                                    style={inputStyle.label} 
+                                    id="data" 
+                                    shrink
+                                >
+                                    Vigência
+                                </InputLabel>
+                                <InputMonth
+                                    labelId="data"
+                                    type="month" 
+                                    onChange={e => 
+                                        getByFuncionarioAndMes(new Date(e.target.value.split("-")),  
+                                        new Date(e.target.value.split("-")))
+                                    }  
+                                />
+                            </SearchContainer>
+                    }
                 </InputRow>
             </Row>
-
             <Modal
                 isOpen={modalPutIsOpen}
                 onRequestClose={closeModalUpdate}
@@ -339,7 +264,6 @@ const Apontamento = () => {
                         >
                             {(inputProps) => <MaterialInput {...inputProps} type="tel" />}
                         </TextField>
-                        
                         <TextField
                             placeholder="Almoço"
                             mask="00:00:00"
@@ -353,7 +277,6 @@ const Apontamento = () => {
                         >
                             {(inputProps) => <MaterialInput {...inputProps} type="tel" />}
                         </TextField>
-                        
                         <TextField
                             placeholder="Retorno"
                             mask="00:00:00"
@@ -367,7 +290,6 @@ const Apontamento = () => {
                         >
                             {(inputProps) => <MaterialInput {...inputProps} type="tel" />}
                         </TextField>
-
                         <TextField
                             placeholder="Saida"
                             inputProps={{maxLength: 8, minLength: 8}}
@@ -395,9 +317,7 @@ const Apontamento = () => {
                     </ButtonCancel>
                 </FooterModal>
             </Modal>
-            
             <TableA apontamentos={apontamentosFiltrados} handleApontamento={openModalWithData} />
-            
         </Container>
     )
     

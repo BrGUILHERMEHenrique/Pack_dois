@@ -1,93 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
-
 import Modal from 'react-modal';
 import api from '../../services/api';
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-
-
-import { FormModal, Button, Container, Row, SubTitulo, HeaderModal, FooterModal, InputContainer, ButtonCancel} from './styles';
 import { TableHD } from '../../components/Table';
-
-
-// const customStyles = {
-//     content : {
-//         width               : '50%',
-//         height              : '50%',
-//         top                 : '50%',
-//         left                : '50%',
-//         right               : 'auto',
-//         bottom              : 'auto',
-//         marginRight         : '-50%',
-//         transform           : 'translate(-50%, -50%)'
-//     }
-//   };
-
-const inputStyle = {
-    horario: {
-        width: '8vw',
-        height: '100%',
-        marginRight: '10px',
-        marginTop: '3%', 
-    },
-    horarioUp: {
-        width: '8vw',
-        height: '100%',
-        marginRight: '10px',
-        marginTop: '3%', 
-    },
-    
-};
-
-
-const modalStyleAtualizar = {
-    content: {
-        width               : '580px',
-        height              : '380px',
-        top                 : '50%',
-        left                : '50%',
-        right               : 'auto',
-        bottom              : 'auto',
-        marginRight         : '-50%',
-        transform           : 'translate(-50%, -50%)'
-    }
-};
-
-const modalStyleAdicionar = {
-    content: {
-        width               : '580px',
-        height              : '380px',
-        top                 : '50%',
-        left                : '50%',
-        right               : 'auto',
-        bottom              : 'auto',
-        marginRight         : '-50%',
-        transform           : 'translate(-50%, -50%)'
-    }
-}
-
-
-  const useStyles = makeStyles((theme) => ({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-    TextFieldEmpty: {
-      marginTop: theme.spacing(2),
-    }
-  }));
+import swal from 'sweetalert';
+import 'sweetalert2/src/sweetalert2.scss';
+import { FormModal, Button, Container, Row, SubTitulo, HeaderModal, FooterModal, InputContainer, ButtonCancel, inputStyle, modalStyleAdicionar, modalStyleAtualizar} from './styles';
   
 const HorarioDetalhes = ({ location }) => {
+
     const id = location.state.id;
     const horarioSubtitulo = location.state.descHorario;
-    const classes = useStyles();
 
     const [ListHorarioDetalhes, setListHorarioDetalhes] = useState([]);
     const [folga, setFolga] = useState(false);
-    const [horarios, setHorarios] = useState([]);
     const [entrada1, setEntrada1] = useState('');
     const [entrada2, setEntrada2] = useState('');
     const [saida1, setSaida1] = useState('');
@@ -156,7 +84,7 @@ const HorarioDetalhes = ({ location }) => {
             console.log(response.data);
             setListHorarioDetalhes(response.data);
         } catch (error) {
-            console.log(error);
+            swal("Atenção", "Não foi possível carregar os dados", "error");
         }
     }, [id],
     );
@@ -164,18 +92,18 @@ const HorarioDetalhes = ({ location }) => {
     const handleAddHorarioDetalhe = useCallback(
         async (e) => {
             e.preventDefault();
+
             if(parseInt(codigoDia) > 31) {
-                alert("Por favor verifique os dados, não há um mês que passe do dia 31");
+                swal("Atenção", "Por favor verifique os dados, não há um mês que passe do dia 31", "warning");
                 closeModalAdd();
                 return;
             }
             if(!folga){
                 if(!entrada1 || !saida1 || !entrada2 || !saida2 || !codigoDia){
-                alert("Por favor, preencha todos os campos");
+                swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
                 }
             }
-
             if(
                 entrada1.getTime() >= saida1.getTime() ||
                 entrada1.getTime() >= entrada2.getTime() ||
@@ -184,10 +112,9 @@ const HorarioDetalhes = ({ location }) => {
                 saida1.getTime() >= saida2.getTime() ||
                 entrada2.getTime() >= saida2.getTime()
             ) {
-                alert("Verifique a ordem dos horários");
+                swal("Atenção", "Verifique a ordem dos horários", "warning");
                 return;
             }
-
 
             const params = { 
                 horario: id,
@@ -197,14 +124,12 @@ const HorarioDetalhes = ({ location }) => {
                 saida1: saida1,
                 entrada2: entrada2,
                 saida2: saida2
-   
             }
-
             try {
                 console.log(params);
                 await api.post('horario_detalhes', params);
             } catch (error) {
-                console.log(error.response.data);
+                swal("Atenção", error.response.data, "error");
             } finally{
                 loadHorarioDetahes();
                 setCodigoDia(ultimo + 1);
@@ -217,14 +142,7 @@ const HorarioDetalhes = ({ location }) => {
                 setHorario({});
                 closeModalAdd();
             }
-        }, [ 
-            codigoDia,
-            folga,
-            entrada1,
-            saida1,
-            entrada2,
-            saida2
-        ]
+        }, [codigoDia, folga, entrada1, saida1, entrada2, saida2]
     );
 
     const removeHorarioDetalhe = useCallback(
@@ -232,8 +150,9 @@ const HorarioDetalhes = ({ location }) => {
             try {
                 await api.delete(`horario_detalhes/${id}`);
                 console.log('Sucess, Delete');
+                swal("Sucesso", "Relação removida com sucesso", "sucess");
             } catch (error) {
-                console.log(error);
+                swal("Atenção", "Não foi possível remover a relação", "error");
             } finally {
                 loadHorarioDetahes();
             }
@@ -244,13 +163,13 @@ const HorarioDetalhes = ({ location }) => {
         async (horario, e) => {
             e.preventDefault();
             if(parseInt(codigoDia) > 31){
-                alert("Por favor, verifique os dados, não há um mês que passe do dia 31");
+                swal("Atenção", "Por favor verifique os dados, não há um mês que passe do dia 31", "warning");
                 closeModalAdd();
                 return;
             }
             if(!folgaAtualizado) {
                 if(!entrada1Atualizado || !saida1Atualizado || !entrada2Atualizado || !saida2Atualizado || !codigoDiaAtualizado){
-                alert("Por favor, preencha todos os campos");
+                    swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
                 }
             }
@@ -263,7 +182,7 @@ const HorarioDetalhes = ({ location }) => {
                 saida1Atualizado.getTime() >= saida2Atualizado.getTime() ||
                 entrada2Atualizado.getTime() >= saida2Atualizado.getTime()
             ) {
-                alert("Verifique a ordem dos horários");
+                swal("Atenção", "Verifique a ordem dos horários", "warning");
                 return;
             }
 
@@ -285,14 +204,7 @@ const HorarioDetalhes = ({ location }) => {
             } finally {
                 loadHorarioDetahes();
             }
-        }, [
-            codigoDiaAtualizado,
-            folgaAtualizado,
-            entrada1Atualizado,
-            saida1Atualizado,
-            entrada2Atualizado,
-            saida2Atualizado
-        ],
+        }, [codigoDiaAtualizado, folgaAtualizado, entrada1Atualizado, saida1Atualizado, entrada2Atualizado, saida2Atualizado],
     )
     
     useEffect(
@@ -304,14 +216,12 @@ const HorarioDetalhes = ({ location }) => {
     return(
         <Container>
             <Row 
-            direction="row"
-            container>
+                direction="row"
+                container
+            >
                 <SubTitulo> {horarioSubtitulo} </SubTitulo>
-                <Button variant="contained" color="primary" onClick={openModalAdd}>Adicionar</Button>
+                <Button onClick={openModalAdd}>Adicionar</Button>
             </Row>
-
-            <TableHD horarioDetalhes={ListHorarioDetalhes} removeHorarioDetalhe = {removeHorarioDetalhe} handleHorarioDetalhes={openModalWithData}/>
-
             <Modal
                 isOpen={modalPutIsOpen}
                 onRequestClose={closeModalUpdate}
@@ -354,17 +264,6 @@ const HorarioDetalhes = ({ location }) => {
                         />
                     </InputContainer>
                     <InputContainer>
-                        {/* <TextField 
-                            type="number"
-                            value={codigoDiaAtualizado}
-                            style={inputStyle.horarioUp}
-                            label="Código do Dia"
-                            InputProps={{ inputProps: { min: 1} }}
-                            InputLabelProps={{ shrink: true }}
-                            onChange={e => {
-                                setCodigoDiaAtualizado(e.target.value);
-                            }}
-                        /> */}
                         <TextField
                             select
                             style={inputStyle.horarioUp}
@@ -379,28 +278,27 @@ const HorarioDetalhes = ({ location }) => {
                             <MenuItem value={false}>Falso</MenuItem>
                         </TextField>
                     </InputContainer>
-                        </FormModal>
-                    <FooterModal>
-                        <Button
-                            onClick={e => handleHorarioDetalhe(horarioDetalhe.id, e)}
-                        >Atualizar</Button>
-                        <ButtonCancel
-                            onClick={closeModalUpdate}
-                        >
-                            Cancelar
-                        </ButtonCancel>
-                    </FooterModal>
+                </FormModal>
+                <FooterModal>
+                    <Button
+                        onClick={e => handleHorarioDetalhe(horarioDetalhe.id, e)}
+                    >Atualizar</Button>
+                    <ButtonCancel
+                        onClick={closeModalUpdate}
+                    >
+                        Cancelar
+                    </ButtonCancel>
+                </FooterModal>
             </Modal>
             <Modal
-            isOpen={modalAddIsOpen}
-            onRequestClose={closeModalAdd}
-            style={modalStyleAdicionar}
-            contentLabel="Modal"
+                isOpen={modalAddIsOpen}
+                onRequestClose={closeModalAdd}
+                style={modalStyleAdicionar}
+                contentLabel="Modal"
             >
                 <HeaderModal>
                 <h2>Cadastrar</h2>  
                 </HeaderModal>
-            
                 <FormModal>
                     <InputContainer>
                         <TextField
@@ -418,7 +316,6 @@ const HorarioDetalhes = ({ location }) => {
                                     <MenuItem value={horario}>{horario}</MenuItem>
                                 ))
                             }
-                        
                         </TextField>
                         <TextField
                             select
@@ -473,36 +370,19 @@ const HorarioDetalhes = ({ location }) => {
                         </TextField>
                     </InputContainer>
                     <InputContainer>
-                            {/* <TextField
-                                select
-                                style={inputStyle.horario}
-                                label="Horário"
-                                labelId="Horarios"
-                                id={horario.id}
-                                value={horario}
-                                InputLabelProps={{ shrink: true }}
-                                onChange={e => setHorario(e.target.value)}
-                            >
-                                {
-                                    horarios.map(horario => (
-                                        <MenuItem value={horario}>{horario.codigoHorario}-{horario.descHorario}</MenuItem>
-                                    )) 
-                                }
-                            
-                            </TextField> */}
-                            <TextField
-                                select
-                                style={inputStyle.horario}
-                                label="Folga"
-                                labelId="Folga"
-                                id="Folga"
-                                value={folga}
-                                InputLabelProps={{ shrink: true }}
-                                onChange={e => setFolga(e.target.value)}
-                            >
-                                <MenuItem value={true}>Verdadeiro</MenuItem>
-                                <MenuItem value={false}>Falso</MenuItem>
-                            </TextField>
+                        <TextField
+                            select
+                            style={inputStyle.horario}
+                            label="Folga"
+                            labelId="Folga"
+                            id="Folga"
+                            value={folga}
+                            InputLabelProps={{ shrink: true }}
+                            onChange={e => setFolga(e.target.value)}
+                        >
+                            <MenuItem value={true}>Verdadeiro</MenuItem>
+                            <MenuItem value={false}>Falso</MenuItem>
+                        </TextField>
                         <TextField 
                             style={inputStyle.horario}
                             type="number"
@@ -515,24 +395,23 @@ const HorarioDetalhes = ({ location }) => {
                             }}
                         />
                     </InputContainer>
-                        </FormModal>
-                    <FooterModal>
-                        <Button
-                            onClick={e => handleAddHorarioDetalhe(e)}
-                        >
-                            Adicionar
-                        </Button>
-                        <ButtonCancel
-                            onClick={closeModalAdd}
-                        >
-                            Cancelar
-                        </ButtonCancel>
-                    </FooterModal>
+                </FormModal>
+                <FooterModal>
+                    <Button
+                        onClick={e => handleAddHorarioDetalhe(e)}
+                    >
+                        Adicionar
+                    </Button>
+                    <ButtonCancel
+                        onClick={closeModalAdd}
+                    >
+                        Cancelar
+                    </ButtonCancel>
+                </FooterModal>
             </Modal>
+            <TableHD horarioDetalhes={ListHorarioDetalhes} removeHorarioDetalhe = {removeHorarioDetalhe} handleHorarioDetalhes={openModalWithData}/>
         </Container>
     )
-
-
 
 }
 
