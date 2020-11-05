@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Modal from 'react-modal';
 import api from '../../services/api';
-import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { TableHD } from '../../components/Table';
@@ -20,7 +19,6 @@ const HorarioDetalhes = ({ location }) => {
     const [entrada2, setEntrada2] = useState('');
     const [saida1, setSaida1] = useState('');
     const [saida2, setSaida2] = useState('');
-    const [horario, setHorario] = useState({});
     const [horarioDetalhe, setHorarioDetalhe] = useState({});
     const [codigoDia, setCodigoDia] = useState(1);
     const [codigoDiaAtualizado, setCodigoDiaAtualizado] = useState(Number);
@@ -139,10 +137,9 @@ const HorarioDetalhes = ({ location }) => {
                 setSaida1('');
                 setSaida2('');
                 setFolga(false);
-                setHorario({});
                 closeModalAdd();
             }
-        }, [codigoDia, folga, entrada1, saida1, entrada2, saida2]
+        }, [codigoDia, folga, entrada1, saida1, entrada2, saida2, id, loadHorarioDetahes, ultimo]
     );
 
     const removeHorarioDetalhe = useCallback(
@@ -156,7 +153,7 @@ const HorarioDetalhes = ({ location }) => {
             } finally {
                 loadHorarioDetahes();
             }
-        }, []
+        }, [loadHorarioDetahes],
     )
 
     const handleHorarioDetalhe = useCallback(
@@ -204,7 +201,7 @@ const HorarioDetalhes = ({ location }) => {
             } finally {
                 loadHorarioDetahes();
             }
-        }, [codigoDiaAtualizado, folgaAtualizado, entrada1Atualizado, saida1Atualizado, entrada2Atualizado, saida2Atualizado],
+        }, [codigoDia, folgaAtualizado, entrada1Atualizado, saida1Atualizado, entrada2Atualizado, saida2Atualizado, codigoDiaAtualizado, loadHorarioDetahes],
     )
     
     useEffect(

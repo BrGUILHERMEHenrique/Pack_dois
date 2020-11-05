@@ -10,33 +10,7 @@ import DateRangeIconRounded from '@material-ui/icons/DateRangeRounded';
 import { pt } from 'date-fns/locale';
 import { Tabela, TabelaRow, TextoTh, TextoTr, ButtonU, ButtonD, ButtonIcon, ButtonIconD, useStyles } from './styles';
 
-String.prototype.cpf = function(){
-  let cpf = this.replace(/\D/g, '');
-
-  return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-}
-
-String.prototype.cnpj = function(){
-  let cnpj = this.replace(/\D/g, '');
-
-  return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
-}
-
-String.prototype.pis = function(){
-  let pis = this.replace(/\D/g, '');
-
-  return pis.replace(/(\d{3})(\d{5})(\d{2})(\d{1})/, "$1.$2.$3-$4");
-}
-
-String.prototype.numero = function(){
-  let numero = this.replace(/\D/g, '');
-
-  if(numero.lenght === 10){
-    return numero.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3")
-  } else {
-    return numero.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
-  }
-}
+import { formataCpf, formataCnpj, formataPis, formataNumero } from '../Formatadores';
 
 const OpenAlert = async (id, remove) => {
   try{
@@ -78,10 +52,10 @@ const TableF = ({ funcionarios, handleFuncionario, removeFuncionario }) => {
               <TabelaRow key={funcionario.id}>
                 <Tabela component="th" scope="funcionario" align="left"><TextoTr>{funcionario.nome}</TextoTr></Tabela>
                 <Tabela align="left"><TextoTr>{funcionario.idEmpresa.razaoSocial}</TextoTr></Tabela>
-                <Tabela align="right" style={{minWidth: 150}}><TextoTr>{funcionario.pis.pis()}</TextoTr></Tabela>
-                <Tabela align="center" style={{minWidth: 150}}><TextoTr>{funcionario.cpf.cpf()}</TextoTr></Tabela>
+                <Tabela align="right" style={{minWidth: 150}}><TextoTr>{formataPis(funcionario.pis)}</TextoTr></Tabela>
+                <Tabela align="center" style={{minWidth: 150}}><TextoTr>{formataCpf(funcionario.cpf)}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{format(new Date(funcionario.dataNascimento.split("-")), 'dd/MM/yyyy')}</TextoTr></Tabela>
-                <Tabela align="center" style={{minWidth: 150}}><TextoTr>{funcionario.telefone.numero()}</TextoTr></Tabela>
+                <Tabela align="center" style={{minWidth: 150}}><TextoTr>{formataNumero(funcionario.telefone)}</TextoTr></Tabela>
                   <Tabela align="center" style={{minWidth: 150}}>
                     <ButtonIcon
                       onClick = {() => {
@@ -133,7 +107,7 @@ const TableE = ({ empresas, handleEmpresa, removeEmpresa }) => {
               <TabelaRow key={empresa.id}>
                 <Tabela component="th" scope="empresa" align="left"><TextoTr>{empresa.razaoSocial}</TextoTr></Tabela>
                 <Tabela align="center"><TextoTr>{empresa.codEmpresa}</TextoTr></Tabela>
-                <Tabela align="center"><TextoTr>{empresa.cnpj.cnpj()}</TextoTr></Tabela>
+                <Tabela align="center"><TextoTr>{formataCnpj(empresa.cnpj)}</TextoTr></Tabela>
                 <Tabela align="center">
                   <ButtonU 
                     onClick={() => {

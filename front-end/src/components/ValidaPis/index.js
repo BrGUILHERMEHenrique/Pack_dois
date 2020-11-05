@@ -1,4 +1,3 @@
-import React from 'react'
 
 export default function ValidaPIS(pis) {
     var multiplicadorBase = "3298765432";

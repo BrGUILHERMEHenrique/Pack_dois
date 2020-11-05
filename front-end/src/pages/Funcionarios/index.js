@@ -58,7 +58,7 @@ const Funcionarios = () => {
             }catch(error){
                 swal("Atenção", "Funcionários não encontrados", "error");
             }
-        }, [idEmpresa],
+        }, [],
     );
 
     const loadEmpresas = useCallback(
@@ -114,7 +114,7 @@ const Funcionarios = () => {
                 closeModal();
                 loadFuncionarios(idEmpresa);
             }
-        }, [nome, pis, cpf, dataNascimento, telefone, empresa],
+        }, [nome, pis, cpf, dataNascimento, telefone, empresa, idEmpresa, loadFuncionarios],
     )
 
     const getFuncionarioById = useCallback(
@@ -126,7 +126,7 @@ const Funcionarios = () => {
             } catch(error){
                 swal("Atenção", "Funcionário não encontrado", "error");
             } 
-        }, [nome, cpf, dataNascimento, pis, telefone, funcionario, empresa]
+        }, []
     )
 
     const openModalWithData = useCallback(
@@ -142,7 +142,7 @@ const Funcionarios = () => {
             } finally {
                 openModalUpdate();
             }
-        }, [funcionario, nomeAtualizado, dataNascimentoAtualizado, telefoneAtualizado],
+        }, [getFuncionarioById],
     )
 
     const handleUpdateFuncionario = useCallback(
@@ -171,7 +171,7 @@ const Funcionarios = () => {
                 loadFuncionarios(idEmpresa);
             }
             
-        }, [nomeAtualizado, dataNascimentoAtualizado, telefoneAtualizado],
+        }, [nomeAtualizado, dataNascimentoAtualizado, telefoneAtualizado, funcionario.id, idEmpresa, loadFuncionarios],
     )
 
     const removeFuncionario = async (id) => {

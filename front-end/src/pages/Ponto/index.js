@@ -22,14 +22,15 @@ const Horario = () => {
 
         if(!funcionario.id){
             loadFuncionario();
-        } else if(!entrada1 && !saida1 || !entrada2 && !!saida1){
+        } else if((!entrada1 && !saida1) || (!entrada2 && !!saida1)){
             getTimeNow();
-        } else if(!saida1 || !saida2 && !!entrada1 || !!entrada2){
+        } else if((!saida1 || !saida2) && (!!entrada1 || !!entrada2)){
             timeStop();
         }
     }
 
-    const addZero = () => {
+    const addZero = useCallback(
+    () => {
 
         let hour = dateNow.getHours();
         let minute = dateNow.getMinutes();
@@ -45,7 +46,8 @@ const Horario = () => {
             second = `0${dateNow.getSeconds()}`;
         }
         return `${hour}:${minute}:${second}`;
-    }
+    }, [dateNow]
+    )
 
     const getTimeNow = () => {
 
@@ -74,11 +76,11 @@ const Horario = () => {
             }
 
             try {               
-            const response = await api.post('apontamento', params);
+            await api.post('apontamento', params);
             } catch (error) {
                 swal("Atenção", error.response.data.replaceAll("_", " "), "error");
             }
-        }, [funcionario, data, entrada1, entrada2, saida1, saida2]
+        }, [funcionario, data, entrada1, entrada2, saida1]
     )
 
     const timeStop = useCallback(
@@ -93,7 +95,7 @@ const Horario = () => {
                 setSaida2(dateTotal);
                 handleAddApontamento(dateTotal);
             }
-        }, [entrada1, entrada2, saida1, saida2, handleAddApontamento], 
+        }, [entrada1, entrada2, saida1, saida2, handleAddApontamento, addZero], 
     )
     
     const loadFuncionario = useCallback(
@@ -112,34 +114,29 @@ const Horario = () => {
         }, [pis],
     )
 
-    return(
-        <Container>
-            <ContainerLogin>
-                <Input 
-                    placeholder="PIS (apenas números)"
-                    value={pis}
-                    onChange={e => setPis(e.target.value)}
-                    disabled={!!funcionario.id ? true : false}
-                    />
-                {
-                    !saida2 ?
-                    <Button
-                        onClick={() => handleAllClicks()}
-                        disabled={!!saida2 ? true : false}
-                    >
-                        {textButton}
-                    </Button>
-                    :
-                    <ButtonInativo
-                        disabled={true}
-                    >
-                        Fim do Expediente
-                    </ButtonInativo>
-                }
-            </ContainerLogin>
-            <Relogio/>
-        </Container>
-    )
+    return (
+      <Container>
+        <ContainerLogin>
+          <Input
+            placeholder="PIS (apenas números)"
+            value={pis}
+            onChange={(e) => setPis(e.target.value)}
+            disabled={!!funcionario.id ? true : false}
+          />
+          {!saida2 ? (
+            <Button
+              onClick={() => handleAllClicks()}
+              disabled={!!saida2 ? true : false}
+            >
+              {textButton}
+            </Button>
+          ) : (
+            <ButtonInativo disabled={true}>Fim do Expediente</ButtonInativo>
+          )}
+        </ContainerLogin>
+        <Relogio />
+      </Container>
+    );
 }
 
 export default Horario;

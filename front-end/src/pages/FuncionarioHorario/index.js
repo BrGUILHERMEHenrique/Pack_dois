@@ -141,7 +141,7 @@ const FuncionarioHorario = ({ location }) => {
                 loadFuncionarioHorarios();
                 closeModalUpdate();
             }     
-        }, [codigoInicialAtualizado, idHorarioAtualizado, vigenciaInicialAtualizada, vigenciaFinalAtualizada],
+        }, [codigoInicialAtualizado, idHorarioAtualizado, vigenciaInicialAtualizada, vigenciaFinalAtualizada, vigenciaInicial, vigenciaFinal, id, funcionarioHorario.id, loadFuncionarioHorarios],
     );
 
     const removeFuncionarioHorario = useCallback (
@@ -172,14 +172,14 @@ const FuncionarioHorario = ({ location }) => {
             } finally {
                 openModalUpdate();
             }
-        }, [codigoInicialAtualizado, idHorarioAtualizado, vigenciaFinalAtualizada, vigenciaInicialAtualizada],
+        }, [],
     );
 
     useEffect(
         () => {
             loadFuncionarioHorarios(id);
             loadHorarios();
-        }, [loadFuncionarioHorarios, loadHorarios],
+        }, [loadFuncionarioHorarios, loadHorarios, id],
     )
     
     return(     

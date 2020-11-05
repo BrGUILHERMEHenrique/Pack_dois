@@ -82,7 +82,7 @@ const Empresas = () => {
                 closeModal();
                 loadEmpresas();
             }
-        }, [razaoSocial, codEmpresa, cnpj],
+        }, [razaoSocial, codEmpresa, cnpj, loadEmpresas],
     )
 
     const getEmpresaById = useCallback(
@@ -94,7 +94,7 @@ const Empresas = () => {
             } catch(error){                    
             swal("Atenção", "Não foi possível encontrar a empresa", "error");
             }
-        }, [razaoSocial, codEmpresa, cnpj],
+        }, [],
     )
 
     const openModalWithData = useCallback(
@@ -108,7 +108,7 @@ const Empresas = () => {
             } finally {
                 openModalUpdate();
             }
-        }, [empresa, razaoSocialAtualizada],
+        }, [getEmpresaById],
     )
 
     const handleUpdateEmpresa = useCallback(
@@ -132,12 +132,12 @@ const Empresas = () => {
                 loadEmpresas();
             }
             
-        }, [razaoSocialAtualizada],
+        }, [empresa.id, loadEmpresas, razaoSocialAtualizada],
     )
 
     const removeEmpresa = async (id) => {
         try {
-            const response = await api.delete(`empresa/${id}`);
+            await api.delete(`empresa/${id}`);
             swal("Ação realizada com sucesso!", "Empresa removida.", "success");
         } catch (error) {
             swal("Ação não permitida!", error.response.data.replaceAll("_", " "), "error");

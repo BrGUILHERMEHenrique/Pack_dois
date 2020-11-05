@@ -62,31 +62,33 @@ const Apontamento = () => {
             } finally {
                 openModalUpdate();
             }
-        }, [entrada1Atualizada, saida1Atualizada, entrada2Atualizada, saida2Atualizada],
+        }, [],
     )
 
-    const getByFuncionarioAndMes =  async (data1, data2) => { 
-        setApontamentosFiltrados([]);
-        const dataInicial = new Date(data1.getFullYear(), data1.getMonth(), 1);
-        setDataInicio(dataInicial)
-        const dataFinal = new Date(data2.getFullYear(), data2.getMonth() + 1, 0);
-        setDataFim(dataFinal)
+    const getByFuncionarioAndMes =  useCallback(
+        async (data1, data2) => { 
+            setApontamentosFiltrados([]);
+            const dataInicial = new Date(data1.getFullYear(), data1.getMonth(), 1);
+            setDataInicio(dataInicial)
+            const dataFinal = new Date(data2.getFullYear(), data2.getMonth() + 1, 0);
+            setDataFim(dataFinal)
 
-        const params = {
-            idFuncionario: idFuncionario,
-            dataInicial: dataInicial,
-            dataFinal: dataFinal
-        }
+            const params = {
+                idFuncionario: idFuncionario,
+                dataInicial: dataInicial,
+                dataFinal: dataFinal
+            }
 
-        try {
-            const response = await api.post(`apontamento/totalDays`, params);
-            setApontamentosFiltrados(response.data);
-            console.log(response.data)
-            console.log(params)
-        } catch(error) {
-            swal("Atenção", "Nenhum dado retornado", "error");
-        }
-    }
+            try {
+                const response = await api.post(`apontamento/totalDays`, params);
+                setApontamentosFiltrados(response.data);
+                console.log(response.data)
+                console.log(params)
+            } catch(error) {
+                swal("Atenção", "Nenhum dado retornado", "error");
+            }
+        }, [idFuncionario],
+    );
 
     const loadFuncionarios = 
         async (id) => {
@@ -119,7 +121,7 @@ const Apontamento = () => {
                 getByFuncionarioAndMes(dataInicio, dataFim);
                 closeModalUpdate();
             }   
-        }, [entrada1Atualizada, saida1Atualizada, entrada2Atualizada, saida2Atualizada],
+        }, [entrada1Atualizada, saida1Atualizada, entrada2Atualizada, saida2Atualizada, apontamento.id, getByFuncionarioAndMes, dataInicio, dataFim],
         )
 
     useEffect(
@@ -159,7 +161,7 @@ const Apontamento = () => {
                     Apontamentos
                 </SubTitulo>
                 <Button 
-                    disabled={ !(apontamentosFiltrados.length != 0) ? true : false }
+                    disabled={ !(apontamentosFiltrados.length !== 0) ? true : false }
                     onClick={criadorPDF}
                 > 
                     Gerar PDF
