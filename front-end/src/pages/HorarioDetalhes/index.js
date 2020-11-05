@@ -12,6 +12,8 @@ import TextField from '@material-ui/core/TextField';
 import { FormModal, Button, Container, Row, SubTitulo, HeaderModal, FooterModal, InputContainer, ButtonCancel} from './styles';
 import { TableHD } from '../../components/Table';
 
+import swal from 'sweetalert';
+import 'sweetalert2/src/sweetalert2.scss';
 
 // const customStyles = {
 //     content : {
@@ -156,7 +158,7 @@ const HorarioDetalhes = ({ location }) => {
             console.log(response.data);
             setListHorarioDetalhes(response.data);
         } catch (error) {
-            console.log(error);
+            swal("Atenção", "Não foi possível carregar os dados", "error");
         }
     }, [id],
     );
@@ -165,13 +167,13 @@ const HorarioDetalhes = ({ location }) => {
         async (e) => {
             e.preventDefault();
             if(parseInt(codigoDia) > 31) {
-                alert("Por favor verifique os dados, não há um mês que passe do dia 31");
+                swal("Atenção", "Por favor verifique os dados, não há um mês que passe do dia 31", "warning");
                 closeModalAdd();
                 return;
             }
             if(!folga){
                 if(!entrada1 || !saida1 || !entrada2 || !saida2 || !codigoDia){
-                alert("Por favor, preencha todos os campos");
+                swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
                 }
             }
@@ -184,7 +186,7 @@ const HorarioDetalhes = ({ location }) => {
                 saida1.getTime() >= saida2.getTime() ||
                 entrada2.getTime() >= saida2.getTime()
             ) {
-                alert("Verifique a ordem dos horários");
+                swal("Atenção", "Verifique a ordem dos horários", "warning");
                 return;
             }
 
@@ -204,7 +206,7 @@ const HorarioDetalhes = ({ location }) => {
                 console.log(params);
                 await api.post('horario_detalhes', params);
             } catch (error) {
-                console.log(error.response.data);
+                swal("Atenção", error.response.data, "error");
             } finally{
                 loadHorarioDetahes();
                 setCodigoDia(ultimo + 1);
@@ -232,8 +234,9 @@ const HorarioDetalhes = ({ location }) => {
             try {
                 await api.delete(`horario_detalhes/${id}`);
                 console.log('Sucess, Delete');
+                swal("Sucesso", "Relação removida com sucesso", "sucess");
             } catch (error) {
-                console.log(error);
+                swal("Atenção", "Não foi possível remover a relação", "error");
             } finally {
                 loadHorarioDetahes();
             }
@@ -244,13 +247,13 @@ const HorarioDetalhes = ({ location }) => {
         async (horario, e) => {
             e.preventDefault();
             if(parseInt(codigoDia) > 31){
-                alert("Por favor, verifique os dados, não há um mês que passe do dia 31");
+                swal("Atenção", "Por favor verifique os dados, não há um mês que passe do dia 31", "warning");
                 closeModalAdd();
                 return;
             }
             if(!folgaAtualizado) {
                 if(!entrada1Atualizado || !saida1Atualizado || !entrada2Atualizado || !saida2Atualizado || !codigoDiaAtualizado){
-                alert("Por favor, preencha todos os campos");
+                    swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
                 }
             }
@@ -263,7 +266,7 @@ const HorarioDetalhes = ({ location }) => {
                 saida1Atualizado.getTime() >= saida2Atualizado.getTime() ||
                 entrada2Atualizado.getTime() >= saida2Atualizado.getTime()
             ) {
-                alert("Verifique a ordem dos horários");
+                swal("Atenção", "Verifique a ordem dos horários", "warning");
                 return;
             }
 

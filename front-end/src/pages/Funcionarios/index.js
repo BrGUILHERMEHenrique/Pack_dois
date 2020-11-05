@@ -157,7 +157,7 @@ const Funcionarios = () => {
                 console.log(response.data);
                 setFuncionarios(response.data);
             }catch(error){
-                console.log(error);
+                swal("Atenção", "Funcionários não encontrados", "error");
             }
         }, [idEmpresa],
     );
@@ -169,7 +169,7 @@ const Funcionarios = () => {
                 console.log(response.data);
                 setListaEmpresas(response.data);
             }catch(error){
-                console.log(error);
+                swal("Atenção", "Não foi possível carregar as empresas", "error");
             }
         }, [],
     );
@@ -179,16 +179,16 @@ const Funcionarios = () => {
             e.preventDefault();
 
             if(!nome || !pis || !cpf.replace(/\D/g, '') || !dataNascimento.replace(/\D/g, '') || !telefone.replace(/\D/g, '') || !empresa){
-                alert("Por favor, preencha todos os campos");
+                swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
             }
 
             if(!cpfValidator.isValid(cpf)){ 
-                alert('O CPF informado é inválido');
+                swal('Atenção', 'O CPF informado é inválido', 'error');
                 return;
             }
             if(!ValidaPIS(pis)){ 
-                alert('O matricula informado é inválido');
+             swsal('Atenção', 'O matricula informado é inválido', 'error');
                 return;
             }
             const params = {
@@ -205,7 +205,7 @@ const Funcionarios = () => {
                 const response = await api.post('funcionario', params);
                 console.log(response.data);
             } catch (error) {
-                alert(error.response.data.replaceAll("_", " "));
+                swal("Atenção", error.response.data.replaceAll("_", " "), "error");
             } finally {
                 setNome('');
                 setPis('');
@@ -226,7 +226,7 @@ const Funcionarios = () => {
                     const response = await api.get(`funcionario/${id}`);
                     setFuncionario(response.data);
                 } catch(error){
-                    console.log(error);
+                    swal("Atenção", "Funcionário não encontrado", "error");
                 } 
             }, [nome, cpf, dataNascimento, pis, telefone, funcionario, empresa]
         )
@@ -240,7 +240,7 @@ const Funcionarios = () => {
                     setDataNascimentoAtualizado(response.data.dataNascimento);
                     setTelefoneAtualizado(response.data.telefone);
                 } catch(error) {
-                    console.log(error);
+                    swal("Atenção", "Funcionários não encontrados", "error");
                 } finally {
                     openModalUpdate();
                 }
@@ -252,7 +252,7 @@ const Funcionarios = () => {
             e.preventDefault();
 
             if(!nomeAtualizado || !dataNascimentoAtualizado.replace(/\D/g, '') || !telefoneAtualizado.replace(/\D/g, '')){
-                alert("Por favor, preencha todos os campos");
+                swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
             }
 
@@ -266,7 +266,7 @@ const Funcionarios = () => {
                 await api.put(`funcionario/${funcionario.id}`, paramsUpdated);
                 console.log(paramsUpdated);
             } catch(error){
-                console.log(error);
+                swal("Atenção", "Funcionário não econtrado", "error");
 
             } finally {
                 closeModalUpdate();

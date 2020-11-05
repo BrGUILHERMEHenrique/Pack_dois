@@ -10,6 +10,9 @@ import { TableFH } from '../../components/Table';
 import { Container, FormModal, HeaderModal, ContainerInputs, FooterModal, SubTitulo, Row, Button, ButtonCancel, DivNome } from './styles';
 import { set } from 'date-fns';
 
+import swal from 'sweetalert';
+import 'sweetalert2/src/sweetalert2.scss';
+
 const modalStyle = {
     content : {
         width               : '550px',
@@ -84,7 +87,7 @@ const FuncionarioHorario = ({ location }) => {
                 console.log("horarios: ", response.data);
                 setHorarios(response.data);
               } catch (error){
-                  console.log(error);
+                  swal("Atenção", "Não foi possível carregar os horários", "error");
               }
           }, []
       )
@@ -101,7 +104,7 @@ const FuncionarioHorario = ({ location }) => {
             e.preventDefault();
 
             if(!parseInt(idHorario) || !vigenciaInicial || !vigenciaFinal|| !parseInt(codigoInicial)){
-                alert("Por favor, preencha todos os campos");
+            swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
             }
 
@@ -109,7 +112,7 @@ const FuncionarioHorario = ({ location }) => {
             let dataFinal = new Date(vigenciaFinal);
 
             if(dataInicial.getTime() >= dataFinal.getTime()){
-                alert("A vigência final não pode ser anterior ou igual à vigência inicial");
+            swal("Atenção", "A vigência final não pode ser anterior ou igual à vigência inicial", "error");
                 return;
             }
 
@@ -144,7 +147,7 @@ const FuncionarioHorario = ({ location }) => {
             e.preventDefault();
 
             if(!parseInt(idHorarioAtualizado) || !vigenciaInicialAtualizada || !vigenciaFinalAtualizada|| !parseInt(codigoInicialAtualizado)) {
-                alert("Por favor, preencha todos os campos");
+                swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
             }
 
@@ -152,7 +155,7 @@ const FuncionarioHorario = ({ location }) => {
             let dataFinal = new Date(vigenciaFinal);
 
             if(dataInicial.getTime() >= dataFinal.getTime()){
-                alert("A vigência final não pode ser anterior ou igual à vigência inicial");
+                swal("Atenção", "A vigência final não pode ser anterior ou igual à vigência inicial", "error");
                 return;
             }
 
@@ -185,7 +188,7 @@ const FuncionarioHorario = ({ location }) => {
                 await api.delete(`funcionario_horario/${id}`);
                 console.log("apagado com sucesso");
             } catch (error) {
-                alert(error)
+                swal("Atenção", "Relação não encontrado", "error");
             } finally{
                 loadFuncionarioHorarios();
                 closeModalUpdate();
@@ -203,7 +206,7 @@ const FuncionarioHorario = ({ location }) => {
                 setVigenciaFinalAtualizada(response.data.vigenciaFinal);
                 setFuncionarioHorario(response.data)
             } catch(error) {
-                console.log(error);
+                swal("Atenção", "Relação Não encontrada", "error");
             } finally {
                 openModalUpdate();
             }

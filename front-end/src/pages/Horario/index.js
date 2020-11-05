@@ -85,7 +85,7 @@ const Horario = () => {
                 console.log(response.data);
                 console.log(params);
             } catch (error) {
-                console.log(error.response.data.replaceAll("_", " "));
+                swal("Atenção", error.response.data.replaceAll("_", " "), "error");
                 console.log(error);
             }
         }, [horario, 
@@ -131,51 +131,12 @@ const Horario = () => {
                 setFuncionario(response.data);
                 setTextButton('Entrada');
             } catch (error) {
-                console.log(error);
+                swal("Atenção", "Não foi possível carregar os funcionários", "error");
             }
         }, [pis],
     )
 
-    const  loadHorarios = useCallback(
-        async () => {
-            try{
-                const response = await api.get('horario_detalhes');
-                console.log(response.data);
-                setHorarios(response.data);
-            } catch(error){
-                console.log(error);
-            }
-        }, []
-    )
-
     
-
-    // const defineHour = useCallback(
-    //     () => {
-    //         setHora(dateNow.getHours());
-    //         setMinuto(dateNow.getMinutes());
-    //         setSegundo(dateNow.getSeconds());
-    //         if(parseInt(dateNow.getMinutes()) >= 59){
-    //             setHora(dateNow.getHours());
-    //         }
-    //         console.log(dateNow.getHours() +":"+ dateNow.getMinutes());
-    //         }, [],
-    // )
-
-    // useEffect (
-    //     () => {
-    //         defineHour();
-    //     }, [defineHour]
-    // )
-    // useEffect(
-    //     () => {
-    //         setInterval(() => {
-    //             defineHour();
-    //         }, 300000);
-    //     }, [defineHour]
-    // ); 
-
-
  
     return(
         <Container>

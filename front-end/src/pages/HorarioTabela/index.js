@@ -70,7 +70,7 @@ const HorarioTabela = () => {
                 setHorario(response.data);
                 setModalaPutIsOpen(true);
             } catch (error) {
-                console.log(error);
+                swal("Atenção", "Horário não encontrado", "error");
             }
         }, [],
         );
@@ -79,9 +79,9 @@ const HorarioTabela = () => {
             try{
                 const response = await api.get('horario');
                 console.log(response.data);
-                setHorarios(response.data)
+                setHorarios(response.data);
             } catch (error) {
-                console.log(error);
+                swal("Atenção", "Não foi possível carregar os horários", "error");
             }
         }, []
     );
@@ -95,9 +95,9 @@ const HorarioTabela = () => {
             }
             try {
                 await api.post('horario', params);
-                console.log("sucess, Horario post");
+                
             } catch (error) {
-                console.log(error)
+                swal("Atenção", error.response.data, "error");
             } finally {
                 loadHorarios();
                 closeModalAdd();
@@ -120,7 +120,7 @@ const HorarioTabela = () => {
                 await api.put(`horario/${id}`, params);
                 console.log('Sucess, Update');
             } catch (error) {
-                
+                swal("Atenção", error.response.data, "error");
             } finally {
                 loadHorarios();
                 closeModalUpdate();

@@ -13,6 +13,9 @@ import { jsPDF } from "jspdf";
 import { TableA } from '../../components/Table';
 import Input from '@material-ui/core/Input';
 
+import swal from 'sweetalert';
+import 'sweetalert2/src/sweetalert2.scss';
+
 const inputStyle = {
     horario: {
         width: '8vw',
@@ -93,13 +96,13 @@ const Apontamento = () => {
             try {
                 const response = await api.get(`apontamento/${id}`);
                 const apontamento = response.data;
-                setApontamento(apontamento)
+                setApontamento(apontamento);
                 setEntrada1Atualizada(apontamento.entrada1);
                 setSaida1Atualizada(apontamento.saida1);
                 setEntrada2Atualizada(apontamento.entrada2);
                 setSaida2Atualizada(apontamento.saida2);
             } catch(error) {
-                alert(error);
+                swal("Atenção", "Apontamento não encontrado", "error");
             } finally {
                 openModalUpdate();
             }
@@ -131,7 +134,7 @@ const Apontamento = () => {
                 console.log(response.data)
                 console.log(params)
             } catch(error) {
-                alert(error);
+                swal("Atenção", "Nenhum dado retornado", "error");
             } finally {
                 
             }
@@ -144,7 +147,7 @@ const Apontamento = () => {
                 console.log("funcionou " + response.data);
                 setListaFuncionarios(response.data);
             } catch(error) {
-                console.log(error);
+                swal("Anteção", "funcionários não encontrados", "error");
             }
         }
     
@@ -152,7 +155,7 @@ const Apontamento = () => {
         async (e) => {
             e.preventDefault();
             if(!entrada1Atualizada || !saida1Atualizada || !entrada2Atualizada || !entrada2Atualizada){
-                alert("Por favor, preencha todos os campos");
+                swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
             }
             const paramsUpdated = {
@@ -167,7 +170,7 @@ const Apontamento = () => {
             } catch(error){
                 console.log(error.response.data);
 
-                console.log(error);
+                swal("Anteção", "Apontamento não encontrado", "error");
             } finally {
                 getByFuncionarioAndMes(dataInicio, dataFim);
                 closeModalUpdate();
@@ -184,7 +187,7 @@ const Apontamento = () => {
                 console.log(response.data);
                 response.data.map(apontamento => console.log(apontamento))
             } catch (error) {
-                console.log(error);
+                swal("Anteção", "Não foi possível carregar os apontamentos", "error");
             }
         }, []
     )
@@ -197,7 +200,7 @@ const Apontamento = () => {
                 console.log("aqui, tio" + response.data);
                 setListaEmpresas(response.data);
             }catch(error){
-                console.log(error);
+                swal("Atenção", "Impossível carregar as empresas", "error");
             }
         }, [],
     );

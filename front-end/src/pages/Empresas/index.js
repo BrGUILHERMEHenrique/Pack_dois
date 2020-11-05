@@ -96,8 +96,8 @@ const Empresas = () => {
                 const response = await api.get('empresa');
                 console.log(response.data);
                 setEmpresas(response.data);
-            }catch(error){
-                console.log(error);
+            }catch(error){                
+                swal("Atenção", "Impossível carregar as empresas", "error");
             }
         }, [],
     );
@@ -107,12 +107,12 @@ const Empresas = () => {
             e.preventDefault();
 
             if(!razaoSocial || !codEmpresa || !cnpj.replace(/\D/g, '')){
-                alert("Por favor, preencha todos os campos");
+                swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
             }
 
             if(!cnpjValidator.isValid(cnpj)){ 
-                alert('O CNPJ informado é inválido');
+                swal("Atenção", "O CNPJ informado é inválido", "warning");
                 return;
             }
 
@@ -126,8 +126,8 @@ const Empresas = () => {
                 console.log(params);
                 const response = await api.post('empresa', params);
                 console.log(response.data);
-            } catch (error) {
-                alert(error.response.data);
+            } catch (error) {                
+                swal("Atenção", "Impossível carregar as empresas", "error");
             } finally {
                 setRazaoSocial('');
                 setCodEmpresa('');
@@ -144,9 +144,9 @@ const Empresas = () => {
                 try{
                     const response = await api.get(`empresa/${id}`);
                     setEmpresa(response.data);
-                } catch(error){
-                    console.log(error);
-                } 
+                } catch(error){                    
+                swal("Atenção", "Não foi possível encontrar a empresa", "error");
+                }
             }, [razaoSocial, codEmpresa, cnpj],
         )
 
@@ -156,8 +156,8 @@ const Empresas = () => {
                     const response = await api.get(`empresa/${id}`);
                     await getEmpresaById(id);
                     setRazaoSocialAtualizada(response.data.razaoSocial);
-                } catch(error) {
-                    console.log(error);
+                } catch(error) {                    
+                swal("Atenção", "Impossível carregar as empresas", "error");
                 } finally {
                     openModalUpdate();
                 }
@@ -169,7 +169,7 @@ const Empresas = () => {
             e.preventDefault();
 
             if(!razaoSocialAtualizada){
-                alert("Por favor, preencha todos os campos");
+                swal("Atenção", "Por favor, preencha todos os campos", "warning");
                 return;
             }
 
