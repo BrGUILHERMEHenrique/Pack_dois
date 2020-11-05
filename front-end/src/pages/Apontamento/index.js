@@ -224,21 +224,25 @@ const Apontamento = () => {
         const colunas = ["Data","Entrada", "Almoço", "Retorno", "Saída", "Total", "Horas Extras", "Atrasos"];
         const linhas = [];
         
-        var nome;
+        var nome = apontamentosFiltrados[0].funcionario.nome + " (" + apontamentosFiltrados[0].funcionario.pis + ") - " + dataInicio.getMonth() + "/" + dataInicio.getFullYear();
         
-        apontamentosFiltrados.forEach(apont => {  
-            nome = apont.funcionario.nome
+        apontamentosFiltrados.forEach(apont => { 
             var valores = [apont.data, apont.entrada1, apont.saida1,
                 apont.entrada2, apont.saida2, apont.totalTrabalhado,
                 apont.saldoHe, apont.saldoAtraso];
             linhas.push(valores);
         });   
 
-        doc.text(10, 10, nome);
+        doc.setFontSize(10);
+        doc.text(15, 5, nome, {styles: { 
+            fontSize: 10 
+        }});
 
-        doc.autoTable(colunas, linhas, { startY: 5, headStyles: {fillColor: '#942a37'} }
+        doc.autoTable(colunas, linhas, { startY: 7, headStyles: {fillColor: '#942a37'},  styles: { 
+            fontSize: 5 
+         }}
         );
-        doc.save(apontamentosFiltrados[0].funcionario.nome + "(" + apontamentosFiltrados[0].funcionario.pis + ") - " + dataInicio.getMonth() + "/" + dataInicio.getFullYear());
+        doc.save(nome);
     }
 
 
